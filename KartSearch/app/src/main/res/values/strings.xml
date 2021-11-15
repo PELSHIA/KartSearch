@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KartSearch</string>
+    <string name="app_Title">나의 Kart 전적을 Search</string>
+    <string name="search_hint">라이더 명을 입력하세요</string>
 </resources>
