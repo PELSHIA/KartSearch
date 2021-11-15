@@ -4,6 +4,6 @@
 개인 프로젝트
 
 | | Android | Searver | Design |
-|---|:---:|:---:|---:|
-| Skill | Kotlin | FireBase | _ |
+|---|:---:|:---:|:---:|
+| Skill | Kotlin | FireBase | - |
 | Tools | Android Studio | - | Figma, Adobe Illustrator | 
