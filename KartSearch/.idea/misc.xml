@@ -5,9 +5,11 @@
       <map>
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_search.xml" value="0.384375" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/gradient_background.xml" value="0.384375" />
+        <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/ic_close.xml" value="0.384375" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/activity_main.xml" value="0.36822916666666666" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_main.xml" value="0.33" />
-        <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_search.xml" value="0.36822916666666666" />
+        <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/item_search.xml" value="0.25" />
       </map>
     </option>
   </component>
