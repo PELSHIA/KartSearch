@@ -6,9 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface UserService {
-    @GET("/users/{access_id}")
+    @GET("/kart/v1.0/users/{access_id}")
     fun accessIdInquiry(@Path("access_id") access_Id: String): Call<UserInfo>
 
-    @GET("/users/nickname/{nickname}")
+    @GET("/kart/v1.0/users/nickname/{nickname}")
     fun nickNameInquiry(@Path("nickname") nickName: String): Call<UserInfo>
 }

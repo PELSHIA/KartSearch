@@ -3,12 +3,13 @@ package com.hcraestrak.kartsearch.model.network
 import com.google.gson.Gson
 import com.hcraestrak.kartsearch.model.network.dao.MatchService
 import com.hcraestrak.kartsearch.model.network.dao.UserService
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    const val URL = "https://api.nexon.co.kr/kart/v1.0/"
+    private const val URL = "https://api.nexon.co.kr/"
 
     private val gson = Gson().newBuilder().setLenient().create()
 
