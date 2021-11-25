@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="멋진샌박주장"
-        android:fontFamily="@font/nexonlv1gothiclight"
         android:layout_marginVertical="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
