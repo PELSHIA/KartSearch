@@ -12,5 +12,5 @@ data class MatchDetailPlayer(
     val playTime: Int,
     val channelName: String,
     val trackId: String,
-    val teams: List<PlayerInfo>
+    val teams: List<Player>
 )

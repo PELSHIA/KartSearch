@@ -6,23 +6,23 @@ import androidx.lifecycle.ViewModel
 import com.hcraestrak.kartsearch.model.network.PreferenceUtils
 import com.hcraestrak.kartsearch.model.network.RetrofitService
 import com.hcraestrak.kartsearch.model.network.dao.MatchService
-import com.hcraestrak.kartsearch.model.network.data.response.MatchResponse
+import com.hcraestrak.kartsearch.model.network.data.response.Match
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MatchViewModel: ViewModel() {
 
-    private val matchResponse = MutableLiveData<MatchResponse>()
+    val matchResponse = MutableLiveData<Match>()
     private val matchService: MatchService by lazy { RetrofitService.matchService }
 
-   fun getMatchResponseObserver(): MutableLiveData<MatchResponse> {
-       return matchResponse
-   }
+    fun getMatchResponseObserver() : MutableLiveData<Match> {
+        return matchResponse
+    }
 
     fun accessIdMatchInquiry(access_Id: String) {
-        matchService.accessIdMatchInquiry(access_Id).enqueue(object: Callback<MatchResponse> {
-            override fun onResponse(call: Call<MatchResponse>, response: Response<MatchResponse>) {
+        matchService.accessIdMatchInquiry(access_Id).enqueue(object: Callback<Match> {
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
                 Log.d("accessIdMatchInquiry : ",  "${response.code()} ${response.message()}: ${response.body()}")
                 if (response.isSuccessful) {
                     matchResponse.postValue(response.body())
@@ -31,7 +31,7 @@ class MatchViewModel: ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
+            override fun onFailure(call: Call<Match>, t: Throwable) {
                 matchResponse.postValue(null)
             }
         })

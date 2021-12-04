@@ -3,7 +3,6 @@ package com.hcraestrak.kartsearch.model.network.dao
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailPlayer
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailTeam
-import com.hcraestrak.kartsearch.model.network.data.response.MatchResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,7 +17,7 @@ interface MatchService {
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
         @Query("match_types") match_types: String? = null
-    ): Call<MatchResponse>
+    ): Call<Match>
 
     @GET("/kart/v1.0/matches")
     fun allMatchInquiry(
