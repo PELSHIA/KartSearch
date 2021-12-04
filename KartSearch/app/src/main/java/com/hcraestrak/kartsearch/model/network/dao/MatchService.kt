@@ -10,7 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MatchService {
-    @GET("/users/{access_id}/matches")
+    @GET("/kart/v1.0/users/{access_id}/matches")
     fun accessIdMatchInquiry(
         @Path("access_id") access_id: String,
         @Query("start_date") start_date: String? = null,
@@ -20,7 +20,7 @@ interface MatchService {
         @Query("match_types") match_types: String? = null
     ): Call<MatchResponse>
 
-    @GET("/matches")
+    @GET("/kart/v1.0/matches")
     fun allMatchInquiry(
         @Query("start_date") start_date: String? = null,
         @Query("end_date") end_date: String? = null,
@@ -29,10 +29,10 @@ interface MatchService {
         @Query("match_types") match_types: String? = null
     ): Call<Match>
 
-    @GET("/matches/{match_id}")
+    @GET("/kart/v1.0/matches/{match_id}")
     fun specificMatchInquiry(@Path("match_id") match_id: String): Call<MatchDetailPlayer>
 
-    @GET("/matches/{match_id}")
+    @GET("/kart/v1.0/matches/{match_id}")
     fun specificTeamMatchInquiry(@Path("match_id") match_id: String): Call<MatchDetailTeam>
 
 }
