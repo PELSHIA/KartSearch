@@ -1,6 +1,6 @@
 package com.hcraestrak.kartsearch.model.network.data.response
 
 data class Match(
-    val matchType: String,
-    val matches: List<MatchInfo>
+    val matches: List<Matche>,
+    val nickName: String
 )
