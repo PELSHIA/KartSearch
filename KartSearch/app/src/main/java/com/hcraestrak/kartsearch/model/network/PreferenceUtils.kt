@@ -9,9 +9,14 @@ object PreferenceUtils {
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences("token", Context.MODE_PRIVATE)
-        preferences.edit().putString("token", ACCESS_TOKEN).apply()
+        token = ACCESS_TOKEN
     }
 
-    fun getToken() = preferences.getString("token", null)
+    var token : String?
+        get() =
+            preferences.getString("token", null)
+        set(value) =
+            preferences.edit().putString("token", value).apply()
+
 
 }
