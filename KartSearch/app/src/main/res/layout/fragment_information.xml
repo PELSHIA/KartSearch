@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/user_profile_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
             android:layout_marginTop="25dp"
             tools:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,20 +32,21 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <ImageView
-            android:id="@+id/user_licence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/user_license"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintStart_toEndOf="@id/user_profile_img"
             app:layout_constraintBottom_toBottomOf="@id/user_profile_img"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="10dp"
             tools:src="@drawable/ic_close"/>
 
         <TextView
             android:id="@+id/user_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             tools:text="멋진샌박주장"
-            android:layout_marginTop="20dp"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/user_profile_img"
