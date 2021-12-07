@@ -3,11 +3,11 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
@@ -62,29 +61,19 @@ class InformationFragment : Fragment() {
         viewModel.accessIdMatchInquiry(args.accessId)
         viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, { match ->
             binding.userNickName.text = match.nickName
-            getProfileImage("character", match.matches[0].matches[0].character) // 대표 캐릭터 이미지
-            when(match.matches[0].matches[0].player.rankinggrade2) { // 라이센스 이미지
-                "1" -> getLicenseImage("License", "chobo")
-                "2" -> getLicenseImage("License", "Rookie")
-                "3" -> getLicenseImage("License", "L3")
-                "4" -> getLicenseImage("License", "L2")
-                "5" -> getLicenseImage("License", "L1")
-                "6" -> getLicenseImage("License", "PRO")
-            }
-//            getLicenseImage("License", "PRO")
-
-//            storageReference = FirebaseStorage.getInstance().getReference("UnknownCharacter.png")
+            getImage("character", match.matches[0].matches[0].character, binding.userProfileImg) // 대표 캐릭터 이미지
+            getLicenseImage(match.matches[0].matches[0].player.rankinggrade2) // 라이센스 이미지
         })
     }
 
-    private fun getProfileImage(type: String, id: String) {
+    private fun getImage(type: String, id: String, view: ImageView) {
         storageReference = FirebaseStorage.getInstance().getReference("/$type/$id.png")
         try {
             val localFile: File = File.createTempFile("tempfile", ".png")
             storageReference.getFile(localFile)
                 .addOnSuccessListener {
                     val bitmap: Bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    Glide.with(this).load(bitmap).into(binding.userProfileImg)
+                    Glide.with(this).load(bitmap).into(view)
                 }.addOnFailureListener{
                     Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
                 }
@@ -93,19 +82,14 @@ class InformationFragment : Fragment() {
         }
     }
 
-    private fun getLicenseImage(type: String, id: String) {
-        storageReference = FirebaseStorage.getInstance().getReference("/$type/$id.png")
-        try {
-            val localFile: File = File.createTempFile("tempfile", ".png")
-            storageReference.getFile(localFile)
-                .addOnSuccessListener {
-                    val bitmap: Bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    Glide.with(this).load(bitmap).into(binding.userLicense)
-                }.addOnFailureListener{
-                    Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
-                }
-        } catch (e: IOException) {
-            e.printStackTrace()
+    private fun getLicenseImage(license: String) { // 라이센스 판별
+        when(license) {
+            "1" -> getImage("License", "chobo", binding.userLicense)
+            "2" -> getImage("License", "Rookie", binding.userLicense)
+            "3" -> getImage("License", "L3", binding.userLicense)
+            "4" -> getImage("License", "L2", binding.userLicense)
+            "5" -> getImage("License", "L1", binding.userLicense)
+            "6" -> getImage("License", "PRO", binding.userLicense)
         }
     }
 
