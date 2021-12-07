@@ -14,12 +14,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.firebase.ktx.Firebase
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
+import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
 import java.io.File
 import java.io.IOException
 
@@ -42,6 +43,7 @@ class InformationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindingToolbar()
         searchData()
+        setTabLayout()
     }
 
     private fun bindingToolbar() {
@@ -91,6 +93,14 @@ class InformationFragment : Fragment() {
             "5" -> getImage("License", "L1", binding.userLicense)
             "6" -> getImage("License", "PRO", binding.userLicense)
         }
+    }
+
+    private fun setTabLayout() {
+        val tabLayoutTextList = listOf<String>("전적", "통계", "정보")
+        binding.viewPager.adapter = InformationVIewPagerAdapter(requireActivity())
+        TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
+            tab.text = tabLayoutTextList[position]
+        }.attach()
     }
 
 }
