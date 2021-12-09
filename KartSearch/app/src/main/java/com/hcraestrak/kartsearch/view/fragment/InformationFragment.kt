@@ -97,7 +97,7 @@ class InformationFragment : Fragment() {
 
     private fun setTabLayout() {
         val tabLayoutTextList = listOf<String>("전적", "통계", "정보")
-        binding.viewPager.adapter = InformationVIewPagerAdapter(requireActivity())
+        binding.viewPager.adapter = InformationVIewPagerAdapter(requireActivity(), args.accessId)
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
             tab.text = tabLayoutTextList[position]
         }.attach()

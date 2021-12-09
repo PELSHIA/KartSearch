@@ -8,7 +8,7 @@ import com.hcraestrak.kartsearch.view.fragment.UserInfoFragment
 import com.hcraestrak.kartsearch.view.fragment.UserRecordFragment
 import com.hcraestrak.kartsearch.view.fragment.UserStatsFragment
 
-class InformationVIewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity) {
+class InformationVIewPagerAdapter(fragmentActivity: FragmentActivity, val id: String): FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount(): Int {
         return 3
@@ -16,9 +16,9 @@ class InformationVIewPagerAdapter(fragmentActivity: FragmentActivity): FragmentS
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> UserRecordFragment()
-            1 -> UserStatsFragment()
-            else -> UserInfoFragment()
+            0 -> UserRecordFragment(id)
+            1 -> UserStatsFragment(id)
+            else -> UserInfoFragment(id)
         }
     }
 }

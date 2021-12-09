@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserStatsBinding
 
-class UserStatsFragment : Fragment() {
+class UserStatsFragment(val id: String) : Fragment() {
 
     private lateinit var binding: FragmentUserStatsBinding
 
