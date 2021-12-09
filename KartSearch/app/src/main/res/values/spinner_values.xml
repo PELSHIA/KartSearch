@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="team_array">
+        <item>스피드</item>
+        <item>아이템</item>
+        <item>무한부스터</item>
+        <item>스피드 클럽전</item>
+        <item>아이템 클럽전</item>
+        <item>등급전</item>
+        <item>무한부스터</item>
+        <item>팀 배틀</item>
+    </string-array>
+
+    <string-array name="single_array">
+        <item>스피드</item>
+        <item>아이템</item>
+        <item>무한부스터</item>
+        <item>등급전</item>
+    </string-array>
+</resources>
