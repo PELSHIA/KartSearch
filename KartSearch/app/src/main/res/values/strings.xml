@@ -4,4 +4,7 @@
     <string name="search_hint">라이더 명을 입력하세요</string>
     <string name="recent_searches">최근 검색어</string>
     <string name="error_msg">라이더 정보가 존재하지 않습니다\n검색어를 다시 확인해주세요</string>
+    <string name="NexonDevelopers">Data based on NEXON DEVELOPERS</string>
+    <string name="single">개인전</string>
+    <string name="team">팀전</string>
 </resources>
