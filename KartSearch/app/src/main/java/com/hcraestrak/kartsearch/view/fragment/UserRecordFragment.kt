@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
@@ -26,6 +27,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindingStateButton()
         bindingSpinner()
+        bindingTitle()
     }
 
     private fun bindingStateButton() {
@@ -34,11 +36,13 @@ class UserRecordFragment(val id: String) : Fragment() {
                 stateSingle(resources.getColor(R.color.light_blue), R.drawable.background_on)
                 stateTeam(resources.getColor(R.color.gray), 0)
                 bindingSpinner()
+                bindingTitle()
                 false
             } else {
                 stateSingle(resources.getColor(R.color.gray), 0)
                 stateTeam(resources.getColor(R.color.light_blue), R.drawable.background_on)
                 bindingSpinner()
+                bindingTitle()
                 true
             }
         }
@@ -74,5 +78,24 @@ class UserRecordFragment(val id: String) : Fragment() {
                 binding.userRecordSpinner.adapter = adapter
             }
         }
+
+        binding.userRecordSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                bindingTitle()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
     }
+
+    private fun bindingTitle() {
+        if (isClicked) {
+            binding.userRecordTitle.text = binding.userRecordSpinner.selectedItem.toString() + " 팀전 전적"
+        } else {
+            binding.userRecordTitle.text = binding.userRecordSpinner.selectedItem.toString() + " 개인전 전적"
+        }
+    }
+
 }
