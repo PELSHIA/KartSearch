@@ -31,21 +31,27 @@ class UserRecordFragment(val id: String) : Fragment() {
     private fun bindingStateButton() {
         binding.userInfoStateLayout.setOnClickListener {
             isClicked = if (isClicked) {
-                binding.userInfoStateSingle.setTextColor(resources.getColor(R.color.light_blue))
-                binding.userInfoStateSingle.setBackgroundResource(R.drawable.background_on)
-                binding.userInfoStateTeam.setTextColor(resources.getColor(R.color.gray))
-                binding.userInfoStateTeam.setBackgroundResource(0)
+                stateSingle(resources.getColor(R.color.light_blue), R.drawable.background_on)
+                stateTeam(resources.getColor(R.color.gray), 0)
                 bindingSpinner()
                 false
             } else {
-                binding.userInfoStateTeam.setTextColor(resources.getColor(R.color.light_blue))
-                binding.userInfoStateTeam.setBackgroundResource(R.drawable.background_on)
-                binding.userInfoStateSingle.setTextColor(resources.getColor(R.color.gray))
-                binding.userInfoStateSingle.setBackgroundResource(0)
+                stateSingle(resources.getColor(R.color.gray), 0)
+                stateTeam(resources.getColor(R.color.light_blue), R.drawable.background_on)
                 bindingSpinner()
                 true
             }
         }
+    }
+
+    private fun stateTeam(color: Int, backGround: Int) {
+        binding.userInfoStateTeam.setTextColor(color)
+        binding.userInfoStateTeam.setBackgroundResource(backGround)
+    }
+
+    private fun stateSingle(color: Int, backGround: Int) {
+        binding.userInfoStateSingle.setTextColor(color)
+        binding.userInfoStateSingle.setBackgroundResource(backGround)
     }
 
     private fun bindingSpinner() {
