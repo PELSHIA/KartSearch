@@ -13,7 +13,7 @@ import retrofit2.Response
 
 class MatchViewModel: ViewModel() {
 
-    val matchResponse = MutableLiveData<Match>()
+    private val matchResponse = MutableLiveData<Match>()
     private val matchService: MatchService by lazy { RetrofitService.matchService }
 
     fun getMatchResponseObserver() : MutableLiveData<Match> {
@@ -21,7 +21,24 @@ class MatchViewModel: ViewModel() {
     }
 
     fun accessIdMatchInquiry(access_Id: String) {
-        matchService.accessIdMatchInquiry(access_Id).enqueue(object: Callback<Match> {
+        matchService.accessIdMatchInquiry(access_id = access_Id).enqueue(object: Callback<Match> {
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
+                Log.d("accessIdMatchInquiry : ",  "${response.code()} ${response.message()}: ${response.body()}")
+                if (response.isSuccessful) {
+                    matchResponse.postValue(response.body())
+                } else {
+                    matchResponse.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Match>, t: Throwable) {
+                matchResponse.postValue(null)
+            }
+        })
+    }
+
+    fun accessIdMatchInquiryWithMatchType(access_Id: String, matchType: String) {
+        matchService.accessIdMatchInquiry(access_id = access_Id, match_types = matchType).enqueue(object: Callback<Match> {
             override fun onResponse(call: Call<Match>, response: Response<Match>) {
                 Log.d("accessIdMatchInquiry : ",  "${response.code()} ${response.message()}: ${response.body()}")
                 if (response.isSuccessful) {
