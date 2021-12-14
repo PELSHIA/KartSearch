@@ -16,6 +16,12 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
 
     private val data = mutableListOf<UserInfoData>()
 
+    fun setData(data: List<UserInfoData>) {
+        this.data.clear()
+        this.data.addAll(data)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val rank: TextView = view.findViewById(R.id.item_rank)
         val kart: ImageView = view.findViewById(R.id.item_kart_img)
