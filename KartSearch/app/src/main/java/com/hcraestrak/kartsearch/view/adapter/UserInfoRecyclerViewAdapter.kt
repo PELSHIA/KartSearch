@@ -1,6 +1,7 @@
 package com.hcraestrak.kartsearch.view.adapter
 
-import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 
-class UserInfoRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<UserInfoRecyclerViewAdapter.ViewHolder>() {
+class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdapter.ViewHolder>() {
 
     private val data = mutableListOf<UserInfoData>()
 
@@ -35,7 +36,7 @@ class UserInfoRecyclerViewAdapter(val context: Context): RecyclerView.Adapter<Us
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position], context)
+        holder.bind(data[position])
     }
 
     override fun getItemCount() = data.size
