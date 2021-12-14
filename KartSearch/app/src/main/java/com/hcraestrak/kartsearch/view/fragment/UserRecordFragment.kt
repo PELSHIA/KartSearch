@@ -7,12 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
+import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
+import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
+import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 
 class UserRecordFragment(val id: String) : Fragment() {
 
     private lateinit var binding: FragmentUserRecordBinding
+    private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
+    private val matchViewModel: MatchViewModel by viewModels()
     private var isClicked: Boolean = true // true 개인전 false 팀전
 
     override fun onCreateView(
@@ -28,6 +35,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         bindingStateButton()
         bindingSpinner()
         bindingTitle()
+        initRecyclerView()
     }
 
     private fun bindingStateButton() {
@@ -98,4 +106,33 @@ class UserRecordFragment(val id: String) : Fragment() {
         }
     }
 
+    private fun initRecyclerView() {
+        binding.userInfoRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            recyclerAdapter = UserInfoRecyclerViewAdapter()
+            adapter = recyclerAdapter
+            setData()
+        }
+    }
+
+    private fun setData() {
+        val dataList = mutableListOf<UserInfoData>()
+        matchViewModel.accessIdMatchInquiryWithMatchType(id, "effd66758144a29868663aa50e85d3d95c5bc0147d7fdb9802691c2087f3416e")
+        matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
+            for (match in it.matches[0].matches) {
+                dataList.add(
+                    UserInfoData(
+                        match.playerCount,
+                        match.player.matchRank,
+                        match.player.kart,
+                        match.trackId,
+                        match.player.matchTime,
+                        match.player.matchWin,
+                        match.player.matchRetired
+                    )
+                )
+            }
+            recyclerAdapter.setData(dataList)
+        })
+    }
 }
