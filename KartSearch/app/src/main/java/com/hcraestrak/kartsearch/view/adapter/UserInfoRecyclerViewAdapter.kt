@@ -60,6 +60,11 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                     itemView.setBackgroundResource(R.drawable.background_win)
                     rank.setTextColor(Color.parseColor("#7CA8FF"))
                 }
+                else -> {
+                    rank.text = "Re"
+                    time.text = "-"
+                    itemView.setBackgroundResource(R.drawable.background_none)
+                }
             }
             getImage(data.kart)
             getTrackName(data.track, map)
