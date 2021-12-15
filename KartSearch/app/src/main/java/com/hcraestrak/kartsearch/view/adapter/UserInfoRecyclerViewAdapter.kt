@@ -1,6 +1,7 @@
 package com.hcraestrak.kartsearch.view.adapter
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,17 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                 "1" -> {
                     rank.text = "Re"
                     time.text = "-"
+                }
+            }
+
+            when (data.isWin) {
+                "0" -> {
+                    itemView.setBackgroundResource(R.drawable.background_lose)
+                    rank.setTextColor(Color.parseColor("#FF8484"))
+                }
+                "1" -> {
+                    itemView.setBackgroundResource(R.drawable.background_win)
+                    rank.setTextColor(Color.parseColor("#7CA8FF"))
                 }
             }
             getImage(data.kart)
