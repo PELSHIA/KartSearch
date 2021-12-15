@@ -14,6 +14,7 @@ import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
+import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 
 class UserRecordFragment(val id: String) : Fragment() {
 
@@ -107,10 +108,12 @@ class UserRecordFragment(val id: String) : Fragment() {
     }
 
     private fun initRecyclerView() {
+        val decoration: RecyclerViewDecoration = RecyclerViewDecoration(40)
         binding.userInfoRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             recyclerAdapter = UserInfoRecyclerViewAdapter()
             adapter = recyclerAdapter
+            addItemDecoration(decoration)
             setData()
         }
     }
