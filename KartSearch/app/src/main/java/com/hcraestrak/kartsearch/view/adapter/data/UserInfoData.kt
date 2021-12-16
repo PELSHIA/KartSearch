@@ -10,5 +10,5 @@ data class UserInfoData(
     val track: String,
     val time: String,
     val isWin: String,
-    val isRetired: String
+    var isRetired: String
 )

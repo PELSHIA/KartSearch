@@ -40,17 +40,6 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
         val time: TextView = view.findViewById(R.id.item_time)
 
         fun bind(data: UserInfoData) {
-            when (data.isRetired) {
-                "0" -> {
-                    rank.text = "${data.userRank}/${data.playerCount}"
-                    time.text = data.time
-                }
-                "1" -> {
-                    rank.text = "Re"
-                    time.text = "-"
-                }
-            }
-
             when (data.isWin) {
                 "0" -> {
                     itemView.setBackgroundResource(R.drawable.background_lose)
@@ -61,6 +50,15 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                     rank.setTextColor(Color.parseColor("#7CA8FF"))
                 }
                 else -> {
+                    data.isRetired = "1"
+                }
+            }
+            when (data.isRetired) {
+                "0" -> {
+                    rank.text = "${data.userRank}/${data.playerCount}"
+                    time.text = getTime(data.time.toInt())
+                }
+                "1" -> {
                     rank.text = "Re"
                     time.text = "-"
                     itemView.setBackgroundResource(R.drawable.background_none)
@@ -104,6 +102,18 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                     Log.d("error", "${error.code}: ${error.message}")
                 }
             })
+        }
+
+        private fun getTime(time: Int): String {
+            var min: Int = 0
+            var sec: Int = time / 1000
+            val mSec: Int = time % 1000
+            while (sec > 60) {
+                sec -= 60
+                min++
+            }
+
+            return String.format("%02d:%02d.%03d", min, sec, mSec)
         }
     }
 
