@@ -34,9 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_off"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="80dp"
             app:layout_constraintBottom_toBottomOf="@id/user_record_spinner"
-            app:layout_constraintStart_toEndOf="@id/user_record_spinner"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/user_record_spinner">
 
             <TextView
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:background="@drawable/background_on"
                 android:textColor="@color/light_blue"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="18dp"
                 android:paddingVertical="10dp"
                 android:text="@string/single"
                 android:textSize="11sp" />
