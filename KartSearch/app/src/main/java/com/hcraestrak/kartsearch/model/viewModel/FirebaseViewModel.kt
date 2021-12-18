@@ -12,7 +12,7 @@ class FirebaseViewModel: ViewModel() {
 
     private lateinit var database: DatabaseReference
 
-    fun getGameType(typeId: String): LiveData<String> {
+    fun getGameType(typeName: String): LiveData<String> {
         val data = MutableLiveData<String>()
         database = Firebase.database("https://gametype.firebaseio.com/").reference
         database.addValueEventListener(object: ValueEventListener {
@@ -20,8 +20,8 @@ class FirebaseViewModel: ViewModel() {
                 for (postSnapshot in snapshot.children) {
                     val id = postSnapshot.child("id").getValue(String::class.java)
                     val name = postSnapshot.child("name").getValue(String::class.java)
-                    if (id == typeId) {
-                        data.postValue(name)
+                    if (name == typeName) {
+                        data.postValue(id)
                         return
                     }
                 }
