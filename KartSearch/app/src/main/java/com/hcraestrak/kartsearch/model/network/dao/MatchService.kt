@@ -16,7 +16,7 @@ interface MatchService {
         @Query("end_date") end_date: String? = null,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
-        @Query("match_types") match_types: String? = null
+        @Query("match_types") match_types: String
     ): Call<Match>
 
     @GET("/kart/v1.0/matches")
