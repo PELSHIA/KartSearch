@@ -8,8 +8,9 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class FirebaseViewModel: ViewModel() {
+class UserInfoViewModel: ViewModel() {
 
+    val mode = MutableLiveData<String>()
     private lateinit var database: DatabaseReference
 
     fun getGameType(typeName: String): LiveData<String> {

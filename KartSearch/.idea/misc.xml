@@ -3,6 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/MinHyukJi/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.21822916666666667" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_lose.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_none.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_off.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_on.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_radius_10dp.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_information.xml" value="0.21875" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_mode_select_dialog.xml" value="0.5" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_record.xml" value="0.33" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/item_mode.xml" value="0.25" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/spinner_item.xml" value="0.21822916666666667" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_lose.xml" value="0.384375" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_none.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/Minhyuk/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_off.xml" value="0.384375" />
@@ -29,7 +40,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

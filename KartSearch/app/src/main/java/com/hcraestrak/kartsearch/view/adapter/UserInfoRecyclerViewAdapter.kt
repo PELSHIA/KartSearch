@@ -85,7 +85,7 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
         }
 
         private fun getTrackName(trackId: String, view: TextView) {
-            val database: DatabaseReference = Firebase.database.reference
+            val database: DatabaseReference = Firebase.database("https://kartmap.firebaseio.com/").reference
             database.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (postSnapshot in snapshot.children) {

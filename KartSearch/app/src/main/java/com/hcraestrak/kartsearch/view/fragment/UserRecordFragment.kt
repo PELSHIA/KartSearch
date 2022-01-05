@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -17,9 +14,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
-import com.hcraestrak.kartsearch.model.viewModel.FirebaseViewModel
+import com.hcraestrak.kartsearch.model.viewModel.UserInfoViewModel
 import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
@@ -30,7 +26,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private lateinit var binding: FragmentUserRecordBinding
     private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
     private val matchViewModel: MatchViewModel by viewModels()
-    private val fireBaseViewModel: FirebaseViewModel by viewModels()
+    private val viewModel: UserInfoViewModel by viewModels()
     private var spinnerItem: String = "스피드"
 
     override fun onCreateView(
@@ -43,32 +39,15 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindingSpinner()
+        modeSelect()
         initRecyclerView()
     }
 
-    private fun bindingSpinner() {
-            ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.game_mode,
-                R.layout.spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(R.layout.spinner_item)
-                binding.userRecordSpinner.adapter = adapter
-            }
-
-
-        binding.userRecordSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                spinnerItem = p0?.getItemAtPosition(p2).toString()
-                binding.userRecordTitle.text = "$spinnerItem 전적"
-                Log.d("item", spinnerItem)
-                setData(spinnerItem)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+    private fun modeSelect() {
+        binding.userRecordMode.setOnClickListener {
+            ModeSelectDialogFragment().show(
+                parentFragmentManager, "ModeSelectDialog"
+            )
         }
     }
 
@@ -85,7 +64,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private fun setData(type: String) {
         val dataList = mutableListOf<UserInfoData>()
 //        val gameType: String = getGameType(type)
-        val gameType: String = ""
+        val gameType: String = viewModel.mode.value.toString()
         Log.d("typeId", gameType)
         matchViewModel.accessIdMatchInquiryWithMatchType(id, gameType)
         matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
