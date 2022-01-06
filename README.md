@@ -6,4 +6,4 @@
 | | Android | Searver | Design |
 |---|:---:|:---:|:---:|
 | Skill | Kotlin | FireBase | - |
-| Tools | Android Studio | - | Figma, Adobe Illustrator | 
+| Tools | Android Studio | - | Figma | 
