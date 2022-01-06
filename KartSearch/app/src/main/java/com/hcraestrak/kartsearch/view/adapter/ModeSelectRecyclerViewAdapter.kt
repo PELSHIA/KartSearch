@@ -9,9 +9,9 @@ import com.hcraestrak.kartsearch.R
 
 class ModeSelectRecyclerViewAdapter: RecyclerView.Adapter<ModeSelectRecyclerViewAdapter.ViewHolder>() {
 
-    private val data = arrayListOf<String>()
+    private val data = mutableListOf<String>()
     private lateinit var mListener: OnItemClickListener
-    private val mode: String = ""
+    private var mode: String = ""
 
     interface OnItemClickListener {
         fun onClick(id: Int)
@@ -27,7 +27,7 @@ class ModeSelectRecyclerViewAdapter: RecyclerView.Adapter<ModeSelectRecyclerView
 
     fun getMode() = mode
 
-    fun setData(data: Array<String>) {
+    fun setData(data: List<String>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
@@ -50,6 +50,7 @@ class ModeSelectRecyclerViewAdapter: RecyclerView.Adapter<ModeSelectRecyclerView
         holder.bind(data[position])
 
         holder.itemView.setOnClickListener {
+            mode = data[position]
             mListener.onClick(1 )
         }
     }

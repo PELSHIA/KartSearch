@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +27,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private lateinit var binding: FragmentUserRecordBinding
     private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
     private val matchViewModel: MatchViewModel by viewModels()
-    private val viewModel: UserInfoViewModel by viewModels()
+    private val viewModel: UserInfoViewModel by activityViewModels()
     private var spinnerItem: String = "스피드"
 
     override fun onCreateView(
@@ -41,6 +42,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         modeSelect()
         initRecyclerView()
+        observe()
     }
 
     private fun modeSelect() {
@@ -49,6 +51,14 @@ class UserRecordFragment(val id: String) : Fragment() {
                 parentFragmentManager, "ModeSelectDialog"
             )
         }
+    }
+
+    private fun observe() {
+        viewModel.mode.observe(viewLifecycleOwner, {
+            Log.d("gameType", it)
+            binding.userRecordTitle.text = it
+            setData(it)
+        })
     }
 
     private fun initRecyclerView() {
@@ -63,10 +73,7 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private fun setData(type: String) {
         val dataList = mutableListOf<UserInfoData>()
-//        val gameType: String = getGameType(type)
-        val gameType: String = viewModel.mode.value.toString()
-        Log.d("typeId", gameType)
-        matchViewModel.accessIdMatchInquiryWithMatchType(id, gameType)
+        matchViewModel.accessIdMatchInquiryWithMatchType(id, getGameTypeWithFirebase(type))
         matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
             for (match in it.matches[0].matches) {
                 dataList.add(
@@ -84,10 +91,6 @@ class UserRecordFragment(val id: String) : Fragment() {
             recyclerAdapter.setData(dataList)
         })
     }
-
-//    private fun getGameType(type: String): String {
-//
-//    }
 
     private fun getGameTypeWithFirebase(typeName: String): String {
         var typeId: String = ""

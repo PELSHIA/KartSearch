@@ -11,10 +11,11 @@ import com.google.firebase.ktx.Firebase
 class UserInfoViewModel: ViewModel() {
 
     val mode = MutableLiveData<String>()
+    val gameTypeId = MutableLiveData<String>()
+
     private lateinit var database: DatabaseReference
 
-    fun getGameType(typeName: String): LiveData<String> {
-        val data = MutableLiveData<String>()
+    fun getGameType(typeName: String) {
         database = Firebase.database("https://gametype.firebaseio.com/").reference
         database.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -22,17 +23,15 @@ class UserInfoViewModel: ViewModel() {
                     val id = postSnapshot.child("id").getValue(String::class.java)
                     val name = postSnapshot.child("name").getValue(String::class.java)
                     if (name == typeName) {
-                        data.postValue(id)
+                        gameTypeId.postValue(id)
                         return
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.d("error", "${error.code}: ${error.message}")
             }
         })
-        return data
     }
 }
 
