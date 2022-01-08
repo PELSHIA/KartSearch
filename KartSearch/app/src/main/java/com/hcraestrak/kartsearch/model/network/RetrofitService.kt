@@ -17,19 +17,19 @@ object RetrofitService {
 
     private val gson = Gson().newBuilder().setLenient().create()
 
-    //    val logginInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-    //        override fun log(message: String) {
-    //            try {
-    //                Log.d("TAG", "JSON      " + JSONObject(message).toString(4))
-    //            } catch (e: Exception) {
-    //                Log.d("TAG", "?      " + message)
-    //            }
-    //        }
-    //
-    //    }).setLevel(HttpLoggingInterceptor.Level.BODY)
+        val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                try {
+                    Log.d("TAG", "JSON      " + JSONObject(message).toString(4))
+                } catch (e: Exception) {
+                    Log.d("TAG", "?      " + message)
+                }
+            }
 
-//    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).addInterceptor(logginInterceptor).build()
-    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).build()
+        }).setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).addInterceptor(loggingInterceptor).build()
+//    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).build()
 
 
 
