@@ -29,6 +29,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private val matchViewModel: MatchViewModel by viewModels()
     private val viewModel: UserInfoViewModel by activityViewModels()
     private var spinnerItem: String = "스피드"
+    private var typeId: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +43,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         modeSelect()
         initRecyclerView()
-        observe()
+        modeObserve()
     }
 
     private fun modeSelect() {
@@ -53,7 +54,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         }
     }
 
-    private fun observe() {
+    private fun modeObserve() {
         viewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
             binding.userRecordTitle.text = it
@@ -93,7 +94,6 @@ class UserRecordFragment(val id: String) : Fragment() {
     }
 
     private fun getGameTypeWithFirebase(typeName: String): String {
-        var typeId: String = ""
         val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
