@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,9 +27,9 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private lateinit var binding: FragmentUserRecordBinding
     private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
+    private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val matchViewModel: MatchViewModel by viewModels()
     private val viewModel: UserInfoViewModel by activityViewModels()
-    private var spinnerItem: String = "스피드"
     private var typeId: String = ""
 
     override fun onCreateView(
@@ -57,7 +58,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private fun modeObserve() {
         viewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
-            binding.userRecordTitle.text = it
+            binding.userRecordTitle.text = it + "전적"
             setData(it)
         })
     }
@@ -69,6 +70,12 @@ class UserRecordFragment(val id: String) : Fragment() {
             recyclerAdapter = UserInfoRecyclerViewAdapter()
             adapter = recyclerAdapter
             addItemDecoration(decoration)
+        }
+
+        recyclerAdapter.setOnItemClickListener {
+            val matchId: String = recyclerAdapter.getMatchId()
+            val isWin: Int = recyclerAdapter.getIsWin()
+            findNavController().navigate(InformationFragmentDirections.actionInformationFragmentToSpecificFragment(matchId, isWin))
         }
     }
 
@@ -85,7 +92,8 @@ class UserRecordFragment(val id: String) : Fragment() {
                         match.trackId,
                         match.player.matchTime,
                         match.player.matchWin,
-                        match.player.matchRetired
+                        match.player.matchRetired,
+                        match.matchId
                     )
                 )
             }
@@ -94,16 +102,12 @@ class UserRecordFragment(val id: String) : Fragment() {
     }
 
     private fun getGameTypeWithFirebase(typeName: String): String {
-        val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
-        database.addValueEventListener(object : ValueEventListener {
+        database.child(typeName).child("id").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
-                    val id = postSnapshot.child("id").getValue(String::class.java)
-                    val name = postSnapshot.child("name").getValue(String::class.java)
-                    if (typeName == name) {
+                    val id = postSnapshot.getValue(String::class.java)
                         typeId = id.toString()
                         return
-                    }
                 }
             }
 

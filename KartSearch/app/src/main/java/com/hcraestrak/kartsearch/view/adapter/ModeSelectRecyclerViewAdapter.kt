@@ -13,10 +13,6 @@ class ModeSelectRecyclerViewAdapter: RecyclerView.Adapter<ModeSelectRecyclerView
     private lateinit var mListener: OnItemClickListener
     private var mode: String = ""
 
-    interface OnItemClickListener {
-        fun onClick(id: Int)
-    }
-
     fun setOnItemClickListener(listener: (Int) -> Unit) {
         mListener = object : OnItemClickListener {
             override fun onClick(id: Int) {

@@ -26,12 +26,26 @@ import java.io.IOException
 class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdapter.ViewHolder>() {
 
     private val data = mutableListOf<UserInfoData>()
+    private var matchId: String = ""
+    private var isWin: Int = 0 // 0 : Lose, 1 : Win
+    private lateinit var mListener: OnItemClickListener
+
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        mListener = object : OnItemClickListener {
+            override fun onClick(id: Int) {
+                listener(id)
+            }
+        }
+    }
 
     fun setData(data: List<UserInfoData>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
     }
+
+    fun getMatchId() = matchId
+    fun getIsWin() = isWin
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val rank: TextView = view.findViewById(R.id.item_rank)
@@ -124,6 +138,12 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
+
+        holder.itemView.setOnClickListener {
+            matchId = data[position].matchId
+            isWin = data[position].isWin.toInt()
+            mListener.onClick(1)
+        }
     }
 
     override fun getItemCount() = data.size
