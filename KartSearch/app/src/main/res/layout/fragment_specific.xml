@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.SpecificFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/specific_outcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="승리" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/outcome_color"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            tools:background="@color/light_blue"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        
+        <ImageView
+            android:id="@+id/map_img"
+            android:layout_width="187dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="20dp"
+            tools:src="@color/light_blue"
+            app:layout_constraintTop_toBottomOf="@id/outcome_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/map_name"
+            app:layout_constraintStart_toStartOf="@id/map_img"
+            app:layout_constraintTop_toBottomOf="@id/map_img"
+            android:layout_marginTop="10dp"
+            tools:text="빌리지 고가의 질주"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/gameType"
+            app:layout_constraintStart_toEndOf="@id/map_name"
+            app:layout_constraintTop_toTopOf="@id/map_name"
+            app:layout_constraintBottom_toBottomOf="@id/map_name"
+            tools:text="스피드 팀전"
+            android:textColor="@color/gray"
+            android:layout_marginStart="10dp"
+            android:textSize="11sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/team_score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/map_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/blue_score"
+                tools:text="Blue 22"
+                android:textColor="@color/light_blue"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text=" vs "
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textSize="18sp"
+                android:id="@+id/red_score"
+                android:textColor="@color/red"
+                tools:text="14 Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/match_rank_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="30dp"
+            tools:listitem="@layout/item_rank"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/map_name"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

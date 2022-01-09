@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_informationFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_informationFragment_to_specificFragment"
+            app:destination="@id/specificFragment" />
     </fragment>
     <fragment
         android:id="@+id/errorFragment"
@@ -46,5 +49,16 @@
         <action
             android:id="@+id/action_errorFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specificFragment"
+        android:name="com.hcraestrak.kartsearch.view.fragment.SpecificFragment"
+        android:label="fragment_specific"
+        tools:layout="@layout/fragment_specific" >
+        <argument android:name="matchId"
+            app:argType="string" />
+        <argument
+            android:name="isWin"
+            app:argType="integer" />
     </fragment>
 </navigation>
