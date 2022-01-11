@@ -1,10 +1,9 @@
-package com.hcraestrak.kartsearch.model.viewModel
+package com.hcraestrak.kartsearch.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hcraestrak.kartsearch.model.network.PreferenceUtils
 import com.hcraestrak.kartsearch.model.network.RetrofitService
 import com.hcraestrak.kartsearch.model.network.dao.UserService
 import com.hcraestrak.kartsearch.model.network.data.response.UserInfo
