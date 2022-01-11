@@ -17,8 +17,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
-import com.hcraestrak.kartsearch.model.viewModel.UserInfoViewModel
-import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
+import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
+import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
@@ -102,12 +102,15 @@ class UserRecordFragment(val id: String) : Fragment() {
     }
 
     private fun getGameTypeWithFirebase(typeName: String): String {
-        database.child(typeName).child("id").addValueEventListener(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
-                    val id = postSnapshot.getValue(String::class.java)
+                    val id = postSnapshot.child("id").getValue(String::class.java)
+                    val name = postSnapshot.child("name").getValue(String::class.java)
+                    if (typeName == name) {
                         typeId = id.toString()
                         return
+                    }
                 }
             }
 
