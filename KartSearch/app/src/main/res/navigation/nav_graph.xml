@@ -60,5 +60,8 @@
         <argument
             android:name="isWin"
             app:argType="integer" />
+        <argument
+            android:name="isTeamMatch"
+            app:argType="boolean" />
     </fragment>
 </navigation>

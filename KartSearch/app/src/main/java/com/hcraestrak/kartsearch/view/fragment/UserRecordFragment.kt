@@ -31,6 +31,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private val matchViewModel: MatchViewModel by viewModels()
     private val viewModel: UserInfoViewModel by activityViewModels()
     private var typeId: String = ""
+    private var isTeamMatch = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,9 +59,13 @@ class UserRecordFragment(val id: String) : Fragment() {
     private fun modeObserve() {
         viewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
-            binding.userRecordTitle.text = it + "전적"
+            binding.userRecordTitle.text = it + " 전적"
             setData(it)
         })
+    }
+
+    private fun isTeamMatch(gameType: String) {
+        isTeamMatch = gameType.contains("팀전")
     }
 
     private fun initRecyclerView() {
@@ -75,7 +80,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         recyclerAdapter.setOnItemClickListener {
             val matchId: String = recyclerAdapter.getMatchId()
             val isWin: Int = recyclerAdapter.getIsWin()
-            findNavController().navigate(InformationFragmentDirections.actionInformationFragmentToSpecificFragment(matchId, isWin))
+            findNavController().navigate(InformationFragmentDirections.actionInformationFragmentToSpecificFragment(matchId, isWin, isTeamMatch))
         }
     }
 
