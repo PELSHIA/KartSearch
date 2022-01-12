@@ -133,6 +133,7 @@ class SpecificFragment : Fragment() {
                     )
                 )
             }
+            dataList.sortBy { it.rank }
             recyclerViewAdapter.setData(dataList)
         })
     }
@@ -159,6 +160,7 @@ class SpecificFragment : Fragment() {
                     )
                 }
             }
+            dataList.sortBy { it.rank }
             recyclerViewAdapter.setData(dataList)
         })
     }
