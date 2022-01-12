@@ -30,6 +30,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val matchViewModel: MatchViewModel by viewModels()
     private val viewModel: UserInfoViewModel by activityViewModels()
+    private var gameType: String = ""
     private var typeId: String = ""
     private var isTeamMatch = false
 
@@ -59,7 +60,9 @@ class UserRecordFragment(val id: String) : Fragment() {
     private fun modeObserve() {
         viewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
+            gameType = it
             binding.userRecordTitle.text = it + " 전적"
+            isTeamMatch(it)
             setData(it)
         })
     }
@@ -80,7 +83,7 @@ class UserRecordFragment(val id: String) : Fragment() {
         recyclerAdapter.setOnItemClickListener {
             val matchId: String = recyclerAdapter.getMatchId()
             val isWin: Int = recyclerAdapter.getIsWin()
-            findNavController().navigate(InformationFragmentDirections.actionInformationFragmentToSpecificFragment(matchId, isWin, isTeamMatch))
+            findNavController().navigate(InformationFragmentDirections.actionInformationFragmentToSpecificFragment(matchId, isWin, isTeamMatch, gameType))
         }
     }
 

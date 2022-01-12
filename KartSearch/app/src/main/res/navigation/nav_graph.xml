@@ -63,5 +63,8 @@
         <argument
             android:name="isTeamMatch"
             app:argType="boolean" />
+        <argument
+            android:name="gameType"
+            app:argType="string" />
     </fragment>
 </navigation>
