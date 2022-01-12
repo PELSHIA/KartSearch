@@ -2,16 +2,24 @@ package com.hcraestrak.kartsearch.view.fragment
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentSpecificBinding
@@ -44,6 +52,7 @@ class SpecificFragment : Fragment() {
     }
 
     private fun bindingView() {
+        binding.gameType.text = args.gameType
         if (args.isWin == 0) {
             bindingLose()
         } else {
@@ -84,12 +93,33 @@ class SpecificFragment : Fragment() {
         }
     }
 
+    private fun getTrackName(trackId: String) {
+        val database: DatabaseReference = Firebase.database("https://kartmap.firebaseio.com/").reference
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children) {
+                    val id = postSnapshot.child("id").getValue(String::class.java)
+                    val name = postSnapshot.child("name").getValue(String::class.java).toString()
+                    if (id == trackId) {
+                        binding.mapName.text = name
+                        break
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("error", "${error.code}: ${error.message}")
+            }
+        })
+    }
+
     private fun setSingleData() {
         val dataList = mutableListOf<RankData>()
         viewModel.specificMatchInquiry(args.matchId)
-        viewModel.matchDetailObserver().observe(viewLifecycleOwner, {
-            getTrackImage(it.trackId)
-            for (player in it.players) {
+        viewModel.matchDetailObserver().observe(viewLifecycleOwner, { match ->
+            getTrackImage(match.trackId)
+            getTrackName(match.trackId)
+            for (player in match.players) {
                 dataList.add(
                     RankData(
                         player.matchRank,
@@ -110,8 +140,10 @@ class SpecificFragment : Fragment() {
     private fun setTeamData() {
         val dataList = mutableListOf<RankData>()
         viewModel.specificTeamMatchInquiry(args.matchId)
-        viewModel.matchTeamDetailObserver().observe(viewLifecycleOwner, {
-            for (team in it.teams) {
+        viewModel.matchTeamDetailObserver().observe(viewLifecycleOwner, { match ->
+            getTrackImage(match.trackId)
+            getTrackName(match.trackId)
+            for (team in match.teams) {
                 for (player in team.players) {
                     dataList.add(
                         RankData(
