@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
-import com.hcraestrak.kartsearch.model.viewModel.MatchViewModel
+import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
 import java.io.File
 import java.io.IOException

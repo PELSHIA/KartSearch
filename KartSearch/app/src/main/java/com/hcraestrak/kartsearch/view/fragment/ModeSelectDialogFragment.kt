@@ -1,7 +1,6 @@
 package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentModeSelectDialogBinding
-import com.hcraestrak.kartsearch.model.viewModel.UserInfoViewModel
+import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
 import com.hcraestrak.kartsearch.view.adapter.ModeSelectRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ModeSelectDialogFragment : DialogFragment() {
 

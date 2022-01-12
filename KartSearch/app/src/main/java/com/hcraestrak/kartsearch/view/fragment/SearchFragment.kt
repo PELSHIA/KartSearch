@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hcraestrak.kartsearch.databinding.FragmentSearchBinding
-import com.hcraestrak.kartsearch.model.viewModel.UserViewModel
+import com.hcraestrak.kartsearch.viewModel.UserViewModel
 
 class SearchFragment : Fragment() {
 
