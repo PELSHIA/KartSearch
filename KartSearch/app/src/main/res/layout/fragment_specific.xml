@@ -108,6 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
             android:layout_marginHorizontal="30dp"
+            android:overScrollMode="never"
             tools:listitem="@layout/item_rank"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
