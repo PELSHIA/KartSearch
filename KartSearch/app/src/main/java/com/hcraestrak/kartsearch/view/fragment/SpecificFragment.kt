@@ -36,6 +36,7 @@ class SpecificFragment : Fragment() {
     private lateinit var recyclerViewAdapter: RankRecyclerViewAdapter
     private val viewModel: SpecificViewModel by viewModels()
     private val args: SpecificFragmentArgs by navArgs()
+    private val dataList = mutableListOf<RankData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,7 +87,11 @@ class SpecificFragment : Fragment() {
         }
         if (args.isTeamMatch) {
             setTeamData()
-            binding.teamScoreLayout.visibility = View.VISIBLE
+            if (args.gameType.contains("아이템")) {
+                binding.teamScoreLayout.visibility = View.GONE
+            } else {
+                binding.teamScoreLayout.visibility = View.VISIBLE
+            }
         } else {
             setSingleData()
             binding.teamScoreLayout.visibility = View.GONE
@@ -114,7 +119,6 @@ class SpecificFragment : Fragment() {
     }
 
     private fun setSingleData() {
-        val dataList = mutableListOf<RankData>()
         viewModel.specificMatchInquiry(args.matchId)
         viewModel.matchDetailObserver().observe(viewLifecycleOwner, { match ->
             getTrackImage(match.trackId)
@@ -139,7 +143,6 @@ class SpecificFragment : Fragment() {
     }
 
     private fun setTeamData() {
-        val dataList = mutableListOf<RankData>()
         viewModel.specificTeamMatchInquiry(args.matchId)
         viewModel.matchTeamDetailObserver().observe(viewLifecycleOwner, { match ->
             getTrackImage(match.trackId)
@@ -161,8 +164,31 @@ class SpecificFragment : Fragment() {
                 }
             }
             dataList.sortBy { it.rank }
+            setTeamScore()
             recyclerViewAdapter.setData(dataList)
         })
+    }
+
+    private fun setTeamScore() {
+        var rank = 1
+        var blueScore = 0 // 2
+        var redScore = 0 // 1
+        val scoreList = listOf<Int>(10, 8, 6, 5, 4, 3, 2, 1) // 팀전 점수
+        dataList.forEach {
+            if (it.isRetire == "0") {
+                if (it.teamId == "1") {
+                    redScore += scoreList[rank - 1]
+                    rank++
+                } else if (it.teamId == "2") {
+                    blueScore += scoreList[rank - 1]
+                    rank++
+                }
+            } else {
+                rank++
+            }
+        }
+        binding.blueScore.text = "Blue " + blueScore.toString()
+        binding.redScore.text = redScore.toString() + " Red"
     }
 
     private fun bindingWin() {
