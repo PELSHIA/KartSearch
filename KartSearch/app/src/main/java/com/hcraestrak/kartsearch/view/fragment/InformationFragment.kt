@@ -55,7 +55,7 @@ class InformationFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_informationFragment_to_searchFragment)
+            findNavController().popBackStack()
         }
     }
 
