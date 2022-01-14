@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -83,7 +84,7 @@ class SpecificFragment : Fragment() {
             storageReference.getFile(localFile)
                 .addOnSuccessListener {
                     val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    Glide.with(requireContext()).load(bitmap).into(binding.mapImg)
+                    Glide.with(binding.mapImg.context).load(bitmap).into(binding.mapImg)
                 }.addOnFailureListener{
                     Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
                 }
