@@ -44,14 +44,17 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
 
             getImage(data.kart)
             setTextColor(data.teamId, data.isWin)
-
         }
 
-        private fun setTextColor(isSameTeam: String, isWin: String){
-            if (isSameTeam == "1" && isWin == "1") {
+        private fun setTextColor(teamId: String, isWin: String){
+            if (teamId == "2") {
                 rank.setTextColor(Color.parseColor("#7CA8FF"))
-            } else if (isSameTeam == "1" && isWin == "0") {
+            } else if (teamId == "1") {
                 rank.setTextColor(Color.parseColor("#FF8484"))
+            }
+
+            if (isWin == "1") {
+                nickName.setTextColor(Color.parseColor("#7CA8FF"))
             }
         }
 
