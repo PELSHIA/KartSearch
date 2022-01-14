@@ -75,7 +75,7 @@ class InformationFragment : Fragment() {
             storageReference.getFile(localFile)
                 .addOnSuccessListener {
                     val bitmap: Bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    Glide.with(this).load(bitmap).into(view)
+                    Glide.with(view.context).load(bitmap).into(view)
                 }.addOnFailureListener{
                     Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
                 }
