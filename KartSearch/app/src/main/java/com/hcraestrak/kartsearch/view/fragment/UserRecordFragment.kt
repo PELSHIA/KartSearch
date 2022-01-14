@@ -31,7 +31,6 @@ class UserRecordFragment(val id: String) : Fragment() {
     private val matchViewModel: MatchViewModel by viewModels()
     private val viewModel: UserInfoViewModel by activityViewModels()
     private var gameType: String = ""
-    private var typeId: String = ""
     private var isTeamMatch = false
 
     override fun onCreateView(
@@ -87,9 +86,9 @@ class UserRecordFragment(val id: String) : Fragment() {
         }
     }
 
-    private fun setData(type: String) {
+    private fun setRecyclerViewData(gameTypeId: String) {
         val dataList = mutableListOf<UserInfoData>()
-        matchViewModel.accessIdMatchInquiryWithMatchType(id, getGameTypeWithFirebase(type))
+        matchViewModel.accessIdMatchInquiryWithMatchType(id, gameTypeId)
         matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
             for (match in it.matches[0].matches) {
                 dataList.add(
@@ -109,14 +108,14 @@ class UserRecordFragment(val id: String) : Fragment() {
         })
     }
 
-    private fun getGameTypeWithFirebase(typeName: String): String {
+    private fun setData(typeName: String) {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
                     val id = postSnapshot.child("id").getValue(String::class.java)
                     val name = postSnapshot.child("name").getValue(String::class.java)
                     if (typeName == name) {
-                        typeId = id.toString()
+                        setRecyclerViewData(id.toString())
                         return
                     }
                 }
@@ -126,6 +125,5 @@ class UserRecordFragment(val id: String) : Fragment() {
                 Log.d("error", "${error.code}: ${error.message}")
             }
         })
-        return typeId
     }
 }
