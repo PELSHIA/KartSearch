@@ -7,13 +7,18 @@ import com.hcraestrak.kartsearch.model.network.RetrofitService
 import com.hcraestrak.kartsearch.model.network.dao.MatchService
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailPlayer
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailTeam
+import com.hcraestrak.kartsearch.model.repo.SpecificRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class SpecificViewModel: ViewModel() {
+@HiltViewModel
+class SpecificViewModel @Inject constructor(private val repo: SpecificRepository): ViewModel() {
 
-    private val matchService: MatchService by lazy { RetrofitService.matchService }
     private val matchDetail = MutableLiveData<MatchDetailPlayer>()
     private val matchTeamDetail = MutableLiveData<MatchDetailTeam>()
 
@@ -21,42 +26,32 @@ class SpecificViewModel: ViewModel() {
     fun matchTeamDetailObserver() = matchTeamDetail
 
     fun specificMatchInquiry(matchId: String) {
-        matchService.specificMatchInquiry(matchId).enqueue(object: Callback<MatchDetailPlayer>{
-            override fun onResponse(
-                call: Call<MatchDetailPlayer>,
-                response: Response<MatchDetailPlayer>
-            ) {
+        repo.specificMatchInquiry(matchId).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
                 if (response.isSuccessful) {
                     matchDetail.postValue(response.body())
                 } else {
                     matchDetail.postValue(null)
                 }
-            }
-
-            override fun onFailure(call: Call<MatchDetailPlayer>, t: Throwable) {
-                Log.d("Error", t.message.toString())
+            }, {
+                Log.d("Error", it.message.toString())
                 matchDetail.postValue(null)
-            }
-        })
+            })
     }
 
     fun specificTeamMatchInquiry(matchId: String) {
-        matchService.specificTeamMatchInquiry(matchId).enqueue(object: Callback<MatchDetailTeam> {
-            override fun onResponse(
-                call: Call<MatchDetailTeam>,
-                response: Response<MatchDetailTeam>
-            ) {
+        repo.specificTeamMatchInquiry(matchId).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
                 if (response.isSuccessful) {
                     matchTeamDetail.postValue(response.body())
                 } else {
                     matchTeamDetail.postValue(null)
                 }
-            }
-
-            override fun onFailure(call: Call<MatchDetailTeam>, t: Throwable) {
-                Log.d("Error", t.message.toString())
+            }, {
+                Log.d("Error", it.message.toString())
                 matchTeamDetail.postValue(null)
-            }
-        })
+            })
     }
 }

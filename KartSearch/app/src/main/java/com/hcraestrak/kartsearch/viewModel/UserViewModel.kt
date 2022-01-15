@@ -7,13 +7,18 @@ import androidx.lifecycle.ViewModel
 import com.hcraestrak.kartsearch.model.network.RetrofitService
 import com.hcraestrak.kartsearch.model.network.dao.UserService
 import com.hcraestrak.kartsearch.model.network.data.response.UserInfo
+import com.hcraestrak.kartsearch.model.repo.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class UserViewModel: ViewModel() {
+@HiltViewModel
+class UserViewModel @Inject constructor(private val repo: UserRepository): ViewModel() {
 
-    private val userService: UserService by lazy { RetrofitService.userService }
     private val userInfoLiveData = MutableLiveData<UserInfo>()
 
     fun getObserver() : LiveData<UserInfo> {
@@ -21,35 +26,15 @@ class UserViewModel: ViewModel() {
     }
 
     fun getAccessId(nickName: String) {
-        userService.nickNameInquiry(nickName).enqueue(object: Callback<UserInfo> {
-            override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
-                Log.d("getAccessId : ",  "${response.code()} ${response.message()}: ${response.body()}")
+        repo.getAccessId(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
                 if (response.isSuccessful) {
                     userInfoLiveData.postValue(response.body())
                 } else {
-                    userInfoLiveData.postValue(null )
+                    userInfoLiveData.postValue(null)
                 }
-            }
-
-            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
-                userInfoLiveData.postValue(null)
-            }
-        })
-    }
-
-    fun getDataByAccessId(access_Id: String) {
-          userService.accessIdInquiry(access_Id).enqueue(object: Callback<UserInfo> {
-              override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
-                  if (response.isSuccessful) {
-                      userInfoLiveData.postValue(response.body())
-                  } else {
-                      userInfoLiveData.postValue(null)
-                  }
-              }
-
-              override fun onFailure(call: Call<UserInfo>, t: Throwable) {
-                  userInfoLiveData.postValue(null)
-              }
-          })
+            }, {
+                Log.d("Error", "${it.message}}")
+            })
     }
 }
