@@ -44,11 +44,20 @@ class SearchFragment : Fragment() {
                         findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToErrorFragment())
                     } else {
                         setSearchData(it.name)
-                        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToInformationFragment(it.accessId))
+                        findNavController().navigate(
+                            SearchFragmentDirections.actionSearchFragmentToInformationFragment(
+                                it.accessId
+                            )
+                        )
                     }
                 })
             }
             false
+        }
+
+        binding.allDelete.setOnClickListener {
+            deleteAllSearchData()
+            recyclerViewAdapter.notifyDataSetChanged()
         }
     }
 
