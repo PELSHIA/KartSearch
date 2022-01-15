@@ -29,9 +29,11 @@ import com.hcraestrak.kartsearch.view.adapter.RankRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.RankData
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import com.hcraestrak.kartsearch.viewModel.SpecificViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 
+@AndroidEntryPoint
 class SpecificFragment : Fragment() {
 
     private lateinit var binding: FragmentSpecificBinding

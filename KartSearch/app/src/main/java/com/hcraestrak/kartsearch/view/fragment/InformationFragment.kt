@@ -17,13 +17,14 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 
+@AndroidEntryPoint
 class InformationFragment : Fragment() {
 
     private lateinit var binding: FragmentInformationBinding
@@ -60,7 +61,7 @@ class InformationFragment : Fragment() {
     }
 
     private fun searchData() {
-        viewModel.accessIdMatchInquiryWithMatchType(args.accessId, "")
+        viewModel.accessIdMatchInquiry(args.accessId, "")
         viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, { match ->
             binding.userNickName.text = match.nickName
             getImage("character", match.matches[0].matches[0].character, binding.userProfileImg) // 대표 캐릭터 이미지

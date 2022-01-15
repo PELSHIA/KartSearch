@@ -22,7 +22,9 @@ import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserRecordFragment(val id: String) : Fragment() {
 
     private lateinit var binding: FragmentUserRecordBinding
@@ -45,7 +47,15 @@ class UserRecordFragment(val id: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         modeSelect()
         initRecyclerView()
+        initMode()
         modeObserve()
+    }
+
+    private fun initMode() {
+        gameType = "스피드 개인전"
+        binding.userRecordTitle.text = gameType + " 전적"
+        isTeamMatch(gameType)
+        setData(gameType)
     }
 
     private fun modeSelect() {
@@ -88,7 +98,7 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private fun setRecyclerViewData(gameTypeId: String) {
         val dataList = mutableListOf<UserInfoData>()
-        matchViewModel.accessIdMatchInquiryWithMatchType(id, gameTypeId)
+        matchViewModel.accessIdMatchInquiry(id, gameTypeId)
         matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
             for (match in it.matches[0].matches) {
                 dataList.add(
