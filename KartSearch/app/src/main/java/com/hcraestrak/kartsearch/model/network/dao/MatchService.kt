@@ -3,7 +3,9 @@ package com.hcraestrak.kartsearch.model.network.dao
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailPlayer
 import com.hcraestrak.kartsearch.model.network.data.response.MatchDetailTeam
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -17,7 +19,7 @@ interface MatchService {
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
         @Query("match_types") match_types: String
-    ): Call<Match>
+    ): Single<Response<Match>>
 
     @GET("/kart/v1.0/matches")
     fun allMatchInquiry(
@@ -26,12 +28,12 @@ interface MatchService {
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
         @Query("match_types") match_types: String? = null
-    ): Call<Match>
+    ): Single<Response<Match>>
 
     @GET("/kart/v1.0/matches/{match_id}")
-    fun specificMatchInquiry(@Path("match_id") match_id: String): Call<MatchDetailPlayer>
+    fun specificMatchInquiry(@Path("match_id") match_id: String): Single<Response<MatchDetailPlayer>>
 
     @GET("/kart/v1.0/matches/{match_id}")
-    fun specificTeamMatchInquiry(@Path("match_id") match_id: String): Call<MatchDetailTeam>
+    fun specificTeamMatchInquiry(@Path("match_id") match_id: String): Single<Response<MatchDetailTeam>>
 
 }
