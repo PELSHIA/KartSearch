@@ -19,6 +19,18 @@ import java.io.IOException
 class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.ViewHolder>() {
 
     private val dataSet = mutableListOf<RankData>()
+    private var nickName: String = ""
+    private lateinit var mListener: OnItemClickListener
+
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        mListener = object : OnItemClickListener {
+            override fun onClick(id: Int) {
+                listener(id)
+            }
+        }
+    }
+
+    fun getNickName() = nickName
 
     fun setData(data: List<RankData>) {
         dataSet.clear()
@@ -29,7 +41,7 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val rank: TextView = view.findViewById(R.id.item_rank)
         private val kart: ImageView = view.findViewById(R.id.item_rank_kart_img)
-        private val nickName: TextView = view.findViewById(R.id.item_rank_nickName)
+        val nickName: TextView = view.findViewById(R.id.item_rank_nickName)
         private val time: TextView = view.findViewById(R.id.item_rank_time)
 
         fun bind(data: RankData) {
@@ -95,6 +107,11 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataSet[position])
+
+        holder.nickName.setOnClickListener {
+            nickName = dataSet[position].nickName
+            mListener.onClick(1)
+        }
     }
 
     override fun getItemCount() = dataSet.size

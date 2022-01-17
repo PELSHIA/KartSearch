@@ -28,7 +28,9 @@ import com.hcraestrak.kartsearch.databinding.FragmentSpecificBinding
 import com.hcraestrak.kartsearch.view.adapter.RankRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.RankData
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
+import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.SpecificViewModel
+import com.hcraestrak.kartsearch.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -39,6 +41,7 @@ class SpecificFragment : Fragment() {
     private lateinit var binding: FragmentSpecificBinding
     private lateinit var recyclerViewAdapter: RankRecyclerViewAdapter
     private val viewModel: SpecificViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private val args: SpecificFragmentArgs by navArgs()
     private val dataList = mutableListOf<RankData>()
 
@@ -113,6 +116,19 @@ class SpecificFragment : Fragment() {
         } else {
             setSingleData()
             binding.teamScoreLayout.visibility = View.GONE
+        }
+
+        recyclerViewAdapter.setOnItemClickListener {
+            if (it == 1) {
+                userViewModel.getAccessId(recyclerViewAdapter.getNickName())
+                userViewModel.getObserver().observe(viewLifecycleOwner, { userInfo ->
+                    if (userInfo != null) {
+                        findNavController().navigate(SpecificFragmentDirections.actionSpecificFragmentToInformationFragment(userInfo.accessId))
+                    } else {
+                        findNavController().navigate(SpecificFragmentDirections.actionSpecificFragmentToErrorFragment())
+                    }
+                })
+            }
         }
     }
 

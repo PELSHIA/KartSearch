@@ -37,7 +37,7 @@ class ErrorFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_errorFragment_to_searchFragment)
+            findNavController().popBackStack()
         }
     }
 }
