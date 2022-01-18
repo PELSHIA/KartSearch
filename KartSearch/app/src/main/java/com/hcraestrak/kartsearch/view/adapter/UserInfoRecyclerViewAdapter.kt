@@ -20,6 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
+import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 import java.io.File
 import java.io.IOException
 

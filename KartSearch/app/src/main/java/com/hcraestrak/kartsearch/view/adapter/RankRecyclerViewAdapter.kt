@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.view.adapter.data.RankData
+import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 import java.io.File
 import java.io.IOException
 

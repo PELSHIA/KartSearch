@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hcraestrak.kartsearch.R
+import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 
 class ModeSelectRecyclerViewAdapter: RecyclerView.Adapter<ModeSelectRecyclerViewAdapter.ViewHolder>() {
 
