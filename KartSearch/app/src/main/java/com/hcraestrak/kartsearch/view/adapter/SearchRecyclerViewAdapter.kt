@@ -48,14 +48,15 @@ class SearchRecyclerViewAdapter: RecyclerView.Adapter<SearchRecyclerViewAdapter.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataSet[position])
+
         holder.delete.setOnClickListener {
-            mListener.onClick(1)
             word = dataSet[position].word
+            mListener.onClick(1)
         }
 
         holder.searches.setOnClickListener {
-            mListener.onClick(2)
             word = dataSet[position].word
+            mListener.onClick(2)
         }
     }
 

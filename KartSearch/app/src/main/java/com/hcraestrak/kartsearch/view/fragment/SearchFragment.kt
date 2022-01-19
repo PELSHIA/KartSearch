@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hcraestrak.kartsearch.databinding.FragmentSearchBinding
 import com.hcraestrak.kartsearch.model.db.entity.Search
+import com.hcraestrak.kartsearch.model.network.data.response.UserInfo
 import com.hcraestrak.kartsearch.view.adapter.SearchRecyclerViewAdapter
 import com.hcraestrak.kartsearch.viewModel.SearchViewModel
 import com.hcraestrak.kartsearch.viewModel.UserViewModel
@@ -34,27 +35,41 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initRecyclerView()
+        search()
+        deleteAll()
+    }
+
+    private fun search() {
         binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.getAccessId(binding.searchEditText.text.toString())
-                viewModel.getObserver().observe(viewLifecycleOwner, {
-                    if (it == null) {
-                        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToErrorFragment())
-                    } else {
-                        setSearchData(it.name)
-                        findNavController().navigate(
-                            SearchFragmentDirections.actionSearchFragmentToInformationFragment(
-                                it.accessId
-                            )
-                        )
-                    }
-                })
+                getSearch(binding.searchEditText.text.toString())
             }
             false
         }
+    }
 
+    private fun getSearch(nickName: String) {
+        viewModel.getAccessId(nickName)
+        viewModel.getObserver().observe(viewLifecycleOwner, {
+            navigate(it)
+        })
+    }
+
+    private fun navigate(userInfo: UserInfo?) {
+        if (userInfo == null) {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToErrorFragment())
+        } else {
+            setSearchData(userInfo.name)
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToInformationFragment(
+                    userInfo.accessId
+                )
+            )
+        }
+    }
+
+    private fun deleteAll() {
         binding.allDelete.setOnClickListener {
             deleteAllSearchData()
             recyclerViewAdapter.notifyDataSetChanged()
@@ -73,12 +88,15 @@ class SearchFragment : Fragment() {
         })
 
         recyclerViewAdapter.setOnItemClickListener {
+            val word: String = recyclerViewAdapter.getWord()
             when(it) {
                 1 -> {
-                    deleteSearchData(recyclerViewAdapter.getWord())
+                    deleteSearchData(word)
                     recyclerViewAdapter.notifyDataSetChanged()
                 }
-
+                2 -> {
+                    getSearch(word)
+                }
             }
         }
     }
