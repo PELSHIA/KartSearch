@@ -49,7 +49,12 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
             nickName.text = data.nickName
             if (data.isRetire == "0") {
                 rank.text = data.rank
-                time.text = getTime(data.time.toInt())
+                if (data.time == "") {
+                    time.text = "-"
+                    rank.text = "Re"
+                } else {
+                    time.text = getTime(data.time.toInt())
+                }
             } else {
                 rank.text = "Re"
                 time.text = "-"
