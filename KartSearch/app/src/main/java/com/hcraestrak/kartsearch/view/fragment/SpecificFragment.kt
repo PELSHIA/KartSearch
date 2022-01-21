@@ -160,7 +160,7 @@ class SpecificFragment : Fragment() {
             for (player in match.players) {
                 dataList.add(
                     RankData(
-                        player.matchRank,
+                        isForceQuit(player.matchRank),
                         player.kart,
                         player.characterName,
                         player.matchTime,
@@ -185,7 +185,7 @@ class SpecificFragment : Fragment() {
                 for (player in team.players) {
                     dataList.add(
                         RankData(
-                            player.matchRank,
+                            isForceQuit(player.matchRank),
                             player.kart,
                             player.characterName,
                             player.matchTime,
@@ -201,6 +201,10 @@ class SpecificFragment : Fragment() {
             setTeamScore()
             recyclerViewAdapter.setData(dataList)
         })
+    }
+
+    private fun isForceQuit(rank: String): String {
+        return if (rank == "") "99" else rank
     }
 
     private fun setTeamScore() {
