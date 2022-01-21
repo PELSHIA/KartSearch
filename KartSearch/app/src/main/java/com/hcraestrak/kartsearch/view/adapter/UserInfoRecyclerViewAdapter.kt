@@ -142,7 +142,11 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
 
         holder.itemView.setOnClickListener {
             matchId = data[position].matchId
-            isWin = data[position].isWin.toInt()
+            isWin = if (data[position].isWin == "") {
+                0
+            } else {
+                data[position].isWin.toInt()
+            }
             mListener.onClick(1)
         }
     }
