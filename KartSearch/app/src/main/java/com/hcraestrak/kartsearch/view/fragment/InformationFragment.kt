@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
@@ -78,7 +79,9 @@ class InformationFragment : Fragment() {
                     val bitmap: Bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                     Glide.with(view.context).load(bitmap).into(view)
                 }.addOnFailureListener{
-                    Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
+                    if (type == "character") {
+                        Glide.with(view.context).load(R.drawable.unknowncharacter).into(view)
+                    }
                 }
         } catch (e: IOException) {
             e.printStackTrace()

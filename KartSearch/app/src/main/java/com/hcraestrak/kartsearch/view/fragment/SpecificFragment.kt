@@ -91,7 +91,7 @@ class SpecificFragment : Fragment() {
                     val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                     Glide.with(binding.mapImg.context).load(bitmap).into(binding.mapImg)
                 }.addOnFailureListener{
-                    Toast.makeText(requireContext(), "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
+                    Glide.with(binding.mapImg.context).load(R.drawable.unknowntrack).into(binding.mapImg)
                 }
         } catch (e: IOException) {
             e.printStackTrace()

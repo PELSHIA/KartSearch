@@ -92,7 +92,7 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                         val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                         Glide.with(itemView.context).load(bitmap).into(kart)
                     }.addOnFailureListener{
-                        Toast.makeText(itemView.context, "사진 가져오기에 실패했습니다.", Toast.LENGTH_LONG).show()
+                        Glide.with(itemView.context).load(R.drawable.unknownkart).into(kart)
                     }
             } catch (e: IOException) {
                 e.printStackTrace()
