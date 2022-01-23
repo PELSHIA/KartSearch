@@ -55,32 +55,34 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
         val time: TextView = view.findViewById(R.id.item_time)
 
         fun bind(data: UserInfoData) {
-            when (data.isWin) {
-                "0" -> {
-                    itemView.setBackgroundResource(R.drawable.background_lose)
-                    rank.setTextColor(Color.parseColor("#FF8484"))
+                Log.d("UserInfoData", data.toString())
+            if (data.isRetired == "0" && data.time != "" && data.userRank != "") {
+                rank.text = "${data.userRank}/${data.playerCount}"
+                time.text = getTime(data.time.toInt())
+                when (data.isWin) {
+                    "0" -> {
+                        itemView.setBackgroundResource(R.drawable.background_lose)
+                        rank.setTextColor(Color.parseColor("#FF8484"))
+                    }
+                    "1" -> {
+                        itemView.setBackgroundResource(R.drawable.background_win)
+                        rank.setTextColor(Color.parseColor("#7CA8FF"))
+                    }
+                    else -> {
+                        data.isRetired = "1"
+                    }
                 }
-                "1" -> {
-                    itemView.setBackgroundResource(R.drawable.background_win)
-                    rank.setTextColor(Color.parseColor("#7CA8FF"))
-                }
-                else -> {
-                    data.isRetired = "1"
-                }
-            }
-            when (data.isRetired) {
-                "0" -> {
-                    rank.text = "${data.userRank}/${data.playerCount}"
-                    time.text = getTime(data.time.toInt())
-                }
-                "1" -> {
-                    rank.text = "Re"
-                    time.text = "-"
-                    itemView.setBackgroundResource(R.drawable.background_none)
-                }
+            } else if (data.isRetired == "1" || data.isRetired == "" || data.time != "" && data.userRank != "") {
+                retire()
             }
             getImage(data.kart)
             getTrackName(data.track, map)
+        }
+
+        private fun retire() {
+            rank.text = "Re"
+            time.text = "-"
+            itemView.setBackgroundResource(R.drawable.background_none)
         }
 
         private fun getImage(kartId: String) {
