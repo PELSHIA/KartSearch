@@ -100,21 +100,28 @@ class UserRecordFragment(val id: String) : Fragment() {
         val dataList = mutableListOf<UserInfoData>()
         matchViewModel.accessIdMatchInquiry(id, gameTypeId)
         matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
-            for (match in it.matches[0].matches) {
-                dataList.add(
-                    UserInfoData(
-                        match.playerCount,
-                        match.player.matchRank,
-                        match.player.kart,
-                        match.trackId,
-                        match.player.matchTime,
-                        match.player.matchWin,
-                        match.player.matchRetired,
-                        match.matchId
+            if (it.matches.isNotEmpty()){
+                binding.userRecordNone.visibility = View.GONE
+                binding.userInfoRecyclerView.visibility = View.VISIBLE
+                for (match in it.matches[0].matches) {
+                    dataList.add(
+                        UserInfoData(
+                            match.playerCount,
+                            match.player.matchRank,
+                            match.player.kart,
+                            match.trackId,
+                            match.player.matchTime,
+                            match.player.matchWin,
+                            match.player.matchRetired,
+                            match.matchId
+                        )
                     )
-                )
+                }
+                recyclerAdapter.setData(dataList)
+            } else {
+                binding.userInfoRecyclerView.visibility = View.GONE
+                binding.userRecordNone.visibility = View.VISIBLE
             }
-            recyclerAdapter.setData(dataList)
         })
     }
 
