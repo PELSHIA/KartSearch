@@ -84,7 +84,8 @@ class SearchFragment : Fragment() {
         }
         searchViewModel.getAllWord()
         searchViewModel.searchWordObserver().observe(viewLifecycleOwner, {
-            recyclerViewAdapter.setData(it)
+            val list = it.reversed()
+            recyclerViewAdapter.setData(list)
         })
 
         recyclerViewAdapter.setOnItemClickListener {
