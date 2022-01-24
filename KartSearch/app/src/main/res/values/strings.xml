@@ -7,4 +7,7 @@
     <string name="NexonDevelopers">Data based on NEXON DEVELOPERS</string>
     <string name="single">개인전</string>
     <string name="team">팀전</string>
+    <string name="win_stat">승률</string>
+    <string name="completion_stat">완주/리타율</string>
+    <string name="track_stat">트랙 통계</string>
 </resources>
