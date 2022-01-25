@@ -7,7 +7,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class UserInfoViewModel: ViewModel() {
+class ModeViewModel: ViewModel() {
 
     val mode = MutableLiveData<String>()
 

@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
-import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
+import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
@@ -31,7 +31,7 @@ class UserRecordFragment(val id: String) : Fragment() {
     private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val matchViewModel: MatchViewModel by viewModels()
-    private val viewModel: UserInfoViewModel by activityViewModels()
+    private val viewModel: ModeViewModel by activityViewModels()
     private var gameType: String = ""
     private var isTeamMatch = false
 

@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentModeSelectDialogBinding
-import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
+import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.view.adapter.ModeSelectRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 
@@ -17,7 +17,7 @@ class ModeSelectDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentModeSelectDialogBinding
     private lateinit var recyclerViewAdapter: ModeSelectRecyclerViewAdapter
-    private val userInfoViewModel: UserInfoViewModel by activityViewModels()
+    private val userInfoViewModel: ModeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
