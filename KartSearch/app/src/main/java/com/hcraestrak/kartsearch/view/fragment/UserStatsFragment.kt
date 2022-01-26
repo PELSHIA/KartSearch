@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -92,16 +91,23 @@ class UserStatsFragment(val id: String) : Fragment() {
     private fun pieChartSetting(data: Match) {
         var win: Int = 0
         var completion: Int = 0
-        data.matches[0].matches.forEach {
+        val rankList: MutableList<Entry> = mutableListOf()
+        data.matches[0].matches.forEachIndexed { index, it ->
             if (it.player.matchWin == "1") {
                 win++
             }
             if (it.player.matchRetired == "0") {
                 completion++
             }
+            if (it.player.matchRank.isNotEmpty()) {
+                if (it.player.matchRank != "99") {
+                    rankList.add(Entry(index.toFloat(), it.player.matchRank.toFloat()))
+                }
+            }
         }
         winChart(win)
         completionChart(completion)
+        rankChart(rankList)
     }
 
     private fun winChart(win: Int) {
@@ -148,6 +154,19 @@ class UserStatsFragment(val id: String) : Fragment() {
             centerText = "$completion%"
             animateY(800, Easing.EaseInOutQuad)
             animate()
+        }
+    }
+
+    private fun rankChart(rankList: MutableList<Entry>) {
+        val lineDataSet: LineDataSet = LineDataSet(rankList, "")
+        val dataSets: MutableList<ILineDataSet> = mutableListOf()
+        dataSets.add(lineDataSet)
+        val lineData: LineData = LineData(dataSets)
+
+        binding.avgRankChart.apply {
+            data = lineData
+            legend.isEnabled = false
+
         }
     }
 }
