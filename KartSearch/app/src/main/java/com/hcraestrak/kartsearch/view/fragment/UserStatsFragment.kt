@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
@@ -20,6 +21,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hcraestrak.kartsearch.databinding.FragmentUserStatsBinding
 import com.hcraestrak.kartsearch.model.network.data.response.Match
+import com.hcraestrak.kartsearch.view.adapter.TrackStatRecyclerViewAdapter
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +33,7 @@ class UserStatsFragment(val id: String) : Fragment() {
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val modeViewModel: ModeViewModel by activityViewModels()
     private val viewModel: MatchViewModel by viewModels()
+    private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
     private var gameTypeId: String = ""
 
     override fun onCreateView(
@@ -167,6 +170,14 @@ class UserStatsFragment(val id: String) : Fragment() {
             data = lineData
             legend.isEnabled = false
 
+        }
+    }
+
+    private fun trackRecyclerView() {
+        binding.trackStatRecyclerView.apply {
+            layoutManager = LinearLayoutManager(binding.trackStatRecyclerView.context)
+            recyclerViewAdapter = TrackStatRecyclerViewAdapter()
+            adapter = recyclerViewAdapter
         }
     }
 }
