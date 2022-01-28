@@ -2,8 +2,8 @@ package com.hcraestrak.kartsearch.view.adapter.data
 
 data class TrackStatData(
     val track: String,
-    val number: String,
-    val win: String,
-    val avg: String,
-    val time: String
+    var number: Int,
+    var win: Int,
+    var avg: Int,
+    var time: Int
 )
