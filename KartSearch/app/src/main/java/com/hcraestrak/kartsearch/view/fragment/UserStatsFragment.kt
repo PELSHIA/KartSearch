@@ -22,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.hcraestrak.kartsearch.databinding.FragmentUserStatsBinding
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.adapter.TrackStatRecyclerViewAdapter
+import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,30 +88,65 @@ class UserStatsFragment(val id: String) : Fragment() {
     private fun getData(typeId: String) {
         viewModel.accessIdMatchInquiry(id, matchType=typeId, limit=100)
         viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
-            pieChartSetting(it)
+            setChartDataSetting(it)
         })
     }
 
-    private fun pieChartSetting(data: Match) {
+    private fun setChartDataSetting(data: Match) {
         var win: Int = 0
         var completion: Int = 0
         val rankList: MutableList<Entry> = mutableListOf()
-        data.matches[0].matches.forEachIndexed { index, it ->
-            if (it.player.matchWin == "1") {
+        val trackList: MutableList<TrackStatData> = mutableListOf()
+        data.matches[0].matches.forEachIndexed { index, match ->
+            val isExistTrack = trackList.any { it.track == match.trackId }
+            if (match.player.matchWin == "1") {
                 win++
             }
-            if (it.player.matchRetired == "0") {
+            if (match.player.matchRetired == "0") {
                 completion++
             }
-            if (it.player.matchRank.isNotEmpty()) {
-                if (it.player.matchRank != "99") {
-                    rankList.add(Entry(index.toFloat(), it.player.matchRank.toFloat()))
+            if (match.player.matchRank.isNotEmpty()) {
+                if (match.player.matchRank != "99") {
+                    rankList.add(Entry(index.toFloat(), match.player.matchRank.toFloat()))
                 }
+            }
+            if (isExistTrack) {
+                val condition = { data:TrackStatData -> data.track == match.trackId }
+                val position = trackList.indexOf(trackList.find(condition))
+                trackList[position].number = trackList[position].number + 1
+                when (match.player.matchRank) {
+                    "99" -> {
+                        trackList[position].avg = trackList[position].avg + 9
+                    }
+                    "" -> {
+                        trackList[position].avg = trackList[position].avg + 9
+                    }
+                    else -> {
+                        trackList[position].avg = trackList[position].avg + match.player.matchRank.toInt()
+                        trackList[position].win = trackList[position].win + 1
+                    }
+                }
+                if (match.player.matchTime != "") {
+                    if (trackList[position].time > match.player.matchTime.toInt()) {
+                        trackList[position].time = match.player.matchTime.toInt()
+                    }
+                }
+            } else {
+                trackList.add(
+                    TrackStatData(
+                        match.trackId,
+                        1,
+                        if (match.player.matchWin == "1") 1 else 0,
+                        if (match.player.matchRank == "99" || match.player.matchRank == "") 9 else match.player.matchRank.toInt(),
+                        if (match.player.matchTime == "") 999999 else match.player.matchTime.toInt()
+                    )
+                )
             }
         }
         winChart(win)
         completionChart(completion)
         rankChart(rankList)
+        trackRecyclerView(trackList)
     }
 
     private fun winChart(win: Int) {
@@ -173,11 +209,12 @@ class UserStatsFragment(val id: String) : Fragment() {
         }
     }
 
-    private fun trackRecyclerView() {
+    private fun trackRecyclerView(list: List<TrackStatData>) {
         binding.trackStatRecyclerView.apply {
             layoutManager = LinearLayoutManager(binding.trackStatRecyclerView.context)
             recyclerViewAdapter = TrackStatRecyclerViewAdapter()
             adapter = recyclerViewAdapter
         }
+        recyclerViewAdapter.setData(list)
     }
 }
