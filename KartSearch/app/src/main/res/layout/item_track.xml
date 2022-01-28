@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/item_track_number"
         tools:text="6"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/item_track_img"
         app:layout_constraintBottom_toBottomOf="@id/item_track_img"
@@ -39,7 +39,7 @@
     <TextView
         android:id="@+id/item_track_win"
         tools:text="55%"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/item_track_img"
         app:layout_constraintBottom_toBottomOf="@id/item_track_img"
@@ -50,7 +50,7 @@
     <TextView
         android:id="@+id/item_track_avg"
         tools:text="6"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/item_track_img"
         app:layout_constraintBottom_toBottomOf="@id/item_track_img"
