@@ -83,6 +83,18 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
                 }
             })
         }
+
+        private fun getTime(time: Int): String {
+            var min: Int = 0
+            var sec: Int = time / 1000
+            val mSec: Int = time % 1000
+            while (sec > 60) {
+                sec -= 60
+                min++
+            }
+
+            return String.format("%02d:%02d.%03d", min, sec, mSec)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
