@@ -33,19 +33,23 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val trackImg: ImageView = view.findViewById(R.id.item_track_img)
+        private val number: TextView = view.findViewById(R.id.item_track_number)
+        private val win: TextView = view.findViewById(R.id.item_track_win)
+        private val avg: TextView = view.findViewById(R.id.item_track_avg)
         val trackName: TextView = view.findViewById(R.id.item_track_name)
-        val number: TextView = view.findViewById(R.id.item_track_name)
-        val win: TextView = view.findViewById(R.id.item_track_win)
-        val avg: TextView = view.findViewById(R.id.item_track_avg)
         val time: TextView = view.findViewById(R.id.item_track_time)
 
         fun bind(data: TrackStatData) {
             getImage(data.track)
             getTrackName(data.track)
-            number.text = data.number
-            win.text = data.win
-            avg.text = data.avg
-            time.text = data.time
+            number.text = data.number.toString() + "회"
+            if (data.win == 0) {
+                win.text = "0%"
+            } else {
+                win.text = (data.number / data.win).toString() + "%"
+            }
+            avg.text = (data.avg / data.number).toString() + "등"
+            time.text = getTime(data.time)
         }
 
         private fun getImage(trackId: String) {
