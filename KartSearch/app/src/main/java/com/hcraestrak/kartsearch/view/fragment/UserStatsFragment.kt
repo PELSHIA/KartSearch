@@ -170,6 +170,7 @@ class UserStatsFragment(val id: String) : Fragment() {
             centerText = "$win%"
             animateY(800, Easing.EaseInOutQuad)
             animate()
+            setTouchEnabled(false)
             invalidate()
         }
 
@@ -195,6 +196,7 @@ class UserStatsFragment(val id: String) : Fragment() {
             centerText = "$completion%"
             animateY(800, Easing.EaseInOutQuad)
             animate()
+            setTouchEnabled(false)
             invalidate()
         }
     }
@@ -208,6 +210,7 @@ class UserStatsFragment(val id: String) : Fragment() {
         binding.avgRankChart.apply {
             data = lineData
             legend.isEnabled = false
+            xAxis.isEnabled = false
             invalidate()
         }
     }

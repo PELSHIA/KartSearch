@@ -29,8 +29,8 @@ object RetrofitService {
 
         }).setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).addInterceptor(loggingInterceptor).build()
-//    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).build()
+//    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).addInterceptor(loggingInterceptor).build()
+    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(TokenInterceptor()).build()
 
 
 
