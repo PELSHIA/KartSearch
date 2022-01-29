@@ -58,7 +58,7 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
                         val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                         Glide.with(itemView.context).load(bitmap).into(trackImg)
                     }.addOnFailureListener{
-                        Glide.with(itemView.context).load(R.drawable.unknownkart).into(trackImg)
+                        Glide.with(itemView.context).load(R.drawable.unknowntrack).into(trackImg)
                     }
             } catch (e: IOException) {
                 e.printStackTrace()
