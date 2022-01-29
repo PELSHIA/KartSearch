@@ -82,8 +82,13 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private fun initRecyclerView() {
         val decoration: RecyclerViewDecoration = RecyclerViewDecoration(40)
+        val recyclerViewLayoutManager = object : LinearLayoutManager(requireContext()) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
         binding.userInfoRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = recyclerViewLayoutManager
             recyclerAdapter = UserInfoRecyclerViewAdapter()
             adapter = recyclerAdapter
             addItemDecoration(decoration)

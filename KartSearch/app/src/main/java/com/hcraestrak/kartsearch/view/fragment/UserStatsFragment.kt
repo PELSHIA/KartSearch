@@ -210,8 +210,13 @@ class UserStatsFragment(val id: String) : Fragment() {
     }
 
     private fun trackRecyclerView(list: List<TrackStatData>) {
+        val recyclerViewLayoutManager = object : LinearLayoutManager(binding.trackStatRecyclerView.context) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
         binding.trackStatRecyclerView.apply {
-            layoutManager = LinearLayoutManager(binding.trackStatRecyclerView.context)
+            layoutManager = recyclerViewLayoutManager
             recyclerViewAdapter = TrackStatRecyclerViewAdapter()
             adapter = recyclerViewAdapter
         }
