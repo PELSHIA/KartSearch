@@ -23,6 +23,7 @@ import com.hcraestrak.kartsearch.databinding.FragmentUserStatsBinding
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.adapter.TrackStatRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
+import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -210,6 +211,7 @@ class UserStatsFragment(val id: String) : Fragment() {
     }
 
     private fun trackRecyclerView(list: List<TrackStatData>) {
+        val decoration: RecyclerViewDecoration = RecyclerViewDecoration(20)
         val recyclerViewLayoutManager = object : LinearLayoutManager(binding.trackStatRecyclerView.context) {
             override fun canScrollVertically(): Boolean {
                 return false
@@ -219,6 +221,7 @@ class UserStatsFragment(val id: String) : Fragment() {
             layoutManager = recyclerViewLayoutManager
             recyclerViewAdapter = TrackStatRecyclerViewAdapter()
             adapter = recyclerViewAdapter
+            addItemDecoration(decoration)
         }
         recyclerViewAdapter.setData(list)
     }
