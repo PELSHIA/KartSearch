@@ -138,7 +138,7 @@ class UserStatsFragment(val id: String) : Fragment() {
                         match.trackId,
                         1,
                         if (match.player.matchWin == "1") 1 else 0,
-                        if (match.player.matchRank == "99" || match.player.matchRank == "") 9 else match.player.matchRank.toInt(),
+                        if (match.player.matchRank == "99" || match.player.matchRank == "") 8 else match.player.matchRank.toInt(),
                         if (match.player.matchTime == "") 999999 else match.player.matchTime.toInt()
                     )
                 )

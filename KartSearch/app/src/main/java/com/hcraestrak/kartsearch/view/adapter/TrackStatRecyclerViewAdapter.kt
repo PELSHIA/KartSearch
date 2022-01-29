@@ -43,7 +43,7 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
             getImage(data.track)
             number.text = data.number.toString() + "회"
             win.text = (data.win.toDouble() / data.number.toDouble() * 100.0).roundToInt().toString() + "%"
-            avg.text = (data.avg / data.number).toString() + "등"
+            avg.text = String.format("%.1f등", data.avg.toDouble() / data.number.toDouble())
             time.text = getTime(data.time)
         }
 
