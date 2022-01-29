@@ -120,5 +120,9 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun getItemCount() = dataSet.size
 }
