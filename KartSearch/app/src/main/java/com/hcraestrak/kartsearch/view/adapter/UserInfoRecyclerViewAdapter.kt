@@ -72,7 +72,7 @@ class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdap
                         data.isRetired = "1"
                     }
                 }
-            } else if (data.isRetired == "1" || data.isRetired == "" || data.time != "" && data.userRank != "") {
+            } else if (data.isRetired == "1" || data.isRetired == "" || data.time == "" || data.userRank == "") {
                 retire()
             }
             getImage(data.kart)
