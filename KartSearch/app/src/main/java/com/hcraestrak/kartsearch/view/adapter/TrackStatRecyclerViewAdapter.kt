@@ -20,6 +20,7 @@ import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import java.io.File
 import java.io.IOException
+import kotlin.math.roundToInt
 
 class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAdapter.ViewHolder>() {
 
@@ -43,11 +44,7 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
             getImage(data.track)
             getTrackName(data.track)
             number.text = data.number.toString() + "회"
-            if (data.win == 0) {
-                win.text = "0%"
-            } else {
-                win.text = (data.number / data.win).toString() + "%"
-            }
+            win.text = (data.win.toDouble() / data.number.toDouble() * 100.0).roundToInt().toString() + "%"
             avg.text = (data.avg / data.number).toString() + "등"
             time.text = getTime(data.time)
         }
