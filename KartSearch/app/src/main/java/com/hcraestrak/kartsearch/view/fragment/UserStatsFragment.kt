@@ -96,6 +96,7 @@ class UserStatsFragment(val id: String) : Fragment() {
     private fun setChartDataSetting(data: Match) {
         var win: Int = 0
         var completion: Int = 0
+        var avg100: Int = 0
         val rankList: MutableList<Entry> = mutableListOf()
         val trackList: MutableList<TrackStatData> = mutableListOf()
         data.matches[0].matches.forEachIndexed { index, match ->
@@ -108,7 +109,10 @@ class UserStatsFragment(val id: String) : Fragment() {
             }
             if (match.player.matchRank.isNotEmpty()) {
                 if (match.player.matchRank != "99") {
+                    avg100 += match.player.matchRank.toInt()
                     rankList.add(Entry(index.toFloat(), match.player.matchRank.toFloat()))
+                } else if (match.player.matchRank == "99" || match.player.matchRank == "") {
+                    avg100 += 8
                 }
             }
             if (isExistTrack) {
@@ -144,6 +148,7 @@ class UserStatsFragment(val id: String) : Fragment() {
                 )
             }
         }
+        binding.avgRank.text = String.format("최근 100경기 평균순위: %.1f등", avg100.toDouble() / 100.0)
         winChart(win)
         completionChart(completion)
         rankChart(rankList)
