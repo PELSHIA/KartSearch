@@ -67,12 +67,15 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
             var min: Int = 0
             var sec: Int = time / 1000
             val mSec: Int = time % 1000
-            while (sec > 60) {
-                sec -= 60
-                min++
+            if (time == 999999) {
+                return "-"
+            } else {
+                while (sec > 60) {
+                    sec -= 60
+                    min++
+                }
+                return String.format("%02d:%02d.%03d", min, sec, mSec)
             }
-
-            return String.format("%02d:%02d.%03d", min, sec, mSec)
         }
     }
 
