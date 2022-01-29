@@ -37,12 +37,10 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
         private val number: TextView = view.findViewById(R.id.item_track_number)
         private val win: TextView = view.findViewById(R.id.item_track_win)
         private val avg: TextView = view.findViewById(R.id.item_track_avg)
-        val trackName: TextView = view.findViewById(R.id.item_track_name)
         val time: TextView = view.findViewById(R.id.item_track_time)
 
         fun bind(data: TrackStatData) {
             getImage(data.track)
-            getTrackName(data.track)
             number.text = data.number.toString() + "회"
             win.text = (data.win.toDouble() / data.number.toDouble() * 100.0).roundToInt().toString() + "%"
             avg.text = (data.avg / data.number).toString() + "등"
@@ -63,26 +61,6 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
-
-        private fun getTrackName(trackId: String) {
-            val database: DatabaseReference = Firebase.database("https://kartmap.firebaseio.com/").reference
-            database.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (postSnapshot in snapshot.children) {
-                        val id = postSnapshot.child("id").getValue(String::class.java)
-                        val name = postSnapshot.child("name").getValue(String::class.java).toString()
-                        if (id == trackId) {
-                            trackName.text = name
-                            break
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("error", "${error.code}: ${error.message}")
-                }
-            })
         }
 
         private fun getTime(time: Int): String {

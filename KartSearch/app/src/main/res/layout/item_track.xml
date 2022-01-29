@@ -15,24 +15,13 @@
         android:layout_height="24dp"/>
 
     <TextView
-        android:id="@+id/item_track_name"
-        android:layout_marginStart="20dp"
-        tools:text="차이나 황산"
+        android:id="@+id/item_track_number"
+        tools:text="6"
+        android:layout_marginStart="30dp"
         android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/item_track_img"
         app:layout_constraintBottom_toBottomOf="@id/item_track_img"
         app:layout_constraintStart_toEndOf="@id/item_track_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/item_track_number"
-        tools:text="6"
-        android:layout_marginStart="10dp"
-        android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="@id/item_track_img"
-        app:layout_constraintBottom_toBottomOf="@id/item_track_img"
-        app:layout_constraintStart_toEndOf="@id/item_track_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
