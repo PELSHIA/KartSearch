@@ -48,6 +48,7 @@ class UserStatsFragment(val id: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initData()
         modeSelect()
         modeObserve()
     }
@@ -58,6 +59,11 @@ class UserStatsFragment(val id: String) : Fragment() {
                 parentFragmentManager, "ModeSelectDialog"
             )
         }
+    }
+
+    private fun initData() {
+        binding.userStatsTitle.text = "스피드 개인전 전적"
+        getGameTypeId("스피드 개인전")
     }
 
     private fun modeObserve() {
