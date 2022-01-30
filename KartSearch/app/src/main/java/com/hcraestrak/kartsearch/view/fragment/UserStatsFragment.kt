@@ -230,6 +230,13 @@ class UserStatsFragment(val id: String) : Fragment() {
             data = lineData
             legend.isEnabled = false
             xAxis.isEnabled = false
+            axisLeft.axisMinimum = 1f
+            axisLeft.axisMaximum = 8f
+            axisRight.apply {
+                setDrawLabels(false)
+                setDrawAxisLine(false)
+                setDrawGridLines(false)
+            }
             invalidate()
         }
     }
