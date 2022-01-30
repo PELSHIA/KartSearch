@@ -125,6 +125,7 @@ class UserStatsFragment(val id: String) : Fragment() {
                     avg100 += match.player.matchRank.toInt()
                     rankList.add(Entry(index.toFloat(), match.player.matchRank.toFloat()))
                 } else if (match.player.matchRank == "99" || match.player.matchRank == "") {
+                    rankList.add(Entry(index.toFloat(), 8f))
                     avg100 += 8
                 }
             }
