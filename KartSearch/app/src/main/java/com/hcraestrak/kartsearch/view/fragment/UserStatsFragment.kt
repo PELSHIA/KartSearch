@@ -95,7 +95,14 @@ class UserStatsFragment(val id: String) : Fragment() {
     private fun getData(typeId: String) {
         viewModel.accessIdMatchInquiry(id, matchType=typeId, limit=100)
         viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
-            setChartDataSetting(it)
+            if (it.matches.isNotEmpty()) {
+                binding.statsLayout.visibility = View.VISIBLE
+                binding.userStatsNone.visibility = View.GONE
+                setChartDataSetting(it)
+            } else {
+                binding.userStatsNone.visibility = View.VISIBLE
+                binding.statsLayout.visibility = View.GONE
+            }
         })
     }
 
