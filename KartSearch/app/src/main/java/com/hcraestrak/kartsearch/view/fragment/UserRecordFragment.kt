@@ -23,6 +23,9 @@ import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class UserRecordFragment(val id: String) : Fragment() {
