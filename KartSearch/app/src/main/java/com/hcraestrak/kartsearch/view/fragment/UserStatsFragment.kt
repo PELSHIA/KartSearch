@@ -19,35 +19,31 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserStatsBinding
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.adapter.TrackStatRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
+import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserStatsFragment(val id: String) : Fragment() {
+class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding, MatchViewModel>(R.layout.fragment_user_stats) {
 
-    private lateinit var binding: FragmentUserStatsBinding
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val modeViewModel: ModeViewModel by activityViewModels()
-    private val viewModel: MatchViewModel by viewModels()
+    override val viewModel: MatchViewModel by viewModels()
     private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
-    private var gameTypeId: String = ""
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserStatsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    var title: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.fragment = this
+
         initData()
         modeSelect()
         modeObserve()
@@ -62,13 +58,13 @@ class UserStatsFragment(val id: String) : Fragment() {
     }
 
     private fun initData() {
-        binding.userStatsTitle.text = "스피드 개인전 전적"
+        title = "스피드 개인전 전적"
         getGameTypeId("스피드 개인전")
     }
 
     private fun modeObserve() {
         modeViewModel.mode.observe(viewLifecycleOwner, {
-            binding.userStatsTitle.text = it + " 전적"
+            title = "$it 전적"
             getGameTypeId(it)
         })
     }

@@ -2,7 +2,6 @@ package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,38 +15,32 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
+import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
-class UserRecordFragment(val id: String) : Fragment() {
+class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBinding, MatchViewModel>(R.layout.fragment_user_record) {
 
-    private lateinit var binding: FragmentUserRecordBinding
     private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
-    private val matchViewModel: MatchViewModel by viewModels()
-    private val viewModel: ModeViewModel by activityViewModels()
+    override val viewModel: MatchViewModel by viewModels()
+    private val modeViewModel: ModeViewModel by activityViewModels()
     private var gameType: String = ""
     private var isTeamMatch = false
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserRecordBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    var title = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.fragment = this
+
         modeSelect()
         initRecyclerView()
         initMode()
@@ -56,7 +49,7 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private fun initMode() {
         gameType = "스피드 개인전"
-        binding.userRecordTitle.text = gameType + " 전적"
+        title = "스피드 개인전 전적"
         isTeamMatch(gameType)
         setData(gameType)
     }
@@ -70,10 +63,10 @@ class UserRecordFragment(val id: String) : Fragment() {
     }
 
     private fun modeObserve() {
-        viewModel.mode.observe(viewLifecycleOwner, {
+        modeViewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
             gameType = it
-            binding.userRecordTitle.text = it + " 전적"
+            title = "$it 전적"
             isTeamMatch(it)
             setData(it)
         })
@@ -106,8 +99,8 @@ class UserRecordFragment(val id: String) : Fragment() {
 
     private fun setRecyclerViewData(gameTypeId: String) {
         val dataList = mutableListOf<UserInfoData>()
-        matchViewModel.accessIdMatchInquiry(id, gameTypeId)
-        matchViewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
+        viewModel.accessIdMatchInquiry(id, gameTypeId)
+        viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
             if (it.matches.isNotEmpty()){
                 binding.userRecordNone.visibility = View.GONE
                 binding.userInfoRecyclerView.visibility = View.VISIBLE
@@ -151,4 +144,5 @@ class UserRecordFragment(val id: String) : Fragment() {
             }
         })
     }
+
 }
