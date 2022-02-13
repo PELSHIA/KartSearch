@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
+import com.hcraestrak.kartsearch.databinding.ItemRankBinding
 import com.hcraestrak.kartsearch.view.adapter.data.RankData
 import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 import java.io.File
@@ -39,82 +40,36 @@ class RankRecyclerViewAdapter: RecyclerView.Adapter<RankRecyclerViewAdapter.View
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        private val rank: TextView = view.findViewById(R.id.item_rank)
-        private val kart: ImageView = view.findViewById(R.id.item_rank_kart_img)
-        val nickName: TextView = view.findViewById(R.id.item_rank_nickName)
-        private val time: TextView = view.findViewById(R.id.item_rank_time)
+    inner class ViewHolder(val binding: ItemRankBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: RankData) {
-            nickName.text = data.nickName
-            if (data.isRetire == "0") {
-                rank.text = data.rank
-                if (data.time == "") {
-                    time.text = "-"
-                    rank.text = "Re"
-                } else {
-                    time.text = getTime(data.time.toInt())
-                }
-            } else {
-                rank.text = "Re"
-                time.text = "-"
-            }
-
-            getImage(data.kart)
+            binding.rank = data
             setTextColor(data.teamId, data.isWin)
         }
 
         private fun setTextColor(teamId: String, isWin: String){
             if (teamId == "2") {
-                rank.setTextColor(Color.parseColor("#7CA8FF"))
+                binding.itemRank.setTextColor(Color.parseColor("#7CA8FF"))
             } else if (teamId == "1") {
-                rank.setTextColor(Color.parseColor("#FF8484"))
+                binding.itemRank.setTextColor(Color.parseColor("#FF8484"))
             }
 
             if (isWin == "1") {
-                nickName.setTextColor(Color.parseColor("#7CA8FF"))
-            }
-        }
-
-        private fun getTime(time: Int): String {
-            var min: Int = 0
-            var sec: Int = time / 1000
-            val mSec: Int = time % 1000
-            while (sec > 60) {
-                sec -= 60
-                min++
-            }
-
-            return String.format("%02d:%02d.%03d", min, sec, mSec)
-        }
-
-        private fun getImage(kartId: String) {
-            val storageReference = FirebaseStorage.getInstance().getReference("/kart/$kartId.png")
-            try {
-                val localFile: File = File.createTempFile("tempfile", ".png")
-                storageReference.getFile(localFile)
-                    .addOnSuccessListener {
-                        val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                        Glide.with(itemView.context).load(bitmap).into(kart)
-                    }.addOnFailureListener{
-                        Glide.with(itemView.context).load(R.drawable.unknownkart).into(kart)
-                    }
-            } catch (e: IOException) {
-                e.printStackTrace()
+                binding.itemRankNickName.setTextColor(Color.parseColor("#7CA8FF"))
             }
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rank, parent, false)
-        return ViewHolder(view)
+        val binding = ItemRankBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataSet[position])
 
-        holder.nickName.setOnClickListener {
+        holder.binding.itemRankNickName.setOnClickListener {
             nickName = dataSet[position].nickName
             mListener.onClick(1)
         }
