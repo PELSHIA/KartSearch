@@ -128,32 +128,32 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
             if (isExistTrack) {
                 val condition = { data:TrackStatData -> data.track == match.trackId }
                 val position = trackList.indexOf(trackList.find(condition))
-                trackList[position].number = trackList[position].number + 1
+                trackList[position].number = (trackList[position].number.toInt() + 1).toString()
                 when (match.player.matchRank) {
                     "99" -> {
-                        trackList[position].avg = trackList[position].avg + 9
+                        trackList[position].avg = (trackList[position].avg.toInt()+ 9).toString()
                     }
                     "" -> {
-                        trackList[position].avg = trackList[position].avg + 9
+                        trackList[position].avg = (trackList[position].avg.toInt() + 9).toString()
                     }
                     else -> {
-                        trackList[position].avg = trackList[position].avg + match.player.matchRank.toInt()
-                        trackList[position].win = trackList[position].win + 1
+                        trackList[position].avg = (trackList[position].avg.toInt() + match.player.matchRank.toInt()).toString()
+                        trackList[position].win = (trackList[position].win.toInt() + 1).toString()
                     }
                 }
                 if (match.player.matchTime != "") {
-                    if (trackList[position].time > match.player.matchTime.toInt()) {
-                        trackList[position].time = match.player.matchTime.toInt()
+                    if (trackList[position].time > match.player.matchTime) {
+                        trackList[position].time = match.player.matchTime
                     }
                 }
             } else {
                 trackList.add(
                     TrackStatData(
                         match.trackId,
-                        1,
-                        if (match.player.matchWin == "1") 1 else 0,
-                        if (match.player.matchRank == "99" || match.player.matchRank == "") 8 else match.player.matchRank.toInt(),
-                        if (match.player.matchTime == "") 999999 else match.player.matchTime.toInt()
+                        "1",
+                        if (match.player.matchWin == "1") "1" else "0",
+                        if (match.player.matchRank == "99" || match.player.matchRank == "") "8" else match.player.matchRank,
+                        if (match.player.matchTime == "") "999999" else match.player.matchTime
                     )
                 )
             }

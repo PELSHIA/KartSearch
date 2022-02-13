@@ -16,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
 import java.io.File
 import java.io.IOException
+import kotlin.math.roundToInt
 
 object BindingAdapter {
 
@@ -54,7 +55,7 @@ object BindingAdapter {
     @JvmStatic
     @BindingAdapter("setTime")
     fun bindSetTime(view: TextView, time: String) {
-        if (time.isNullOrEmpty()) {
+        if (time.isNullOrEmpty() || time == "999999") {
             view.text = "-"
         } else {
             val record: Int = time.toInt()
@@ -99,5 +100,21 @@ object BindingAdapter {
         } else {
             view.text = rank
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["win", "winNumber"])
+    fun bindSetWinData(view: TextView, win: String  , winNumber: String) {
+        val winNum = win.toInt()
+        val num = winNumber.toInt()
+        view.text = (winNum.toDouble() / num.toDouble() * 100.0).roundToInt().toString() + "%"
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["avg", "avgNumber"])
+    fun bindSetAvgData(view: TextView, avg: String, avgNumber: String) {
+        val avgNum = avg.toInt()
+        val num = avgNumber.toInt()
+        view.text = String.format("%.1f등", avgNum.toDouble() / num.toDouble())
     }
 }
