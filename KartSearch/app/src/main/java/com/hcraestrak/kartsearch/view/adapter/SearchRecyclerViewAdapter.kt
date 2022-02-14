@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hcraestrak.kartsearch.R
+import com.hcraestrak.kartsearch.databinding.ItemSearchBinding
 import com.hcraestrak.kartsearch.model.db.entity.Search
 import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 
@@ -32,29 +33,26 @@ class SearchRecyclerViewAdapter: RecyclerView.Adapter<SearchRecyclerViewAdapter.
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val searches: TextView = view.findViewById(R.id.item_searches)
-        val delete: ImageButton = view.findViewById(R.id.item_delete)
-
+    inner class ViewHolder(val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Search) {
-            searches.text = data.word
+            binding.search = data
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search, parent, false)
-        return ViewHolder(view)
+        val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataSet[position])
 
-        holder.delete.setOnClickListener {
+        holder.binding.itemDelete.setOnClickListener {
             word = dataSet[position].word
             mListener.onClick(1)
         }
 
-        holder.searches.setOnClickListener {
+        holder.binding.itemSearches.setOnClickListener {
             word = dataSet[position].word
             mListener.onClick(2)
         }
