@@ -1,7 +1,7 @@
 package com.hcraestrak.kartsearch.view.fragment
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,35 +9,38 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentSearchBinding
 import com.hcraestrak.kartsearch.model.db.entity.Search
 import com.hcraestrak.kartsearch.model.network.data.response.UserInfo
 import com.hcraestrak.kartsearch.view.adapter.SearchRecyclerViewAdapter
+import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.SearchViewModel
 import com.hcraestrak.kartsearch.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.layout.fragment_search) {
 
-    private lateinit var binding: FragmentSearchBinding
     private lateinit var recyclerViewAdapter: SearchRecyclerViewAdapter
-    private val viewModel: UserViewModel by viewModels()
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
+    override val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getAllWord()
         initRecyclerView()
         search()
-        deleteAll()
     }
 
     private fun search() {
@@ -50,8 +53,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun getSearch(nickName: String) {
-        viewModel.getAccessId(nickName)
-        viewModel.getObserver().observe(viewLifecycleOwner, {
+        userViewModel.getAccessId(nickName)
+        userViewModel.getObserver().observe(viewLifecycleOwner, {
             navigate(it)
         })
     }
@@ -69,25 +72,8 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun deleteAll() {
-        binding.allDelete.setOnClickListener {
-            deleteAllSearchData()
-            recyclerViewAdapter.notifyDataSetChanged()
-        }
-    }
-
     private fun initRecyclerView() {
-        binding.searchRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this.context)
-            recyclerViewAdapter = SearchRecyclerViewAdapter()
-            adapter = recyclerViewAdapter
-        }
-        searchViewModel.getAllWord()
-        searchViewModel.searchWordObserver().observe(viewLifecycleOwner, {
-            val list = it.reversed()
-            recyclerViewAdapter.setData(list)
-        })
-
+        recyclerViewAdapter = SearchRecyclerViewAdapter()
         recyclerViewAdapter.setOnItemClickListener {
             val word: String = recyclerViewAdapter.getWord()
             when(it) {
@@ -103,15 +89,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun setSearchData(word: String) {
-        searchViewModel.insertWord(Search(word))
+        viewModel.insertWord(Search(word))
     }
 
     private fun deleteSearchData(word: String) {
-        searchViewModel.deleteWord(Search(word))
-    }
-
-    private fun deleteAllSearchData() {
-        searchViewModel.deleteAllWord()
+        viewModel.deleteWord(Search(word))
     }
 
 }

@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,6 +16,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
+import com.hcraestrak.kartsearch.model.db.entity.Search
+import com.hcraestrak.kartsearch.view.adapter.SearchRecyclerViewAdapter
+import com.hcraestrak.kartsearch.viewModel.SearchViewModel
 import java.io.File
 import java.io.IOException
 import kotlin.math.roundToInt
@@ -116,5 +121,19 @@ object BindingAdapter {
         val avgNum = avg.toInt()
         val num = avgNumber.toInt()
         view.text = String.format("%.1f등", avgNum.toDouble() / num.toDouble())
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["searchData", "searchViewModel"])
+    fun bindSearchRecyclerView(recyclerView: RecyclerView, searchData: List<Search>?, searchViewModel: SearchViewModel) {
+        searchViewModel.getAllWord()
+        if (recyclerView.adapter == null) {
+            recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
+            recyclerView.adapter = SearchRecyclerViewAdapter()
+        }
+        if (searchData != null) {
+            (recyclerView.adapter as SearchRecyclerViewAdapter).setData(searchData)
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 }
