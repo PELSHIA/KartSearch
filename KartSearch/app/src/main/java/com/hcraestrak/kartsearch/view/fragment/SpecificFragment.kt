@@ -27,6 +27,7 @@ import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentSpecificBinding
 import com.hcraestrak.kartsearch.view.adapter.RankRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.RankData
+import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.SpecificViewModel
@@ -36,14 +37,14 @@ import java.io.File
 import java.io.IOException
 
 @AndroidEntryPoint
-class SpecificFragment : Fragment() {
+class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel>(R.layout.fragment_specific) {
 
-    private lateinit var binding: FragmentSpecificBinding
     private lateinit var recyclerViewAdapter: RankRecyclerViewAdapter
-    private val viewModel: SpecificViewModel by viewModels()
+    override val viewModel: SpecificViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
     private val args: SpecificFragmentArgs by navArgs()
     private val dataList = mutableListOf<RankData>()
+    var gameType: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +56,7 @@ class SpecificFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.fragment = this
         bindingToolbar()
         bindingView()
         bindingRecyclerView()
@@ -74,7 +76,7 @@ class SpecificFragment : Fragment() {
     }
 
     private fun bindingView() {
-        binding.gameType.text = args.gameType
+        gameType = args.gameType
         if (args.isWin == 0) {
             bindingLose()
         } else {

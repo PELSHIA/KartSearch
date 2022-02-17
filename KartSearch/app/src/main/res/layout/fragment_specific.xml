@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragment.SpecificFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="fragment"
+            type="com.hcraestrak.kartsearch.view.fragment.SpecificFragment" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        tools:context=".view.fragment.SpecificFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -35,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-        
+
         <ImageView
             android:id="@+id/map_img"
             android:layout_width="187dp"
@@ -62,6 +66,7 @@
             app:layout_constraintTop_toTopOf="@id/map_name"
             app:layout_constraintBottom_toBottomOf="@id/map_name"
             tools:text="스피드 팀전"
+            android:text="@{fragment.gameType}"
             android:textColor="@color/gray"
             android:layout_marginStart="10dp"
             android:textSize="11sp"
@@ -116,4 +121,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</layout>
