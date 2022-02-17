@@ -2,9 +2,7 @@ package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -100,7 +98,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private fun setRecyclerViewData(gameTypeId: String) {
         val dataList = mutableListOf<UserInfoData>()
         viewModel.accessIdMatchInquiry(id, gameTypeId)
-        viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
+        viewModel.matchResponse.observe(viewLifecycleOwner, {
             if (it.matches.isNotEmpty()){
                 binding.userRecordNone.visibility = View.GONE
                 binding.userInfoRecyclerView.visibility = View.VISIBLE

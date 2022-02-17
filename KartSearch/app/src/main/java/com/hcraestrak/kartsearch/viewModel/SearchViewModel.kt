@@ -18,8 +18,6 @@ class SearchViewModel @Inject constructor(private val repo: SearchRepository) : 
     val searchWord: LiveData<List<Search>>
         get() = _searchWord
 
-    fun searchWordObserver() = _searchWord
-
     fun getAllWord() {
         repo.getAllWord()!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({

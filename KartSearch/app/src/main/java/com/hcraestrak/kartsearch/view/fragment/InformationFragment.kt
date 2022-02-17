@@ -63,7 +63,7 @@ class InformationFragment : Fragment() {
 
     private fun searchData() {
         viewModel.accessIdMatchInquiry(args.accessId, "")
-        viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, { match ->
+        viewModel.matchResponse.observe(viewLifecycleOwner, { match ->
             binding.userNickName.text = match.nickName
             getImage("character", match.matches[0].matches[0].character, binding.userProfileImg) // 대표 캐릭터 이미지
             getLicenseImage(match.matches[0].matches[0].player.rankinggrade2) // 라이센스 이미지

@@ -54,7 +54,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
 
     private fun getSearch(nickName: String) {
         userViewModel.getAccessId(nickName)
-        userViewModel.getObserver().observe(viewLifecycleOwner, {
+        userViewModel.userInfoLiveData.observe(viewLifecycleOwner, {
             navigate(it)
         })
     }

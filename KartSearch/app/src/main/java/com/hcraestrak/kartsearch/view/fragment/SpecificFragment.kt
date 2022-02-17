@@ -121,7 +121,7 @@ class SpecificFragment : Fragment() {
         recyclerViewAdapter.setOnItemClickListener {
             if (it == 1) {
                 userViewModel.getAccessId(recyclerViewAdapter.getNickName())
-                userViewModel.getObserver().observe(viewLifecycleOwner, { userInfo ->
+                userViewModel.userInfoLiveData.observe(viewLifecycleOwner, { userInfo ->
                     if (userInfo != null) {
                         findNavController().navigate(SpecificFragmentDirections.actionSpecificFragmentToInformationFragment(userInfo.accessId))
                     } else {
@@ -154,7 +154,7 @@ class SpecificFragment : Fragment() {
 
     private fun setSingleData() {
         viewModel.specificMatchInquiry(args.matchId)
-        viewModel.matchDetailObserver().observe(viewLifecycleOwner, { match ->
+        viewModel.matchDetail.observe(viewLifecycleOwner, { match ->
             getTrackImage(match.trackId)
             getTrackName(match.trackId)
             for (player in match.players) {
@@ -178,7 +178,7 @@ class SpecificFragment : Fragment() {
 
     private fun setTeamData() {
         viewModel.specificTeamMatchInquiry(args.matchId)
-        viewModel.matchTeamDetailObserver().observe(viewLifecycleOwner, { match ->
+        viewModel.matchTeamDetail.observe(viewLifecycleOwner, { match ->
             getTrackImage(match.trackId)
             getTrackName(match.trackId)
             for (team in match.teams) {

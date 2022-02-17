@@ -3,10 +3,7 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,7 +87,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
 
     private fun getData(typeId: String) {
         viewModel.accessIdMatchInquiry(id, matchType=typeId, limit=100)
-        viewModel.getMatchResponseObserver().observe(viewLifecycleOwner, {
+        viewModel.matchResponse.observe(viewLifecycleOwner, {
             if (it.matches.isNotEmpty()) {
                 binding.statsLayout.visibility = View.VISIBLE
                 binding.userStatsNone.visibility = View.GONE
