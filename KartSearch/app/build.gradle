@@ -103,10 +103,4 @@ dependencies {
     /* MPAndroidChart */
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    /* RxRetroJsoup */
-    implementation 'com.github.florent37:retrojsoup:1.0.4'
-    implementation 'com.github.florent37:rxjsoup:1.0.4'
-    annotationProcessor 'com.github.florent37:retrojsoup-compiler:1.0.4'
-
-
 }
