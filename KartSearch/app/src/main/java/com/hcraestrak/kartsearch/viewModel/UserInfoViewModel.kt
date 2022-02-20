@@ -1,9 +1,11 @@
 package com.hcraestrak.kartsearch.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hcraestrak.kartsearch.viewModel.data.InfoData
+import com.hcraestrak.kartsearch.viewModel.data.RecordData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -28,6 +30,23 @@ class UserInfoViewModel: ViewModel() {
                 val gulid: String = doc.select("#GuildName").text()
                 profileData = InfoData(profileImg, levelImg, gulid)
                 it.onNext(profileData)
+                it.onComplete()
+            }
+        )
+    }
+
+    fun getRecordData(nickName: String): Single<RecordData> {
+        return Single.fromObservable (
+            Observable.create {
+                var recordData: RecordData
+                var playTime: String
+                var startTime: String
+                val doc: Document = Jsoup.connect(recordURL + nickName).get()
+                val time: Elements = doc.select(".CntRecord21 dd")
+                startTime = time[0].text()
+                playTime = time[1].text()
+                recordData = RecordData(playTime, startTime)
+                it.onNext(recordData)
                 it.onComplete()
             }
         )
