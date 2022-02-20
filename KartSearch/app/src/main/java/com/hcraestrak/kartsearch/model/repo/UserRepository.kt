@@ -11,4 +11,8 @@ class UserRepository(private val service: UserService) {
         return service.nickNameInquiry(nickName)
     }
 
+    fun getNickname(accessId: String): Single<Response<UserInfo>> {
+        return service.accessIdInquiry(accessId)
+    }
+
 }

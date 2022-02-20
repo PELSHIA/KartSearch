@@ -31,4 +31,17 @@ class UserViewModel @Inject constructor(private val repo: UserRepository): ViewM
                 Log.d("Error", "${it.message}}")
             })
     }
+
+    fun getNickname(accessId: String) {
+        repo.getNickname(accessId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                if (response.isSuccessful) {
+                    _userInfoLiveData.postValue(response.body())
+                } else {
+                    _userInfoLiveData.postValue(null)
+                }
+            }, {
+                Log.d("Error", "${it.message}}")
+            })
+    }
 }
