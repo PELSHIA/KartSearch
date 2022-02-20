@@ -2,20 +2,14 @@ package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserInfoBinding
-import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.view.base.BaseFragment
-import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
 import com.hcraestrak.kartsearch.viewModel.UserViewModel
-import com.hcraestrak.kartsearch.viewModel.data.InfoData
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -35,6 +29,7 @@ class UserInfoFragment(val id: String) : BaseFragment<FragmentUserInfoBinding, U
         userViewModel.getNickname(id)
         userViewModel.userInfoLiveData.observe(viewLifecycleOwner, {
             setProfileData(it.name, it.level)
+            setRecordData(it.name)
         })
     }
 
@@ -49,5 +44,22 @@ class UserInfoFragment(val id: String) : BaseFragment<FragmentUserInfoBinding, U
             }, {
                 Log.d("Error", it.message.toString())
             })
+    }
+
+    private fun setRecordData(nickName: String) {
+        viewModel.getRecordData(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("recordData", it.toString())
+                val playTime = it.playTime.replace("분", "")
+                val startTime = it.startTime.substring(0, 10)
+                binding.playTimeTxt.text = getTime(playTime.toInt()) + "시간"
+                binding.startTimeTxt.text = startTime
+            }, {
+                Log.d("Error", it.message.toString())
+            })
+    }
+
+    private fun getTime(time: Int): String {
+        return (time / 60).toString()
     }
 }
