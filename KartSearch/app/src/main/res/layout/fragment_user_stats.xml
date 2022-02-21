@@ -144,6 +144,7 @@
             android:orientation="vertical"
             android:layout_marginTop="15dp"
             android:gravity="center"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/user_stats_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
