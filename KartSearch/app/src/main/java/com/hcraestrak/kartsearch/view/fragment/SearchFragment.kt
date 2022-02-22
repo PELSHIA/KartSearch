@@ -31,8 +31,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.vm = viewModel
         return binding.root
     }
 
@@ -73,7 +71,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
     }
 
     private fun initRecyclerView() {
-        recyclerViewAdapter = SearchRecyclerViewAdapter()
+        binding.searchRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            recyclerViewAdapter = SearchRecyclerViewAdapter()
+            adapter = recyclerViewAdapter
+        }
+        viewModel.getAllWord()
+        viewModel.searchWord.observe(viewLifecycleOwner, {
+            val list = it.reversed()
+            recyclerViewAdapter.setData(list)
+        })
         recyclerViewAdapter.setOnItemClickListener {
             val word: String = recyclerViewAdapter.getWord()
             when(it) {

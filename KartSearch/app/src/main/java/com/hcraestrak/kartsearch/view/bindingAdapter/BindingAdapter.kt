@@ -123,17 +123,4 @@ object BindingAdapter {
         view.text = String.format("%.1f등", avgNum.toDouble() / num.toDouble())
     }
 
-    @JvmStatic
-    @BindingAdapter(value = ["searchData", "searchViewModel"])
-    fun bindSearchRecyclerView(recyclerView: RecyclerView, searchData: List<Search>?, searchViewModel: SearchViewModel) {
-        searchViewModel.getAllWord()
-        if (recyclerView.adapter == null) {
-            recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-            recyclerView.adapter = SearchRecyclerViewAdapter()
-        }
-        if (searchData != null) {
-            (recyclerView.adapter as SearchRecyclerViewAdapter).setData(searchData)
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-    }
 }
