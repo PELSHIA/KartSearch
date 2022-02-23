@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="@id/user_record_title"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/user_info_recyclerView"
+            android:id="@+id/user_record_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"

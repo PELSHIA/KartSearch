@@ -9,7 +9,7 @@ import com.hcraestrak.kartsearch.databinding.ItemRecordBinding
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 
-class UserInfoRecyclerViewAdapter: RecyclerView.Adapter<UserInfoRecyclerViewAdapter.ViewHolder>() {
+class UserRecordRecyclerViewAdapter: RecyclerView.Adapter<UserRecordRecyclerViewAdapter.ViewHolder>() {
 
     private val data = mutableListOf<UserInfoData>()
     private var matchId: String = ""

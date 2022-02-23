@@ -17,7 +17,7 @@ import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
-import com.hcraestrak.kartsearch.view.adapter.UserInfoRecyclerViewAdapter
+import com.hcraestrak.kartsearch.view.adapter.UserRecordRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBinding, MatchViewModel>(R.layout.fragment_user_record) {
 
-    private lateinit var recyclerAdapter: UserInfoRecyclerViewAdapter
+    private lateinit var recyclerAdapter: UserRecordRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     override val viewModel: MatchViewModel by viewModels()
     private val modeViewModel: ModeViewModel by activityViewModels()
@@ -81,9 +81,9 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                 return false
             }
         }
-        binding.userInfoRecyclerView.apply {
+        binding.userRecordRecyclerView.apply {
             layoutManager = recyclerViewLayoutManager
-            recyclerAdapter = UserInfoRecyclerViewAdapter()
+            recyclerAdapter = UserRecordRecyclerViewAdapter()
             adapter = recyclerAdapter
             addItemDecoration(decoration)
         }
@@ -101,7 +101,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         viewModel.matchResponse.observe(viewLifecycleOwner, {
             if (it.matches.isNotEmpty()){
                 binding.userRecordNone.visibility = View.GONE
-                binding.userInfoRecyclerView.visibility = View.VISIBLE
+                binding.userRecordRecyclerView.visibility = View.VISIBLE
                 for (match in it.matches[0].matches) {
                     dataList.add(
                         UserInfoData(
@@ -118,7 +118,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                 }
                 recyclerAdapter.setData(dataList)
             } else {
-                binding.userInfoRecyclerView.visibility = View.GONE
+                binding.userRecordRecyclerView.visibility = View.GONE
                 binding.userRecordNone.visibility = View.VISIBLE
             }
         })
