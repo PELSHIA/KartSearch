@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -29,7 +30,7 @@ import java.io.IOException
 class InformationFragment : Fragment() {
 
     private lateinit var binding: FragmentInformationBinding
-    private val viewModel: MatchViewModel by viewModels()
+    private val viewModel: MatchViewModel by activityViewModels()
     private val args: InformationFragmentArgs by navArgs()
     private lateinit var storageReference: StorageReference
 
@@ -46,6 +47,7 @@ class InformationFragment : Fragment() {
         bindingToolbar()
         searchData()
         setTabLayout()
+        scroll()
     }
 
     private fun bindingToolbar() {
@@ -106,6 +108,14 @@ class InformationFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
             tab.text = tabLayoutTextList[position]
         }.attach()
+    }
+
+    private fun scroll() {
+        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
+                viewModel.isScroll.value = true
+            }
+        }
     }
 
 }
