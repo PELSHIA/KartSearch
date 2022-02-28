@@ -17,7 +17,7 @@ interface MatchService {
         @Query("start_date") start_date: String? = null,
         @Query("end_date") end_date: String? = null,
         @Query("offset") offset: Int = 0,
-        @Query("limit") limit: Int = 10,
+        @Query("limit") limit: Int = 100,
         @Query("match_types") match_types: String
     ): Single<Response<Match>>
 

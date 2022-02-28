@@ -14,11 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchViewModel @Inject constructor(private val repo: MatchRepository) : ViewModel() {
 
+    var isScroll = MutableLiveData<Boolean>()
     private var _matchResponse = MutableLiveData<Match>()
     val matchResponse: LiveData<Match>
         get() = _matchResponse
 
-    fun accessIdMatchInquiry(access_Id: String, matchType: String, limit: Int = 10) {
+    fun accessIdMatchInquiry(access_Id: String, matchType: String, limit: Int = 100) {
         _matchResponse = MutableLiveData()
         repo.accessIdMatchInquiry(access_Id, matchType, limit).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
