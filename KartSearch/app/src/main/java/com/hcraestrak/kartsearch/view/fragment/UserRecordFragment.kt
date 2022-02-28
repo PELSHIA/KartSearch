@@ -3,8 +3,8 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -28,10 +28,13 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
 
     private lateinit var recyclerAdapter: UserRecordRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
-    override val viewModel: MatchViewModel by viewModels()
+    override val viewModel: MatchViewModel by activityViewModels()
     private val modeViewModel: ModeViewModel by activityViewModels()
     private var gameType: String = ""
     private var isTeamMatch = false
+    private var page: Int = 1
+    private val dataCount: Int = 10
+    private val dataList = mutableListOf<UserInfoData>()
     var title = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,13 +46,14 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         initRecyclerView()
         initMode()
         modeObserve()
+        scroll()
     }
 
     private fun initMode() {
         gameType = "스피드 개인전"
         title = "스피드 개인전 전적"
         isTeamMatch(gameType)
-        setData(gameType)
+        getGameTypeId(gameType)
     }
 
     private fun modeSelect() {
@@ -66,12 +70,47 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
             gameType = it
             title = "$it 전적"
             isTeamMatch(it)
-            setData(it)
+            getGameTypeId(it)
         })
     }
 
     private fun isTeamMatch(gameType: String) {
         isTeamMatch = gameType.contains("팀전")
+    }
+
+    private fun scroll() {
+        viewModel.isScroll.observe(viewLifecycleOwner, {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+                loadMore()
+            }
+        })
+    }
+
+    private fun loadMore() {
+        val data = mutableListOf<UserInfoData>()
+        if (dataList.size <= page * dataCount) {
+            binding.progressBar.visibility = View.GONE
+            Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            for (i in dataCount * page until dataCount * page + dataCount) {
+                data.add(
+                    UserInfoData(
+                        dataList[i].playerCount,
+                        dataList[i].userRank,
+                        dataList[i].kart,
+                        dataList[i].track,
+                        dataList[i].time,
+                        dataList[i].isWin,
+                        dataList[i].isRetired,
+                        dataList[i].matchId,
+                    )
+                )
+            }
+            Log.d("size", "data.size = ${data.size}")
+            recyclerAdapter.setData(data)
+            page++
+        }
     }
 
     private fun initRecyclerView() {
@@ -95,14 +134,15 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         }
     }
 
-    private fun setRecyclerViewData(gameTypeId: String) {
-        val dataList = mutableListOf<UserInfoData>()
+    private fun setData(gameTypeId: String) {
+        page = 1 // 페이지 수 초기화
+        dataList.clear() // 리스트 초기화
         viewModel.accessIdMatchInquiry(id, gameTypeId)
         viewModel.matchResponse.observe(viewLifecycleOwner, {
             if (it.matches.isNotEmpty()){
                 binding.userRecordNone.visibility = View.GONE
                 binding.userRecordRecyclerView.visibility = View.VISIBLE
-                for (match in it.matches[0].matches) {
+                for (match in it.matches[0].matches) { // 모든 데이터 추가
                     dataList.add(
                         UserInfoData(
                             match.playerCount,
@@ -116,22 +156,50 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                         )
                     )
                 }
-                recyclerAdapter.setData(dataList)
-            } else {
+                setRecyclerViewData() // 데이터 초기화
+            } else { // 값이 없을때
                 binding.userRecordRecyclerView.visibility = View.GONE
                 binding.userRecordNone.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             }
         })
     }
 
-    private fun setData(typeName: String) {
+    private fun setRecyclerViewData() {
+        recyclerAdapter.clearData()
+        val data = mutableListOf<UserInfoData>()
+        // 데이터의 수가 20이하 인 경우 페이징 처리가 필요 없다
+        if (dataList.size <= dataCount) {
+            recyclerAdapter.setData(dataList)
+        } else {
+            for (i in 0..dataCount) {
+                data.add(
+                    UserInfoData(
+                        dataList[i].playerCount,
+                        dataList[i].userRank,
+                        dataList[i].kart,
+                        dataList[i].track,
+                        dataList[i].time,
+                        dataList[i].isWin,
+                        dataList[i].isRetired,
+                        dataList[i].matchId,
+                    )
+                )
+            }
+            recyclerAdapter.clearData()
+            recyclerAdapter.setData(data)
+        }
+        page++
+    }
+
+    private fun getGameTypeId(typeName: String) {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
                     val id = postSnapshot.child("id").getValue(String::class.java)
                     val name = postSnapshot.child("name").getValue(String::class.java)
                     if (typeName == name) {
-                        setRecyclerViewData(id.toString())
+                        setData(id.toString())
                         return
                     }
                 }
