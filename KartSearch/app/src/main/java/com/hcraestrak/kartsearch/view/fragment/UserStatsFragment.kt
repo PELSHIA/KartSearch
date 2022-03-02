@@ -44,6 +44,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         super.onViewCreated(view, savedInstanceState)
 
         binding.fragment = this
+        recyclerViewAdapter = TrackStatRecyclerViewAdapter()
 
         initData()
         modeSelect()
@@ -255,7 +256,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         Log.d("trackList", "trackList.size: ${trackList.size}")
         if (trackList.size <= dataCount) {
             recyclerViewAdapter.clearData()
-            recyclerViewAdapter.setData(trackList)
+            recyclerViewAdapter.setData(trackList, true)
         } else {
             for (i in 0 until dataCount) {
                 list.add(
@@ -269,7 +270,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
                 )
             }
             recyclerViewAdapter.clearData()
-            recyclerViewAdapter.setData(list)
+            recyclerViewAdapter.setData(list, true)
             page++
         }
     }
@@ -300,7 +301,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
                     )
                 )
             }
-            recyclerViewAdapter.setData(list)
+            recyclerViewAdapter.setData(list, false)
             page++
         }
     }

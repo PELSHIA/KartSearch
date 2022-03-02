@@ -18,13 +18,16 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.ItemTrackBinding
+import com.hcraestrak.kartsearch.databinding.ItemTrackHeaderBinding
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import java.io.File
 import java.io.IOException
 import kotlin.math.roundToInt
 
-class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAdapter.ViewHolder>() {
+class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val TYPE_HEADER: Int = 0
+    private val TYPE_ITEM: Int = 1
     private val dataList: MutableList<TrackStatData> = mutableListOf()
 
     fun clearData() {
@@ -32,8 +35,10 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
         notifyDataSetChanged()
     }
 
-    fun setData(data: List<TrackStatData>) {
-        dataList.clear()
+    fun setData(data: List<TrackStatData>, isFirst: Boolean) {
+        if (isFirst) {
+            dataList.add(TrackStatData(" ", " ", " ", " ", " "))
+        }
         dataList.addAll(data)
         notifyDataSetChanged()
     }
@@ -44,17 +49,32 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemTrackBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    inner class HeaderViewHolder(val binding: ItemTrackHeaderBinding): RecyclerView.ViewHolder(binding.root) {
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataList[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_ITEM) {
+            val binding = ItemTrackBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewHolder(binding)
+        } else {
+            val binding = ItemTrackHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HeaderViewHolder(binding)
+        }
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ViewHolder) {
+            holder.bind(dataList[position])
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
+        return if (dataList[position].track == " ") {
+            TYPE_HEADER
+        } else {
+            TYPE_ITEM
+        }
     }
 
     override fun getItemCount() = dataList.size

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/item_track_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="20dp"
+            android:text="트랙"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_track_number"
+            android:text="횟수"
+            android:layout_marginStart="30dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/item_track_img"
+            app:layout_constraintBottom_toBottomOf="@id/item_track_img"
+            app:layout_constraintStart_toEndOf="@id/item_track_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_track_win"
+            android:text="승률"
+            android:layout_marginStart="20dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/item_track_img"
+            app:layout_constraintBottom_toBottomOf="@id/item_track_img"
+            app:layout_constraintStart_toEndOf="@id/item_track_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_track_avg"
+            android:text="평균순위"
+            android:layout_marginStart="10dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/item_track_img"
+            app:layout_constraintBottom_toBottomOf="@id/item_track_img"
+            app:layout_constraintStart_toEndOf="@id/item_track_win"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_track_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"
+            android:text="최고기록"
+            app:layout_constraintTop_toTopOf="@id/item_track_img"
+            app:layout_constraintBottom_toBottomOf="@id/item_track_img"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
