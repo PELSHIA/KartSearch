@@ -38,6 +38,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
     private val dataCount: Int = 10
     private var page: Int = 1
+    private var isLastPage: Boolean = false
     var title: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -287,8 +288,26 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     private fun loadMore() {
         val list = mutableListOf<TrackStatData>()
         if (trackList.size <= page * dataCount) {
-            binding.progressBar.visibility = View.GONE
-            Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+            if (isLastPage) {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                for (i in page * dataCount until trackList.size) {
+                    list.add(
+                        TrackStatData(
+                            trackList[i].track,
+                            trackList[i].number,
+                            trackList[i].win,
+                            trackList[i].avg,
+                            trackList[i].time,
+                        )
+                    )
+                }
+
+                recyclerViewAdapter.setData(list, false)
+                binding.progressBar.visibility = View.GONE
+                isLastPage = true
+            }
         } else {
             for (i in dataCount * page until dataCount * page + dataCount) {
                 list.add(

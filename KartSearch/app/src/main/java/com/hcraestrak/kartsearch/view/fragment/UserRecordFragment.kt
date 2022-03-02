@@ -18,6 +18,7 @@ import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserRecordRecyclerViewAdapter
+import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
@@ -35,6 +36,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private var page: Int = 1
     private val dataCount: Int = 10
     private val dataList = mutableListOf<UserInfoData>()
+    private var isLastPage: Boolean = false
     var title = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,8 +92,29 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private fun loadMore() {
         val data = mutableListOf<UserInfoData>()
         if (dataList.size <= page * dataCount) {
+            if (isLastPage) {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                for (i in page * dataCount until dataList.size) {
+                    data.add(
+                        UserInfoData(
+                            dataList[i].playerCount,
+                            dataList[i].userRank,
+                            dataList[i].kart,
+                            dataList[i].track,
+                            dataList[i].time,
+                            dataList[i].isWin,
+                            dataList[i].isRetired,
+                            dataList[i].matchId
+                        )
+                    )
+                }
+                recyclerAdapter.setData(data)
+                binding.progressBar.visibility = View.GONE
+                isLastPage = true
+            }
             binding.progressBar.visibility = View.GONE
-            Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
         } else {
             for (i in dataCount * page until dataCount * page + dataCount) {
                 data.add(
@@ -107,7 +130,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                     )
                 )
             }
-            Log.d("size", "data.size = ${data.size}")
+            Log.d("size", "RecordData.size = ${data.size}")
             recyclerAdapter.setData(data)
             page++
         }
