@@ -172,7 +172,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         if (dataList.size <= dataCount) {
             recyclerAdapter.setData(dataList)
         } else {
-            for (i in 0..dataCount) {
+            for (i in 0 until dataCount) {
                 data.add(
                     UserInfoData(
                         dataList[i].playerCount,
