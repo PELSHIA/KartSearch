@@ -135,6 +135,14 @@
                 android:overScrollMode="never"
                 app:layout_constraintTop_toBottomOf="@id/trackStatTitle"/>
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/trackStatRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

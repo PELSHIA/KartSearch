@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,8 +33,11 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
 
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val modeViewModel: ModeViewModel by activityViewModels()
-    override val viewModel: MatchViewModel by viewModels()
+    override val viewModel: MatchViewModel by activityViewModels()
+    private val trackList: MutableList<TrackStatData> = mutableListOf()
     private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
+    private val dataCount: Int = 10
+    private var page: Int = 1
     var title: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +48,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         initData()
         modeSelect()
         modeObserve()
+        scroll()
     }
 
     private fun modeSelect() {
@@ -104,7 +109,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         var completion: Int = 0
         var avg100: Int = 0
         val rankList: MutableList<Entry> = mutableListOf()
-        val trackList: MutableList<TrackStatData> = mutableListOf()
         data.matches[0].matches.forEachIndexed { index, match ->
             val isExistTrack = trackList.any { it.track == match.trackId }
             if (match.player.matchWin == "1") {
@@ -159,7 +163,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         winChart(win)
         completionChart(completion)
         rankChart(rankList)
-        trackRecyclerView(trackList)
+        trackRecyclerView()
     }
 
     private fun winChart(win: Int) {
@@ -234,7 +238,8 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         }
     }
 
-    private fun trackRecyclerView(list: List<TrackStatData>) {
+    private fun trackRecyclerView() {
+        val list = mutableListOf<TrackStatData>()
         val decoration: RecyclerViewDecoration = RecyclerViewDecoration(20)
         val recyclerViewLayoutManager = object : LinearLayoutManager(binding.trackStatRecyclerView.context) {
             override fun canScrollVertically(): Boolean {
@@ -247,6 +252,56 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
             adapter = recyclerViewAdapter
             addItemDecoration(decoration)
         }
-        recyclerViewAdapter.setData(list)
+        Log.d("trackList", "trackList.size: ${trackList.size}")
+        if (trackList.size <= dataCount) {
+            recyclerViewAdapter.clearData()
+            recyclerViewAdapter.setData(trackList)
+        } else {
+            for (i in 0 until dataCount) {
+                list.add(
+                    TrackStatData(
+                        trackList[i].track,
+                        trackList[i].number,
+                        trackList[i].win,
+                        trackList[i].avg,
+                        trackList[i].time,
+                    )
+                )
+            }
+            recyclerViewAdapter.clearData()
+            recyclerViewAdapter.setData(list)
+            page++
+        }
+    }
+
+    private fun scroll() {
+        viewModel.isScroll.observe(viewLifecycleOwner, {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+                loadMore()
+            }
+        })
+    }
+
+    private fun loadMore() {
+        val list = mutableListOf<TrackStatData>()
+        if (trackList.size <= page * dataCount) {
+            binding.progressBar.visibility = View.GONE
+            Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            for (i in dataCount * page until dataCount * page + dataCount) {
+                list.add(
+                    TrackStatData(
+                        trackList[i].track,
+                        trackList[i].number,
+                        trackList[i].win,
+                        trackList[i].avg,
+                        trackList[i].time,
+                    )
+                )
+            }
+            recyclerViewAdapter.setData(list)
+            page++
+        }
     }
 }

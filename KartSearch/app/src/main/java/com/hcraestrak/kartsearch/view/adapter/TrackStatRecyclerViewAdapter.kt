@@ -27,6 +27,11 @@ class TrackStatRecyclerViewAdapter: RecyclerView.Adapter<TrackStatRecyclerViewAd
 
     private val dataList: MutableList<TrackStatData> = mutableListOf()
 
+    fun clearData() {
+        dataList.clear()
+        notifyDataSetChanged()
+    }
+
     fun setData(data: List<TrackStatData>) {
         dataList.clear()
         dataList.addAll(data)
