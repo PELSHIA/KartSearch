@@ -7,19 +7,19 @@ import io.reactivex.rxjava3.core.Flowable
 
 class SearchRepository(private val db: SearchDao?) {
 
-    fun getAllWord(): Flowable<List<Search>>? {
+    suspend fun getAllWord(): List<Search>? {
         return db?.getAll()
     }
 
-    fun insertWord(search: Search): Completable? {
+    suspend fun insertWord(search: Search): Void? {
         return db?.insertWord(search)
     }
 
-    fun deleteWord(search: Search): Completable? {
+    suspend fun deleteWord(search: Search): Void? {
         return db?.deleteWord(search)
     }
 
-    fun deleteAllWord(): Completable? {
+    suspend fun deleteAllWord(): Void? {
         return db?.deleteAllWord()
     }
 }

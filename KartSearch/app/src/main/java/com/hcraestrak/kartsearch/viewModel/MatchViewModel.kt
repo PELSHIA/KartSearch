@@ -22,22 +22,6 @@ class MatchViewModel @Inject constructor(private val repo: MatchRepository) : Vi
     val matchResponse: LiveData<Match>
         get() = _matchResponse
 
-//    fun accessIdMatchInquiry(access_Id: String, matchType: String, limit: Int = 100) {
-//        _matchResponse = MutableLiveData()
-//        repo.accessIdMatchInquiry(access_Id, matchType, limit).subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ response ->
-//                if (response.isSuccessful) {
-//                    _matchResponse.postValue(response.body())
-//                } else {
-//                    _matchResponse.postValue(null)
-//                }
-//            }, {
-//                Log.d("Error", it.message.toString())
-//                _matchResponse.postValue(null)
-//            })
-//    }
-
     fun accessIdMatchInquiry(access_Id: String, matchType: String, limit: Int = 100) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = repo.accessIdMatchInquiry(access_Id, matchType, limit)

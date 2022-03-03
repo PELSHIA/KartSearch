@@ -26,36 +26,6 @@ class SpecificViewModel @Inject constructor(private val repo: SpecificRepository
     val matchTeamDetail: LiveData<MatchDetailTeam>
         get() = _matchTeamDetail
 
-//    fun specificMatchInquiry(matchId: String) {
-//        repo.specificMatchInquiry(matchId).subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ response ->
-//                if (response.isSuccessful) {
-//                    _matchDetail.postValue(response.body())
-//                } else {
-//                    _matchDetail.postValue(null)
-//                }
-//            }, {
-//                Log.d("Error", it.message.toString())
-//                _matchDetail.postValue(null)
-//            })
-//    }
-//
-//    fun specificTeamMatchInquiry(matchId: String) {
-//        repo.specificTeamMatchInquiry(matchId).subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ response ->
-//                if (response.isSuccessful) {
-//                    _matchTeamDetail.postValue(response.body())
-//                } else {
-//                    _matchTeamDetail.postValue(null)
-//                }
-//            }, {
-//                Log.d("Error", it.message.toString())
-//                _matchTeamDetail.postValue(null)
-//            })
-//    }
-
     fun specificMatchInquiry(matchId: String) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = repo.specificMatchInquiry(matchId)
@@ -82,5 +52,10 @@ class SpecificViewModel @Inject constructor(private val repo: SpecificRepository
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }

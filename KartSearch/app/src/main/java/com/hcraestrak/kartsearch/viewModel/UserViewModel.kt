@@ -22,32 +22,6 @@ class UserViewModel @Inject constructor(private val repo: UserRepository): ViewM
     val userInfoLiveData: LiveData<UserInfo>
         get() = _userInfoLiveData
 
-//    fun getAccessId(nickName: String) {
-//        repo.getAccessId(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ response ->
-//                if (response.isSuccessful) {
-//                    _userInfoLiveData.postValue(response.body())
-//                } else {
-//                    _userInfoLiveData.postValue(null)
-//                }
-//            }, {
-//                Log.d("Error", "${it.message}}")
-//            })
-//    }
-//
-//    fun getNickname(accessId: String) {
-//        repo.getNickname(accessId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ response ->
-//                if (response.isSuccessful) {
-//                    _userInfoLiveData.postValue(response.body())
-//                } else {
-//                    _userInfoLiveData.postValue(null)
-//                }
-//            }, {
-//                Log.d("Error", "${it.message}}")
-//            })
-//    }
-
     fun getAccessId(nickName: String) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = repo.getAccessId(nickName)

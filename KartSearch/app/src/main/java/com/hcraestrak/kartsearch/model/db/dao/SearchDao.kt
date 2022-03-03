@@ -8,14 +8,14 @@ import io.reactivex.rxjava3.core.Completable
 @Dao
 interface SearchDao {
     @Query("SELECT * FROM search_Table")
-    fun getAll(): Flowable<List<Search>>
+    suspend fun getAll(): List<Search>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWord(search: Search): Completable
+    suspend fun insertWord(search: Search): Void
 
     @Delete
-    fun deleteWord(search: Search): Completable
+    suspend fun deleteWord(search: Search): Void
 
     @Query("DELETE FROM search_Table")
-    fun deleteAllWord(): Completable
+    suspend fun deleteAllWord(): Void
 }
