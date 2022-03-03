@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 
 class MatchRepository(private val service: MatchService) {
-    fun accessIdMatchInquiry(accessId: String, gameType: String, limit: Int = 100): Single<Response<Match>> {
+    suspend fun accessIdMatchInquiry(accessId: String, gameType: String, limit: Int = 100): Response<Match> {
         return service.accessIdMatchInquiry(accessId, match_types = gameType, limit = limit)
     }
 }

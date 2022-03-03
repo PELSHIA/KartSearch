@@ -7,11 +7,11 @@ import retrofit2.Response
 
 class UserRepository(private val service: UserService) {
 
-    fun getAccessId(nickName: String): Single<Response<UserInfo>> {
+    suspend fun getAccessId(nickName: String): Response<UserInfo> {
         return service.nickNameInquiry(nickName)
     }
 
-    fun getNickname(accessId: String): Single<Response<UserInfo>> {
+    suspend fun getNickname(accessId: String): Response<UserInfo> {
         return service.accessIdInquiry(accessId)
     }
 

@@ -7,11 +7,11 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 
 class SpecificRepository(private val service: MatchService) {
-    fun specificMatchInquiry(matchId: String): Single<Response<MatchDetailPlayer>> {
+    suspend fun specificMatchInquiry(matchId: String): Response<MatchDetailPlayer> {
         return service.specificMatchInquiry(matchId)
     }
 
-    fun specificTeamMatchInquiry(matchId: String): Single<Response<MatchDetailTeam>> {
+    suspend fun specificTeamMatchInquiry(matchId: String): Response<MatchDetailTeam> {
         return service.specificTeamMatchInquiry(matchId)
     }
 }

@@ -9,39 +9,75 @@ import com.hcraestrak.kartsearch.model.repo.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(private val repo: UserRepository): ViewModel() {
+
+    lateinit var job: Job
 
     private val _userInfoLiveData = MutableLiveData<UserInfo>()
 
     val userInfoLiveData: LiveData<UserInfo>
         get() = _userInfoLiveData
 
+//    fun getAccessId(nickName: String) {
+//        repo.getAccessId(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ response ->
+//                if (response.isSuccessful) {
+//                    _userInfoLiveData.postValue(response.body())
+//                } else {
+//                    _userInfoLiveData.postValue(null)
+//                }
+//            }, {
+//                Log.d("Error", "${it.message}}")
+//            })
+//    }
+//
+//    fun getNickname(accessId: String) {
+//        repo.getNickname(accessId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ response ->
+//                if (response.isSuccessful) {
+//                    _userInfoLiveData.postValue(response.body())
+//                } else {
+//                    _userInfoLiveData.postValue(null)
+//                }
+//            }, {
+//                Log.d("Error", "${it.message}}")
+//            })
+//    }
+
     fun getAccessId(nickName: String) {
-        repo.getAccessId(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val response = repo.getAccessId(nickName)
+            withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     _userInfoLiveData.postValue(response.body())
                 } else {
+                    Log.d("Error", response.message())
                     _userInfoLiveData.postValue(null)
                 }
-            }, {
-                Log.d("Error", "${it.message}}")
-            })
+            }
+        }
     }
 
     fun getNickname(accessId: String) {
-        repo.getNickname(accessId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val response = repo.getNickname(accessId)
+            withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     _userInfoLiveData.postValue(response.body())
                 } else {
+                    Log.d("Error", response.message())
                     _userInfoLiveData.postValue(null)
                 }
-            }, {
-                Log.d("Error", "${it.message}}")
-            })
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }
