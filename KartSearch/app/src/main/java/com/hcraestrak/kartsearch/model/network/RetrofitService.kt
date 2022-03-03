@@ -38,7 +38,6 @@ object RetrofitService {
         Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
             .client(okHttpClient)
             .build()
     }

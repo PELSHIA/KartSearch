@@ -12,28 +12,28 @@ import retrofit2.http.Query
 
 interface MatchService {
     @GET("/kart/v1.0/users/{access_id}/matches")
-    fun accessIdMatchInquiry(
+    suspend fun accessIdMatchInquiry(
         @Path("access_id") access_id: String,
         @Query("start_date") start_date: String? = null,
         @Query("end_date") end_date: String? = null,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 100,
         @Query("match_types") match_types: String
-    ): Single<Response<Match>>
+    ): Response<Match>
 
     @GET("/kart/v1.0/matches")
-    fun allMatchInquiry(
+    suspend fun allMatchInquiry(
         @Query("start_date") start_date: String? = null,
         @Query("end_date") end_date: String? = null,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
         @Query("match_types") match_types: String? = null
-    ): Single<Response<Match>>
+    ): Response<Match>
 
     @GET("/kart/v1.0/matches/{match_id}")
-    fun specificMatchInquiry(@Path("match_id") match_id: String): Single<Response<MatchDetailPlayer>>
+    suspend fun specificMatchInquiry(@Path("match_id") match_id: String): Response<MatchDetailPlayer>
 
     @GET("/kart/v1.0/matches/{match_id}")
-    fun specificTeamMatchInquiry(@Path("match_id") match_id: String): Single<Response<MatchDetailTeam>>
+    suspend fun specificTeamMatchInquiry(@Path("match_id") match_id: String): Response<MatchDetailTeam>
 
 }
