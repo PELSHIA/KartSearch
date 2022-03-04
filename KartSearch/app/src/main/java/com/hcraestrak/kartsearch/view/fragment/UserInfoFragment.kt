@@ -1,7 +1,6 @@
 package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -11,8 +10,6 @@ import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.UserInfoViewModel
 import com.hcraestrak.kartsearch.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class UserInfoFragment(val id: String) : BaseFragment<FragmentUserInfoBinding, UserInfoViewModel>(R.layout.fragment_user_info){
@@ -34,29 +31,22 @@ class UserInfoFragment(val id: String) : BaseFragment<FragmentUserInfoBinding, U
     }
 
     private fun setProfileData(nickName: String, level: Int) {
-        viewModel.getProfileData(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ infoData ->
-                Log.d("infoData", infoData.toString())
-                Glide.with(binding.userProfile.context).load(infoData.profileImg).into(binding.userProfile)
-                Glide.with(binding.levelImg.context).load(infoData.levelImg).into(binding.levelImg)
-                binding.levelTxt.text = "Lv.$level"
-                binding.clubTxt.text = if (infoData.club != "가입된클럽이없습니다") infoData.club else "없음"
-            }, {
-                Log.d("Error", it.message.toString())
-            })
+        viewModel.getProfileData(nickName)
+        viewModel.infoData.observe(viewLifecycleOwner, {
+            Glide.with(binding.levelImg.context).load(it.levelImg).into(binding.levelImg)
+            Glide.with(binding.userProfile.context).load(it.profileImg).into(binding.userProfile)
+            binding.clubTxt.text = if (it.club != "가입된클럽이없습니다") it.club else "없음"
+            binding.levelTxt.text = "Lv.$level"
+        })
     }
 
     private fun setRecordData(nickName: String) {
-        viewModel.getRecordData(nickName).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.d("recordData", it.toString())
-                val playTime = it.playTime.replace("분", "")
-                val startTime = it.startTime.substring(0, 10)
-                binding.playTimeTxt.text = getTime(playTime.toInt()) + "시간"
-                binding.startTimeTxt.text = startTime
-            }, {
-                Log.d("Error", it.message.toString())
-            })
+        viewModel.getRecordData(nickName)
+        viewModel.recordData.observe(viewLifecycleOwner, {
+            val playTime = it.playTime.replace("분", "")
+            binding.playTimeTxt.text = getTime(playTime.toInt()) + "시간"
+            binding.startTimeTxt.text = it.startTime.substring(0, 10)
+        })
     }
 
     private fun getTime(time: Int): String {
