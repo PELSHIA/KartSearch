@@ -145,6 +145,7 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
                         binding.mapName.text = name
                         break
                     }
+                    binding.mapName.text = "알 수 없는 트랙"
                 }
             }
 

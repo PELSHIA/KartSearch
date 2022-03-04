@@ -88,6 +88,7 @@ object BindingAdapter {
                         view.text = name
                         break
                     }
+                    view.text = "알 수 없는 트랙"
                 }
             }
 
