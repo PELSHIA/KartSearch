@@ -40,7 +40,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private val dataCount: Int = 10
     private val dataList = mutableListOf<UserInfoData>()
     private var isLastPage: Boolean = false
-    var title = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +55,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
 
     private fun initMode() {
         gameType = "스피드 개인전"
-        title = "스피드 개인전 전적"
+        binding.userRecordTitle.text = "스피드 개인전 전적"
         isTeamMatch(gameType)
         getGameTypeId(gameType)
     }
@@ -73,7 +72,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         modeViewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
             gameType = it
-            title = "$it 전적"
+            binding.userRecordTitle.text = "$it 전적"
             isTeamMatch(it)
             getGameTypeId(it)
         })
