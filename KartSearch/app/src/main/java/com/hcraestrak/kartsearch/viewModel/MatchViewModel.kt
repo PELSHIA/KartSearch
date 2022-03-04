@@ -15,7 +15,6 @@ class MatchViewModel @Inject constructor(private val repo: MatchRepository) : Vi
 
     lateinit var job: Job
 
-    var isScroll = MutableLiveData<Boolean>()
     private var _matchResponse = MutableLiveData<Match>()
     val matchResponse: LiveData<Match>
         get() = _matchResponse

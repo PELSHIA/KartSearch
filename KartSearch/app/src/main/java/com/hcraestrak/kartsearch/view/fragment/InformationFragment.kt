@@ -22,6 +22,7 @@ import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
+import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -31,6 +32,7 @@ class InformationFragment : Fragment() {
 
     private lateinit var binding: FragmentInformationBinding
     private val viewModel: MatchViewModel by activityViewModels()
+    private val scroll: InformationViewModel by activityViewModels()
     private val args: InformationFragmentArgs by navArgs()
     private lateinit var storageReference: StorageReference
 
@@ -113,7 +115,7 @@ class InformationFragment : Fragment() {
     private fun scroll() {
         binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _ ->
             if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
-                viewModel.isScroll.value = true
+                scroll.isScroll.value = true
             }
         }
     }

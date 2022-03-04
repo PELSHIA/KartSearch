@@ -24,6 +24,7 @@ import com.hcraestrak.kartsearch.view.adapter.TrackStatRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
+import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +34,8 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
 
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val modeViewModel: ModeViewModel by activityViewModels()
-    override val viewModel: MatchViewModel by activityViewModels()
+    override val viewModel: MatchViewModel by viewModels()
+    private val scroll: InformationViewModel by activityViewModels()
     private val trackList: MutableList<TrackStatData> = mutableListOf()
     private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
     private val dataCount: Int = 10
@@ -277,7 +279,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     }
 
     private fun scroll() {
-        viewModel.isScroll.observe(viewLifecycleOwner, {
+        scroll.isScroll.observe(viewLifecycleOwner, {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
                 loadMore()

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -22,6 +23,7 @@ import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
+import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +31,8 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
 
     private lateinit var recyclerAdapter: UserRecordRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
-    override val viewModel: MatchViewModel by activityViewModels()
+    override val viewModel: MatchViewModel by viewModels()
+    private val scroll: InformationViewModel by activityViewModels()
     private val modeViewModel: ModeViewModel by activityViewModels()
     private var gameType: String = ""
     private var isTeamMatch = false
@@ -81,7 +84,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     }
 
     private fun scroll() {
-        viewModel.isScroll.observe(viewLifecycleOwner, {
+        scroll.isScroll.observe(viewLifecycleOwner, {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
                 loadMore()
