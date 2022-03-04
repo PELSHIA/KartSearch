@@ -207,7 +207,7 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
     }
 
     private fun isForceQuit(rank: String): String {
-        return if (rank == "") "99" else rank
+        return if (rank == "" || rank == "0") "99" else rank
     }
 
     private fun setTeamScore() {
