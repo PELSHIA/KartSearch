@@ -111,7 +111,7 @@ class InformationFragment : Fragment() {
     }
 
     private fun scroll() {
-        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _ ->
             if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
                 viewModel.isScroll.value = true
             }

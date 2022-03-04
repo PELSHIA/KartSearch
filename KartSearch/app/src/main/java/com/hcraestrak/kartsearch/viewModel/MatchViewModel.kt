@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.model.repo.MatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
 import javax.inject.Inject
 

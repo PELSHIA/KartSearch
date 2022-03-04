@@ -2,8 +2,6 @@ package com.hcraestrak.kartsearch.model.db.dao
 
 import androidx.room.*
 import com.hcraestrak.kartsearch.model.db.entity.Search
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Completable
 
 @Dao
 interface SearchDao {

@@ -2,8 +2,6 @@ package com.hcraestrak.kartsearch.model.repo
 
 import com.hcraestrak.kartsearch.model.db.dao.SearchDao
 import com.hcraestrak.kartsearch.model.db.entity.Search
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
 
 class SearchRepository(private val db: SearchDao?) {
 

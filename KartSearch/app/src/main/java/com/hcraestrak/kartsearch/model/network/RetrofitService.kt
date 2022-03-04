@@ -4,8 +4,6 @@ import android.util.Log
 import com.google.gson.Gson
 import com.hcraestrak.kartsearch.model.network.dao.MatchService
 import com.hcraestrak.kartsearch.model.network.dao.UserService
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
