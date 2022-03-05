@@ -1,12 +1,10 @@
 package com.hcraestrak.kartsearch.di
 
+import com.hcraestrak.kartsearch.model.db.dao.BookmarkDao
 import com.hcraestrak.kartsearch.model.db.dao.SearchDao
 import com.hcraestrak.kartsearch.model.network.dao.MatchService
 import com.hcraestrak.kartsearch.model.network.dao.UserService
-import com.hcraestrak.kartsearch.model.repo.MatchRepository
-import com.hcraestrak.kartsearch.model.repo.SearchRepository
-import com.hcraestrak.kartsearch.model.repo.SpecificRepository
-import com.hcraestrak.kartsearch.model.repo.UserRepository
+import com.hcraestrak.kartsearch.model.repo.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +37,11 @@ object RepositoryModule {
     @Provides
     fun provideSearchRepository(db: SearchDao?): SearchRepository {
         return SearchRepository(db)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookmarkRepository(db: BookmarkDao?): BookmarkRepository {
+        return BookmarkRepository(db)
     }
 }

@@ -1,7 +1,9 @@
 package com.hcraestrak.kartsearch.di
 
 import android.content.Context
+import com.hcraestrak.kartsearch.model.db.dao.BookmarkDao
 import com.hcraestrak.kartsearch.model.db.dao.SearchDao
+import com.hcraestrak.kartsearch.model.db.database.BookmarkDatabase
 import com.hcraestrak.kartsearch.model.db.database.SearchDatabase
 import dagger.Module
 import dagger.Provides
@@ -18,5 +20,11 @@ object RoomModule {
     @Provides
     fun provideSearchDatabase(@ApplicationContext context: Context): SearchDao? {
         return SearchDatabase.getInstance(context)?.SearchDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookmarkDatabase(@ApplicationContext context: Context): BookmarkDao? {
+        return BookmarkDatabase.getInstance(context)?.BookmarkDao()
     }
 }
