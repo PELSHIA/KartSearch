@@ -16,4 +16,7 @@ interface BookmarkDao {
 
     @Query("DELETE FROM bookmark_Table")
     suspend fun deleteAllNickNames(): Void
+
+    @Query("SELECT EXISTS (SELECT * FROM bookmark_Table WHERE nickName = :nickName)")
+    suspend fun isExists(nickName: String): Boolean
 }

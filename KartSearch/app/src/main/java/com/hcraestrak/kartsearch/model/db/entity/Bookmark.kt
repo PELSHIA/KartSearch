@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "bookmark_Table")
 data class Bookmark(
     @PrimaryKey
-    @ColumnInfo(name = "word")
+    @ColumnInfo(name = "nickName")
     val nickName: String
 )
