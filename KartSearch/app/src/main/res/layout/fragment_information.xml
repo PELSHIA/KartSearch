@@ -36,6 +36,16 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/user_bookmark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_star_border"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
             android:id="@+id/user_profile_img"
             android:layout_width="120dp"
             android:layout_height="110dp"
