@@ -20,8 +20,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
+import com.hcraestrak.kartsearch.model.db.entity.Bookmark
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
+import com.hcraestrak.kartsearch.viewModel.BookmarkViewModel
 import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -32,6 +34,7 @@ class InformationFragment : Fragment() {
 
     private lateinit var binding: FragmentInformationBinding
     private val viewModel: MatchViewModel by activityViewModels()
+    private val bookMark: BookmarkViewModel by viewModels()
     private val scroll: InformationViewModel by activityViewModels()
     private val args: InformationFragmentArgs by navArgs()
     private lateinit var storageReference: StorageReference
@@ -50,6 +53,7 @@ class InformationFragment : Fragment() {
         searchData()
         setTabLayout()
         scroll()
+        bookmark()
     }
 
     private fun bindingToolbar() {
@@ -117,6 +121,23 @@ class InformationFragment : Fragment() {
             if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
                 scroll.isScroll.value = true
             }
+        }
+    }
+
+    private fun bookmark() {
+        binding.userBookmark.setOnClickListener {
+            viewModel.matchResponse.observe(viewLifecycleOwner, { match ->
+                bookMark.isExists(match.nickName)
+                bookMark.isExists.observe(viewLifecycleOwner, {
+                    if (it) {
+                        bookMark.deleteNickName(Bookmark(match.nickName))
+                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border).into(binding.userBookmark)
+                    } else {
+                        bookMark.insertNickName(Bookmark(match.nickName))
+                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star).into(binding.userBookmark)
+                    }
+                })
+            })
         }
     }
 
