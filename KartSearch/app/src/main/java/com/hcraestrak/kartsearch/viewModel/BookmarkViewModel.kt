@@ -17,9 +17,12 @@ class BookmarkViewModel @Inject constructor(private val repo: BookmarkRepository
     private lateinit var job: Job
 
     private val _bookmark = MutableLiveData<List<Bookmark>>()
+    private val _isExists = MutableLiveData<Boolean>()
 
     val bookmark: LiveData<List<Bookmark>>
         get() = _bookmark
+    val isExists: LiveData<Boolean>
+        get() = _isExists
 
     fun getAllNickName() {
         job = CoroutineScope(Dispatchers.IO).launch {
@@ -50,6 +53,15 @@ class BookmarkViewModel @Inject constructor(private val repo: BookmarkRepository
         job = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main) {
                 repo.deleteAllNickName()
+            }
+        }
+    }
+
+    fun isExists(nickName: String) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val isExist = repo.isExists(nickName)
+            withContext(Dispatchers.Main) {
+                _isExists.postValue(isExist)
             }
         }
     }

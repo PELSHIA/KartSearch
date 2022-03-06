@@ -22,4 +22,8 @@ class BookmarkRepository(private val db: BookmarkDao?) {
     suspend fun deleteAllNickName(): Void? {
         return db?.deleteAllNickNames()
     }
+
+    suspend fun isExists(nickName: String): Boolean? {
+        return db?.isExists(nickName)
+    }
 }
