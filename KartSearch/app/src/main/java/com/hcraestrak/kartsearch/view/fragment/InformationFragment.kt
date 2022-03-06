@@ -76,6 +76,14 @@ class InformationFragment : Fragment() {
             binding.userNickName.text = match.nickName
             getImage("character", match.matches[0].matches[0].character, binding.userProfileImg) // 대표 캐릭터 이미지
             getLicenseImage(match.matches[0].matches[0].player.rankinggrade2) // 라이센스 이미지
+            bookMark.isExists(match.nickName)
+            bookMark.isExists.observe(viewLifecycleOwner, { // 즐겨찾기 초기 설정
+                if (it) {
+                    Glide.with(binding.userBookmark.context).load(R.drawable.ic_star).into(binding.userBookmark)
+                } else {
+                    Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border).into(binding.userBookmark)
+                }
+            })
         })
     }
 
