@@ -19,7 +19,6 @@ import com.hcraestrak.kartsearch.databinding.FragmentUserRecordBinding
 import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.UserRecordRecyclerViewAdapter
-import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
@@ -32,7 +31,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private lateinit var recyclerAdapter: UserRecordRecyclerViewAdapter
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     override val viewModel: MatchViewModel by viewModels()
-    private val scroll: InformationViewModel by activityViewModels()
+    private val informationViewModel: InformationViewModel by activityViewModels()
     private val modeViewModel: ModeViewModel by activityViewModels()
     private var gameType: String = ""
     private var isTeamMatch = false
@@ -51,6 +50,16 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         initMode()
         modeObserve()
         scroll()
+        refresh()
+    }
+
+    private fun refresh() {
+        informationViewModel.isRefresh.observe(viewLifecycleOwner, {
+            if (it) {
+                getGameTypeId(gameType)
+                informationViewModel.isScroll.postValue(false)
+            }
+        })
     }
 
     private fun initMode() {
@@ -83,7 +92,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     }
 
     private fun scroll() {
-        scroll.isScroll.observe(viewLifecycleOwner, {
+        informationViewModel.isScroll.observe(viewLifecycleOwner, {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
                 loadMore()

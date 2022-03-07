@@ -26,6 +26,8 @@ import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
 import com.hcraestrak.kartsearch.viewModel.BookmarkViewModel
 import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.IOException
 
@@ -156,7 +158,7 @@ class InformationFragment : Fragment() {
             Log.d("refresh", "refresh")
             informationViewModel.isRefresh.postValue(true)
             informationViewModel.isRefresh.observe(viewLifecycleOwner, {
-                binding.refreshLayout.isRefreshing = it
+                binding.refreshLayout.isRefreshing = false
             })
         }
     }
