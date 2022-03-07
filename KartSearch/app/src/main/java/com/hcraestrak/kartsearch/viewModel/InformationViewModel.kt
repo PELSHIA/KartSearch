@@ -5,4 +5,5 @@ import androidx.lifecycle.ViewModel
 
 class InformationViewModel: ViewModel() {
     var isScroll = MutableLiveData<Boolean>()
+    var isRefresh = MutableLiveData<Boolean>()
 }

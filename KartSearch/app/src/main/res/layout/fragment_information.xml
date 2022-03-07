@@ -24,78 +24,84 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/user_bookmark"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="90dp"
-            android:layout_marginEnd="30dp"
-            android:src="@drawable/ic_star_border"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <ImageView
-            android:id="@+id/user_profile_img"
-            android:layout_width="120dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="85dp"
-            tools:src="@mipmap/ic_launcher"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/user_license"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toEndOf="@id/user_profile_img"
-            app:layout_constraintBottom_toBottomOf="@id/user_profile_img"
-            android:layout_marginStart="10dp"
-            tools:src="@drawable/ic_close"/>
-
-        <TextView
-            android:id="@+id/user_nickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="멋진샌박주장"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/user_profile_img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            style="@style/Base.Widget.Design.TabLayout"
-            app:layout_constraintTop_toBottomOf="@id/user_nickName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
-                app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/user_bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="90dp"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/ic_star_border"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/user_profile_img"
+                android:layout_width="120dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="85dp"
+                tools:src="@mipmap/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/user_license"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toEndOf="@id/user_profile_img"
+                app:layout_constraintBottom_toBottomOf="@id/user_profile_img"
+                android:layout_marginStart="10dp"
+                tools:src="@drawable/ic_close"/>
+
+            <TextView
+                android:id="@+id/user_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:text="멋진샌박주장"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/user_profile_img"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                style="@style/Base.Widget.Design.TabLayout"
+                app:layout_constraintTop_toBottomOf="@id/user_nickName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-    </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -3,12 +3,12 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -35,7 +35,7 @@ class InformationFragment : Fragment() {
     private lateinit var binding: FragmentInformationBinding
     private val viewModel: MatchViewModel by activityViewModels()
     private val bookMark: BookmarkViewModel by viewModels()
-    private val scroll: InformationViewModel by activityViewModels()
+    private val informationViewModel: InformationViewModel by activityViewModels()
     private val args: InformationFragmentArgs by navArgs()
     private lateinit var storageReference: StorageReference
 
@@ -54,6 +54,7 @@ class InformationFragment : Fragment() {
         setTabLayout()
         scroll()
         bookmark()
+        refresh()
     }
 
     private fun bindingToolbar() {
@@ -127,7 +128,7 @@ class InformationFragment : Fragment() {
     private fun scroll() {
         binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _ ->
             if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
-                scroll.isScroll.value = true
+                informationViewModel.isScroll.value = true
             }
         }
     }
@@ -145,6 +146,17 @@ class InformationFragment : Fragment() {
                         Glide.with(binding.userBookmark.context).load(R.drawable.ic_star).into(binding.userBookmark)
                     }
                 })
+            })
+        }
+    }
+
+    private fun refresh() {
+        binding.refreshLayout.setProgressViewOffset(false, 0, 200) // Progress location
+        binding.refreshLayout.setOnRefreshListener {
+            Log.d("refresh", "refresh")
+            informationViewModel.isRefresh.postValue(true)
+            informationViewModel.isRefresh.observe(viewLifecycleOwner, {
+                binding.refreshLayout.isRefreshing = it
             })
         }
     }
