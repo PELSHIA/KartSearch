@@ -56,6 +56,8 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private fun refresh() {
         informationViewModel.isRefresh.observe(viewLifecycleOwner, {
             if (it) {
+                page = 1
+                isLastPage = false
                 getGameTypeId(gameType)
                 informationViewModel.isScroll.postValue(false)
             }
