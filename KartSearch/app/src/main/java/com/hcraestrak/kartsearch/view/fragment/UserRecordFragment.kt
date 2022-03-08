@@ -59,7 +59,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                 page = 1
                 isLastPage = false
                 getGameTypeId(gameType)
-                informationViewModel.isScroll.postValue(false)
+                informationViewModel.isRefresh.postValue(false)
             }
         })
     }
