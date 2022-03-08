@@ -35,12 +35,13 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     private val database: DatabaseReference = Firebase.database("https://gametype.firebaseio.com/").reference
     private val modeViewModel: ModeViewModel by activityViewModels()
     override val viewModel: MatchViewModel by viewModels()
-    private val scroll: InformationViewModel by activityViewModels()
+    private val informationViewModel: InformationViewModel by activityViewModels()
     private val trackList: MutableList<TrackStatData> = mutableListOf()
     private lateinit var recyclerViewAdapter: TrackStatRecyclerViewAdapter
     private val dataCount: Int = 10
     private var page: Int = 1
     private var isLastPage: Boolean = false
+    private var gameType: String = ""
     var title: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,9 +51,11 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         recyclerViewAdapter = TrackStatRecyclerViewAdapter()
 
         initData()
+        initRecyclerView()
         modeSelect()
         modeObserve()
         scroll()
+        refresh()
     }
 
     private fun modeSelect() {
@@ -64,14 +67,27 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     }
 
     private fun initData() {
+        gameType = "스피드 개인전"
         title = "스피드 개인전 전적"
         getGameTypeId("스피드 개인전")
     }
 
     private fun modeObserve() {
         modeViewModel.mode.observe(viewLifecycleOwner, {
+            gameType = it
             title = "$it 전적"
             getGameTypeId(it)
+        })
+    }
+
+    private fun refresh() {
+        informationViewModel.isRefresh.observe(viewLifecycleOwner, {
+            if (it) {
+                page = 1
+                isLastPage = false
+                getGameTypeId(gameType)
+                informationViewModel.isRefresh.postValue(false)
+            }
         })
     }
 
@@ -113,6 +129,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         var completion: Int = 0
         var avg100: Int = 0
         val rankList: MutableList<Entry> = mutableListOf()
+        trackList.clear()
         data.matches[0].matches.forEachIndexed { index, match ->
             val isExistTrack = trackList.any { it.track == match.trackId }
             if (match.player.matchWin == "1") {
@@ -242,8 +259,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         }
     }
 
-    private fun trackRecyclerView() {
-        val list = mutableListOf<TrackStatData>()
+    private fun initRecyclerView() {
         val decoration: RecyclerViewDecoration = RecyclerViewDecoration(20)
         val recyclerViewLayoutManager = object : LinearLayoutManager(binding.trackStatRecyclerView.context) {
             override fun canScrollVertically(): Boolean {
@@ -256,6 +272,10 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
             adapter = recyclerViewAdapter
             addItemDecoration(decoration)
         }
+    }
+
+    private fun trackRecyclerView() {
+        val list = mutableListOf<TrackStatData>()
         Log.d("trackList", "trackList.size: ${trackList.size}")
         if (trackList.size <= dataCount) {
             recyclerViewAdapter.clearData()
@@ -279,7 +299,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     }
 
     private fun scroll() {
-        scroll.isScroll.observe(viewLifecycleOwner, {
+        informationViewModel.isScroll.observe(viewLifecycleOwner, {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
                 loadMore()
