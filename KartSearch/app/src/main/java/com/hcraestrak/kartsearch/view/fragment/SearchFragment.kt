@@ -136,9 +136,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
 
     private fun changeMode() {
         if (mode) {
-            bookMarkMode()
-        } else {
             recentSearch()
+        } else {
+            bookMarkMode()
         }
         
         binding.bookmark.setOnClickListener {
