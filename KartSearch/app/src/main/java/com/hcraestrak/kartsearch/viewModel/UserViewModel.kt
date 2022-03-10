@@ -15,12 +15,13 @@ class UserViewModel @Inject constructor(private val repo: UserRepository): ViewM
 
     lateinit var job: Job
 
-    private val _userInfoLiveData = MutableLiveData<UserInfo>()
+    private var _userInfoLiveData = MutableLiveData<UserInfo>()
 
     val userInfoLiveData: LiveData<UserInfo>
         get() = _userInfoLiveData
 
     fun getAccessId(nickName: String) {
+        _userInfoLiveData = MutableLiveData<UserInfo>()
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = repo.getAccessId(nickName)
             withContext(Dispatchers.Main) {
