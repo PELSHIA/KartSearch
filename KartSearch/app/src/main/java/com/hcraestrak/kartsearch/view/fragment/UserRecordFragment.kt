@@ -225,7 +225,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
             recyclerAdapter.clearData()
             recyclerAdapter.setData(data)
         }
-        page++
     }
 
     private fun getGameTypeId(typeName: String) {

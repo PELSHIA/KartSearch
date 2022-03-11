@@ -294,7 +294,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
             }
             recyclerViewAdapter.clearData()
             recyclerViewAdapter.setData(list, true)
-            page++
         }
     }
 
