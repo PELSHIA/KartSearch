@@ -36,7 +36,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     private var gameType: String = ""
     private var isTeamMatch = false
     private var page: Int = 1
-    private val dataCount: Int = 10
+    private val dataCount: Int = 15
     private val dataList = mutableListOf<UserInfoData>()
     private var isLastPage: Boolean = false
 
