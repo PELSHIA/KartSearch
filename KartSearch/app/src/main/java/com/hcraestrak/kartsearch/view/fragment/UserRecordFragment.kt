@@ -104,7 +104,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
 
     private fun loadMore() {
         val data = mutableListOf<UserInfoData>()
-        if (dataList.size <= page * dataCount) {
+        if (dataList.size - dataCount * page <= dataCount) {
             if (isLastPage) {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
@@ -143,7 +143,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                     )
                 )
             }
-            Log.d("size", "RecordData.size = ${data.size}")
             recyclerAdapter.setData(data)
             page++
         }

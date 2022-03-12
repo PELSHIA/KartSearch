@@ -308,7 +308,7 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
 
     private fun loadMore() {
         val list = mutableListOf<TrackStatData>()
-        if (trackList.size <= page * dataCount) {
+        if (trackList.size - dataCount * page <= dataCount) {
             if (isLastPage) {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
