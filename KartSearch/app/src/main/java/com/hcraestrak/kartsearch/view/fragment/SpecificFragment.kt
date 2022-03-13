@@ -211,17 +211,18 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
     }
 
     private fun setTeamScore() {
-        var rank = 1
+        var rank = 0
         var blueScore = 0 // 2
         var redScore = 0 // 1
         val scoreList = listOf<Int>(10, 8, 6, 5, 4, 3, 2, 1) // 팀전 점수
-        dataList.forEach {
+        val list = dataList.distinct()
+        list.forEach {
             if (it.isRetire == "0") {
                 if (it.teamId == "1") {
-                    redScore += scoreList[rank - 1]
+                    redScore += scoreList[rank]
                     rank++
                 } else if (it.teamId == "2") {
-                    blueScore += scoreList[rank - 1]
+                    blueScore += scoreList[rank]
                     rank++
                 }
             } else {
