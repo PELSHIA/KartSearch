@@ -47,7 +47,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
 
         modeSelect()
         initRecyclerView()
-        initMode()
         modeObserve()
         scroll()
         refresh()
@@ -62,13 +61,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                 informationViewModel.isRefresh.postValue(false)
             }
         })
-    }
-
-    private fun initMode() {
-        gameType = "스피드 개인전"
-        binding.userRecordTitle.text = "스피드 개인전 전적"
-        isTeamMatch(gameType)
-        getGameTypeId(gameType)
     }
 
     private fun modeSelect() {

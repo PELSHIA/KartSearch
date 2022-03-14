@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 
 class ModeViewModel: ViewModel() {
 
-    val mode = MutableLiveData<String>()
+    val mode = MutableLiveData<String>("스피드 개인전")
 
 }
 

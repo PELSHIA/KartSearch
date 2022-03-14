@@ -50,7 +50,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         binding.fragment = this
         recyclerViewAdapter = TrackStatRecyclerViewAdapter()
 
-        initData()
         initRecyclerView()
         modeSelect()
         modeObserve()
@@ -64,12 +63,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
                 parentFragmentManager, "ModeSelectDialog"
             )
         }
-    }
-
-    private fun initData() {
-        gameType = "스피드 개인전"
-        title = "스피드 개인전 전적"
-        getGameTypeId("스피드 개인전")
     }
 
     private fun modeObserve() {
