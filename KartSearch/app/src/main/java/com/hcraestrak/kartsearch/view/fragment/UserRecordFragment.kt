@@ -99,7 +99,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         if (dataList.size - dataCount * page <= dataCount) {
             if (isLastPage) {
                 binding.progressBar.visibility = View.GONE
-                Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
             } else {
                 for (i in page * dataCount until dataList.size) {
                     data.add(

@@ -20,6 +20,7 @@ class MatchViewModel @Inject constructor(private val repo: MatchRepository) : Vi
         get() = _matchResponse
 
     fun accessIdMatchInquiry(access_Id: String, matchType: String, limit: Int = 100) {
+        _matchResponse = MutableLiveData()
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = repo.accessIdMatchInquiry(access_Id, matchType, limit)
             withContext(Dispatchers.Main) {
