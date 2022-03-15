@@ -33,6 +33,7 @@
             tools:src="@color/dark_blue"
             app:imageType="@{`kart`}"
             app:imageId="@{rank.kart}"
+            android:src="@drawable/unknownkart"
             android:layout_marginStart="45dp"
             app:layout_constraintStart_toEndOf="@id/item_rank"
             app:layout_constraintTop_toTopOf="parent"

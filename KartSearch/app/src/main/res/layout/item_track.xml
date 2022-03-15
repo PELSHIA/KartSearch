@@ -20,6 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:imageId="@{trackData.track}"
+            android:src="@drawable/unknowntrack"
             app:imageType="@{`track`}"
             android:layout_marginStart="20dp"
             android:layout_width="35dp"

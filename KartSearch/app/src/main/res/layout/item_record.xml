@@ -32,6 +32,7 @@
         <ImageView
             android:id="@+id/item_kart_img"
             android:layout_marginStart="30dp"
+            android:src="@drawable/unknownkart"
             app:imageId="@{record.kart}"
             imageType="@{`kart`}"
             android:layout_width="40dp"
