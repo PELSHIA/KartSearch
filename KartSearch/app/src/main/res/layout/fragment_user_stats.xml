@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="com.hcraestrak.kartsearch.view.fragment.UserStatsFragment" />
+            name="mode"
+            type="com.hcraestrak.kartsearch.viewModel.ModeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
             android:textSize="11sp"
-            android:text="@{fragment.title}"
+            android:text="@{mode.mode + ` 통계`}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

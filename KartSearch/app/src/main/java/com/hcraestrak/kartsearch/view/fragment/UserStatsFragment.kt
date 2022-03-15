@@ -42,13 +42,12 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     private var page: Int = 1
     private var isLastPage: Boolean = false
     private var gameType: String = ""
-    var title: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fragment = this
-        recyclerViewAdapter = TrackStatRecyclerViewAdapter()
+        binding.mode = modeViewModel
+        binding.lifecycleOwner = this
 
         initRecyclerView()
         modeSelect()
@@ -68,7 +67,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
     private fun modeObserve() {
         modeViewModel.mode.observe(viewLifecycleOwner, {
             gameType = it
-            title = "$it 전적"
             getGameTypeId(it)
         })
     }
@@ -304,7 +302,6 @@ class UserStatsFragment(val id: String) : BaseFragment<FragmentUserStatsBinding,
         if (trackList.size - dataCount * page <= dataCount) {
             if (isLastPage) {
                 binding.progressBar.visibility = View.GONE
-                Toast.makeText(activity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
             } else {
                 for (i in page * dataCount until trackList.size) {
                     list.add(

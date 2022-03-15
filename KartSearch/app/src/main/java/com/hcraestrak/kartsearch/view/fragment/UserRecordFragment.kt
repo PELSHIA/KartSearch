@@ -43,7 +43,8 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fragment = this
+        binding.mode = modeViewModel
+        binding.lifecycleOwner = this
 
         modeSelect()
         initRecyclerView()
@@ -75,7 +76,6 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         modeViewModel.mode.observe(viewLifecycleOwner, {
             Log.d("gameType", it)
             gameType = it
-            binding.userRecordTitle.text = "$it 전적"
             isTeamMatch(it)
             getGameTypeId(it)
         })

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="com.hcraestrak.kartsearch.view.fragment.UserRecordFragment" />
+            name="mode"
+            type="com.hcraestrak.kartsearch.viewModel.ModeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +22,7 @@
             android:layout_marginTop="15dp"
             android:textSize="11sp"
             tools:text="스피드 개인전 전적"
+            android:text="@{mode.mode + ` 전적`}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
