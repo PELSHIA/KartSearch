@@ -35,6 +35,11 @@ class BookmarkRecyclerViewAdapter: RecyclerView.Adapter<BookmarkRecyclerViewAdap
         notifyDataSetChanged()
     }
 
+    fun clearData() {
+        dataSet.clear()
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(val binding: ItemBookmarkBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Bookmark) {
             binding.bookmark = data
@@ -51,6 +56,8 @@ class BookmarkRecyclerViewAdapter: RecyclerView.Adapter<BookmarkRecyclerViewAdap
 
         holder.binding.itemDeleteBookmark.setOnClickListener {
             word = dataSet[position].nickName
+            dataSet.remove(Bookmark(word))
+            notifyDataSetChanged()
             mListener.onClick(1)
         }
 

@@ -33,6 +33,11 @@ class SearchRecyclerViewAdapter: RecyclerView.Adapter<SearchRecyclerViewAdapter.
         notifyDataSetChanged()
     }
 
+    fun clearData() {
+        dataSet.clear()
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Search) {
             binding.search = data
@@ -49,6 +54,8 @@ class SearchRecyclerViewAdapter: RecyclerView.Adapter<SearchRecyclerViewAdapter.
 
         holder.binding.itemDelete.setOnClickListener {
             word = dataSet[position].word
+            dataSet.remove(Search(word))
+            notifyDataSetChanged()
             mListener.onClick(1)
         }
 

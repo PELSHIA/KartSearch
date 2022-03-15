@@ -1,8 +1,5 @@
 package com.hcraestrak.kartsearch.view.fragment
 
-import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -98,7 +95,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
             when(it) {
                 1 -> {
                     deleteSearchData(word)
-                    recyclerViewAdapter.notifyDataSetChanged()
                 }
                 2 -> {
                     getSearch(word)
@@ -111,7 +107,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
             when (it) {
                 1 -> {
                     bookmarkViewModel.deleteNickName(Bookmark(nickName))
-                    bookmarkRecyclerViewAdapter.notifyDataSetChanged()
                 }
                 2 -> {
                     getSearch(nickName)
@@ -168,11 +163,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
     private fun allDelete() {
         binding.allDelete.setOnClickListener {
             if (mode) {
+                recyclerViewAdapter.clearData()
                 viewModel.deleteAllWord()
-                recyclerViewAdapter.notifyDataSetChanged()
             } else {
+                bookmarkRecyclerViewAdapter.clearData()
                 bookmarkViewModel.deleteAllNickName()
-                bookmarkRecyclerViewAdapter.notifyDataSetChanged()
             }
         }
     }
