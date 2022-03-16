@@ -55,6 +55,7 @@ class InformationFragment : Fragment() {
         searchData()
         setTabLayout()
         scroll()
+        goToUp()
         bookmark()
         refresh()
     }
@@ -132,6 +133,12 @@ class InformationFragment : Fragment() {
             if (scrollY == binding.scrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
                 informationViewModel.isScroll.value = true
             }
+        }
+    }
+
+    private fun goToUp() {
+        binding.goToUp.setOnClickListener {
+            binding.scrollView.fullScroll(0)
         }
     }
 
