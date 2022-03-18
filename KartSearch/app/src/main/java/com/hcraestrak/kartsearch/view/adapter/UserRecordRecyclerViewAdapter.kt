@@ -27,7 +27,6 @@ class UserRecordRecyclerViewAdapter: RecyclerView.Adapter<UserRecordRecyclerView
 
     fun setData(data: List<UserInfoData>) {
         this.data.addAll(data)
-        notifyDataSetChanged()
     }
 
     fun clearData() {

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -115,6 +116,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                     )
                 }
                 recyclerAdapter.setData(data)
+                recyclerAdapter.notifyItemChanged(dataList.size)
                 binding.progressBar.visibility = View.GONE
                 isLastPage = true
             }
@@ -135,6 +137,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                 )
             }
             recyclerAdapter.setData(data)
+            recyclerAdapter.notifyItemChanged(dataCount * page + dataCount)
             page++
         }
     }
@@ -152,6 +155,7 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
             adapter = recyclerAdapter
             addItemDecoration(decoration)
         }
+        setAnimation()
 
         recyclerAdapter.setOnItemClickListener {
             val matchId: String = recyclerAdapter.getMatchId()
@@ -191,12 +195,20 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
         })
     }
 
+    private fun setAnimation() {
+        val anim: DefaultItemAnimator = DefaultItemAnimator()
+        anim.addDuration = 1000
+        anim.removeDuration = 1000
+        binding.userRecordRecyclerView.itemAnimator = anim
+    }
+
     private fun setRecyclerViewData() {
         recyclerAdapter.clearData()
         val data = mutableListOf<UserInfoData>()
         // 데이터의 수가 20이하 인 경우 페이징 처리가 필요 없다
         if (dataList.size <= dataCount) {
             recyclerAdapter.setData(dataList)
+            recyclerAdapter.notifyItemInserted(dataList.size)
         } else {
             for (i in 0 until dataCount) {
                 data.add(
@@ -212,8 +224,8 @@ class UserRecordFragment(val id: String) : BaseFragment<FragmentUserRecordBindin
                     )
                 )
             }
-            recyclerAdapter.clearData()
             recyclerAdapter.setData(data)
+            recyclerAdapter.notifyItemInserted(dataCount)
         }
     }
 
