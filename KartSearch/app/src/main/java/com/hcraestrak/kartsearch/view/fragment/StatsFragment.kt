@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hcraestrak.kartsearch.R
 
-class LeagueFragment : Fragment() {
+class StatsFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -15,7 +15,7 @@ class LeagueFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_league, container, false)
+        return inflater.inflate(R.layout.fragment_stats, container, false)
     }
 
 }

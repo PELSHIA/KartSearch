@@ -103,8 +103,8 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
-        android:id="@+id/leagueFragment"
-        android:name="com.hcraestrak.kartsearch.view.fragment.LeagueFragment"
+        android:id="@+id/statsFragment"
+        android:name="com.hcraestrak.kartsearch.view.fragment.StatsFragment"
         android:label="fragment_league"
-        tools:layout="@layout/fragment_league" />
+        tools:layout="@layout/fragment_stats" />
 </navigation>

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.mainFragment || destination.id == R.id.settingFragment || destination.id == R.id.leagueFragment) {
+            if (destination.id == R.id.mainFragment || destination.id == R.id.settingFragment || destination.id == R.id.statsFragment) {
                 binding.bottomNavigationView.visibility = View.VISIBLE
             } else {
                 binding.bottomNavigationView.visibility = View.GONE
