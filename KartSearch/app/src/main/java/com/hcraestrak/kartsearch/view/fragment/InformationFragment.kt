@@ -23,37 +23,27 @@ import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
 import com.hcraestrak.kartsearch.model.db.entity.Bookmark
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import com.hcraestrak.kartsearch.view.adapter.InformationVIewPagerAdapter
+import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.BookmarkViewModel
 import com.hcraestrak.kartsearch.viewModel.InformationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.IOException
 
 @AndroidEntryPoint
-class InformationFragment : Fragment() {
+class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewModel>(R.layout.fragment_information) {
 
-    private lateinit var binding: FragmentInformationBinding
-    private val viewModel: MatchViewModel by activityViewModels()
+    override val viewModel: MatchViewModel by activityViewModels()
     private val bookMark: BookmarkViewModel by viewModels()
     private val informationViewModel: InformationViewModel by activityViewModels()
     private val args: InformationFragmentArgs by navArgs()
     private lateinit var storageReference: StorageReference
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentInformationBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingToolbar()
         searchData()
-        setTabLayout()
+        setViewPager()
         scroll()
         goToUp()
         bookmark()
@@ -120,12 +110,8 @@ class InformationFragment : Fragment() {
         }
     }
 
-    private fun setTabLayout() {
-        val tabLayoutTextList = listOf<String>("전적", "통계", "정보")
-        binding.viewPager.adapter = InformationVIewPagerAdapter(requireActivity(), args.accessId)
-        TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
-            tab.text = tabLayoutTextList[position]
-        }.attach()
+    private fun setViewPager() {
+
     }
 
     private fun scroll() {
