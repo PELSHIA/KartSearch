@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        android:background="@drawable/background_radius_20dp"
+        tools:context=".view.fragment.UserPercentFragment">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/winStatChart"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/completionStatChart"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/winStatTitle"
+            app:layout_constraintStart_toStartOf="@id/winStatChart"
+            app:layout_constraintEnd_toEndOf="@id/winStatChart"
+            app:layout_constraintTop_toBottomOf="@id/winStatChart"
+            android:text="@string/win_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/completionStatChart"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="@id/winStatChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/winStatChart"
+            app:layout_constraintTop_toTopOf="@id/winStatChart" />
+
+        <TextView
+            android:id="@+id/completionStatTitle"
+            app:layout_constraintStart_toStartOf="@id/completionStatChart"
+            app:layout_constraintEnd_toEndOf="@id/completionStatChart"
+            app:layout_constraintTop_toBottomOf="@id/completionStatChart"
+            android:text="@string/completion_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.UserTrackStatFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="164dp" >
+
+        <TextView
+            android:id="@+id/trackWinStatsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:text="가장 승률이 좋은 트랙"/>
+
+        <LinearLayout
+            android:id="@+id/trackWinStatsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trackWinStatsTitle">
+
+            <ImageView
+                android:id="@+id/trackWinStatsImg"
+                android:layout_width="27dp"
+                android:layout_height="19dp"/>
+
+            <TextView
+                android:id="@+id/trackWinStatsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="월드 두바이 다운타운" />
+
+            <TextView
+                android:id="@+id/trackWinStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="90%" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/trackPlayStatsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/trackWinStatsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="20dp"
+            android:text="가장 플레이가 많은 트랙"/>
+
+        <LinearLayout
+            android:id="@+id/trackPlayStatsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trackPlayStatsTitle">
+
+            <ImageView
+                android:id="@+id/trackPlayStatsImg"
+                android:layout_width="27dp"
+                android:layout_height="19dp"/>
+
+            <TextView
+                android:id="@+id/trackPlayStatsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="월드 두바이 다운타운" />
+
+            <TextView
+                android:id="@+id/trackPlayStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="11회" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/trackRankStatsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/trackPlayStatsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="20dp"
+            android:text="평균순위가 제일 높은 트랙"/>
+
+        <LinearLayout
+            android:id="@+id/trackRankStatsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trackRankStatsTitle">
+
+            <ImageView
+                android:id="@+id/trackRankStatsImg"
+                android:layout_width="27dp"
+                android:layout_height="19dp"/>
+
+            <TextView
+                android:id="@+id/trackRankStatsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="월드 두바이 다운타운" />
+
+            <TextView
+                android:id="@+id/trackRankPlayStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                tools:text="1.5위" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
