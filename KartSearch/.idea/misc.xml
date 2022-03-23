@@ -10,6 +10,7 @@
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_on.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_radius_10dp.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/background_radius_20dp.xml" value="0.29814814814814816" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/gradient_background.xml" value="0.21875" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.30833333333333335" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/ic_chart.xml" value="0.30648148148148147" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/drawable/ic_close.xml" value="0.30648148148148147" />
@@ -30,7 +31,7 @@
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_percent.xml" value="0.33" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_record.xml" value="0.2" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_stats.xml" value="0.2" />
-        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_track_stat.xml" value="0.22" />
+        <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/fragment_user_track_stat.xml" value="0.33" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/item_bookmark.xml" value="0.25" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/item_load_more.xml" value="0.33" />
         <entry key="..\:/Users/MinHyukJi/Documents/GitHub/KartSearch/KartSearch/app/src/main/res/layout/item_mode.xml" value="0.25" />
