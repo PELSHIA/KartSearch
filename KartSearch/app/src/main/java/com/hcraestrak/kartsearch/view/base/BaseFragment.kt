@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.hcraestrak.kartsearch.BR
+import com.hcraestrak.kartsearch.viewModel.ModeViewModel
 
 abstract class BaseFragment<VB: ViewDataBinding, VM: ViewModel>(@LayoutRes val layoutRes: Int): Fragment() {
 
@@ -21,6 +23,7 @@ abstract class BaseFragment<VB: ViewDataBinding, VM: ViewModel>(@LayoutRes val l
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 }
