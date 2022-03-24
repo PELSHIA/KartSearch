@@ -44,7 +44,9 @@ class UserTrackStatFragment(val id: String, val type: String) : BaseFragment<Fra
     private fun getMatchData() {
         viewModel.accessIdMatchInquiry(id, type)
         viewModel.matchResponse.observe(viewLifecycleOwner, {
-            setTrackData(it)
+            if (it.matches.isNotEmpty()) {
+                setTrackData(it)
+            }
         })
     }
 

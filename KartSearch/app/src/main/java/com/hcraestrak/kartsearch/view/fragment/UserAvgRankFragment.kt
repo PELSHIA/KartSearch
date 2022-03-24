@@ -30,7 +30,9 @@ class UserAvgRankFragment(val id: String, val type: String) : BaseFragment<Fragm
     private fun getMatchData() {
         viewModel.accessIdMatchInquiry(id, type)
         viewModel.matchResponse.observe(viewLifecycleOwner, {
-            setChartData(it)
+            if (it.matches.isNotEmpty()) {
+                setChartData(it)
+            }
         })
     }
 
