@@ -69,7 +69,7 @@
                             android:layout_width="99dp"
                             android:layout_height="74dp"
                             android:layout_marginTop="80dp"
-                            tools:src="@mipmap/ic_launcher"
+                            android:src="@drawable/unknowncharacter"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,14 +157,42 @@
                         app:layout_constraintBottom_toBottomOf="@id/user_title"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
-                            <androidx.viewpager2.widget.ViewPager2
-                                android:id="@+id/user_stats_viewPager"
-                                app:layout_constraintTop_toBottomOf="@id/user_title"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginTop="30dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/user_record_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/user_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:id="@+id/user_record_none_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/unknowncharacter"/>
+
+                        <TextView
+                            android:id="@+id/user_record_none_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="전적 정보가 없습니다."/>
+
+
+                    </LinearLayout>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/user_stats_viewPager"
+                        app:layout_constraintTop_toBottomOf="@id/user_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/user_record_recyclerView"
@@ -175,6 +203,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/user_stats_viewPager"/>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/light_blue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/user_record_recyclerView"/>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
