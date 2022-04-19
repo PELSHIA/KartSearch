@@ -10,4 +10,5 @@
     <string name="win_stat">승률</string>
     <string name="completion_stat">완주/리타율</string>
     <string name="track_stat">트랙 통계</string>
+    <string name="preparing">아직 준비중인 기능입니다!</string>
 </resources>
