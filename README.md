@@ -1,7 +1,2 @@
 # KartSearch
-카트라이더 전적 검색
-
-| | Android | Searver | Design |
-|---|:---:|:---:|:---:|
-| Skill | Kotlin | FireBase | - |
-| Tools | Android Studio | - | Figma | 
+카트라이더 전적 검색 서비스
