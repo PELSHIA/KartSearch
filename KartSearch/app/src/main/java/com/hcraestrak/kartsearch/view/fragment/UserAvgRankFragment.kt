@@ -61,11 +61,15 @@ class UserAvgRankFragment(val id: String, val type: String) : BaseFragment<Fragm
         val lineData: LineData = LineData(dataSets)
 
         binding.avgRankChart.apply {
+            scaleY = -1f
             data = lineData
+            data.setDrawValues(false)
             legend.isEnabled = false
             xAxis.isEnabled = false
+            description.isEnabled = false
             axisLeft.axisMinimum = 1f
             axisLeft.axisMaximum = 8f
+            axisLeft.setDrawLabels(false)
             axisRight.apply {
                 setDrawLabels(false)
                 setDrawAxisLine(false)
