@@ -57,6 +57,9 @@ fun getApiKey(propertyKey: String): String {
 
 dependencies {
 
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
     implementation (Dependency.Library.AndroidX.core)
     implementation (Dependency.Library.AndroidX.appcompat)
     implementation (Dependency.Library.AndroidX.material)

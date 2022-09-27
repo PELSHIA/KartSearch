@@ -8,5 +8,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "KartSearch"
-include (":app")
-
+include (":presentation")
+include (":data")
+include (":domain")
