@@ -1,4 +1,4 @@
-# 오늘하루 Android
+# KartSearch - 카트라이더 전적 검색 서비스
 
 <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a768e840-f2b0-4f8c-b639-798453893928/Surface_Pro_8_-_1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221017%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221017T014926Z&X-Amz-Expires=86400&X-Amz-Signature=c4c60c19e879e225584d2a84913c1f432ee67124b16610c0441c1df318181c97&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Surface_Pro_8_-_1.png%22&x-id=GetObject">
 
