@@ -1,7 +1,7 @@
 package com.hcraestrak.kartsearch.app
 
 import android.app.Application
-import com.hcraestrak.kartsearch.model.network.PreferenceUtils
+import com.hcraestrak.data.remote.PreferenceUtils
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

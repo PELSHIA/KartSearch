@@ -8,7 +8,7 @@
     <data>
         <variable
             name="search"
-            type="com.hcraestrak.kartsearch.model.db.entity.Search" />
+            type="com.hcraestrak.domain.model.local.Search" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

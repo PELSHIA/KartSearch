@@ -1,8 +1,8 @@
 package com.hcraestrak.kartsearch.di
 
-import com.hcraestrak.kartsearch.model.network.RetrofitService
-import com.hcraestrak.kartsearch.model.network.dao.MatchService
-import com.hcraestrak.kartsearch.model.network.dao.UserService
+import com.hcraestrak.data.remote.RetrofitService
+import com.hcraestrak.data.remote.service.MatchService
+import com.hcraestrak.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

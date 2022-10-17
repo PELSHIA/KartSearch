@@ -2,18 +2,15 @@ package com.hcraestrak.kartsearch.view.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.hcraestrak.domain.model.remote.Match
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserPercentBinding
-import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,11 +27,11 @@ class UserPercentFragment(val id: String, val type: String) : BaseFragment<Fragm
 
     private fun getMatchData() {
         viewModel.accessIdMatchInquiry(id, type)
-        viewModel.matchResponse.observe(viewLifecycleOwner, {
+        viewModel.matchResponse.observe(viewLifecycleOwner) {
             if (it.matches.isNotEmpty()) {
                 setChartData(it)
             }
-        })
+        }
     }
 
     private fun setChartData(data: Match) {

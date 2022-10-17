@@ -1,10 +1,10 @@
 package com.hcraestrak.kartsearch.di
 
 import android.content.Context
-import com.hcraestrak.kartsearch.model.db.dao.BookmarkDao
-import com.hcraestrak.kartsearch.model.db.dao.SearchDao
-import com.hcraestrak.kartsearch.model.db.database.BookmarkDatabase
-import com.hcraestrak.kartsearch.model.db.database.SearchDatabase
+import com.hcraestrak.data.local.database.BookmarkDatabase
+import com.hcraestrak.data.local.database.SearchDatabase
+import com.hcraestrak.data.local.service.BookmarkService
+import com.hcraestrak.data.local.service.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,13 +18,13 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideSearchDatabase(@ApplicationContext context: Context): SearchDao? {
-        return SearchDatabase.getInstance(context)?.SearchDao()
+    fun provideSearchDatabase(@ApplicationContext context: Context): SearchService {
+        return SearchDatabase.getInstance(context)!!.SearchService()
     }
 
     @Singleton
     @Provides
-    fun provideBookmarkDatabase(@ApplicationContext context: Context): BookmarkDao? {
-        return BookmarkDatabase.getInstance(context)?.BookmarkDao()
+    fun provideBookmarkDatabase(@ApplicationContext context: Context): BookmarkService {
+        return BookmarkDatabase.getInstance(context)!!.BookmarkService()
     }
 }

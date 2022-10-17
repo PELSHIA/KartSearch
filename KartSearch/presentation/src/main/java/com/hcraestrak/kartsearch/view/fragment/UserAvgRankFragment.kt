@@ -1,18 +1,15 @@
 package com.hcraestrak.kartsearch.view.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.hcraestrak.domain.model.remote.Match
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserAvgRankBinding
-import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,11 +26,11 @@ class UserAvgRankFragment(val id: String, val type: String) : BaseFragment<Fragm
 
     private fun getMatchData() {
         viewModel.accessIdMatchInquiry(id, type)
-        viewModel.matchResponse.observe(viewLifecycleOwner, {
+        viewModel.matchResponse.observe(viewLifecycleOwner) {
             if (it.matches.isNotEmpty()) {
                 setChartData(it)
             }
-        })
+        }
     }
 
     private fun setChartData(data: Match) {

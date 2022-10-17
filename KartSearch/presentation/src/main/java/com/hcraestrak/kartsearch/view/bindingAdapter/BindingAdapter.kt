@@ -5,8 +5,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,9 +14,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.hcraestrak.kartsearch.R
-import com.hcraestrak.kartsearch.model.db.entity.Search
-import com.hcraestrak.kartsearch.view.adapter.SearchRecyclerViewAdapter
-import com.hcraestrak.kartsearch.viewModel.SearchViewModel
 import java.io.File
 import java.io.IOException
 import kotlin.math.roundToInt

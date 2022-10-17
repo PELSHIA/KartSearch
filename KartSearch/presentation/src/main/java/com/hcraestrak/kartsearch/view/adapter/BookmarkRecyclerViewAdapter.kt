@@ -1,16 +1,10 @@
 package com.hcraestrak.kartsearch.view.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.hcraestrak.kartsearch.R
+import com.hcraestrak.domain.model.local.Bookmark
 import com.hcraestrak.kartsearch.databinding.ItemBookmarkBinding
-import com.hcraestrak.kartsearch.databinding.ItemSearchBinding
-import com.hcraestrak.kartsearch.model.db.entity.Bookmark
-import com.hcraestrak.kartsearch.model.db.entity.Search
 import com.hcraestrak.kartsearch.view.adapter.listener.OnItemClickListener
 
 class BookmarkRecyclerViewAdapter: RecyclerView.Adapter<BookmarkRecyclerViewAdapter.ViewHolder>() {

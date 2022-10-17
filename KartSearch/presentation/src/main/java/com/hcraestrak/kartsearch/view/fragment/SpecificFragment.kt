@@ -3,12 +3,9 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -30,17 +27,16 @@ import com.hcraestrak.kartsearch.view.adapter.data.RankData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.view.decoration.RecyclerViewDecoration
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
-import com.hcraestrak.kartsearch.viewModel.SpecificViewModel
 import com.hcraestrak.kartsearch.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 
 @AndroidEntryPoint
-class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel>(R.layout.fragment_specific) {
+class SpecificFragment : BaseFragment<FragmentSpecificBinding, MatchViewModel>(R.layout.fragment_specific) {
 
     private lateinit var recyclerViewAdapter: RankRecyclerViewAdapter
-    override val viewModel: SpecificViewModel by viewModels()
+    override val viewModel: MatchViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
     private val args: SpecificFragmentArgs by navArgs()
     private val dataList = mutableListOf<RankData>()
@@ -122,7 +118,7 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
 
         recyclerViewAdapter.setOnItemClickListener {
             if (it == 1) {
-                userViewModel.getAccessId(recyclerViewAdapter.getNickName())
+                userViewModel.accessIdInquiry(recyclerViewAdapter.getNickName())
                 userViewModel.userInfoLiveData.observe(viewLifecycleOwner, { userInfo ->
                     if (userInfo != null) {
                         findNavController().navigate(SpecificFragmentDirections.actionSpecificFragmentToInformationFragment(userInfo.accessId))
@@ -156,8 +152,8 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
     }
 
     private fun setSingleData() {
-        viewModel.specificMatchInquiry(args.matchId)
-        viewModel.matchDetail.observe(viewLifecycleOwner, { match ->
+        viewModel.specificSingleMatchInquiry(args.matchId)
+        viewModel.detailSingle.observe(viewLifecycleOwner) { match ->
             getTrackImage(match.trackId)
             getTrackName(match.trackId)
             for (player in match.players) {
@@ -176,12 +172,12 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
             }
             dataList.sortBy { it.rank }
             recyclerViewAdapter.setData(dataList)
-        })
+        }
     }
 
     private fun setTeamData() {
         viewModel.specificTeamMatchInquiry(args.matchId)
-        viewModel.matchTeamDetail.observe(viewLifecycleOwner, { match ->
+        viewModel.detailTeam.observe(viewLifecycleOwner) { match ->
             getTrackImage(match.trackId)
             getTrackName(match.trackId)
             for (team in match.teams) {
@@ -203,7 +199,7 @@ class SpecificFragment : BaseFragment<FragmentSpecificBinding, SpecificViewModel
             dataList.sortBy { it.rank }
             setTeamScore()
             recyclerViewAdapter.setData(dataList)
-        })
+        }
     }
 
     private fun isForceQuit(rank: String): String {

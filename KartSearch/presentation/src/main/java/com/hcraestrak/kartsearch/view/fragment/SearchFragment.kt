@@ -9,11 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hcraestrak.domain.model.local.Bookmark
+import com.hcraestrak.domain.model.local.Search
+import com.hcraestrak.domain.model.remote.UserInfo
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentSearchBinding
-import com.hcraestrak.kartsearch.model.db.entity.Bookmark
-import com.hcraestrak.kartsearch.model.db.entity.Search
-import com.hcraestrak.kartsearch.model.network.data.response.UserInfo
 import com.hcraestrak.kartsearch.view.adapter.BookmarkRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.SearchRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.base.BaseFragment
@@ -59,10 +59,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
     }
 
     private fun getSearch(nickName: String) {
-        userViewModel.getAccessId(nickName)
-        userViewModel.userInfoLiveData.observe(viewLifecycleOwner, {
+        userViewModel.nickNameInquiry(nickName)
+        userViewModel.userInfoLiveData.observe(viewLifecycleOwner) {
             navigate(it)
-        })
+        }
     }
 
     private fun navigate(userInfo: UserInfo?) {
@@ -117,16 +117,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(R.la
 
     private fun setData() {
         viewModel.getAllWord()
-        viewModel.searchWord.observe(viewLifecycleOwner, {
+        viewModel.searchWord.observe(viewLifecycleOwner) {
             val list = it.reversed()
             recyclerViewAdapter.setData(list)
-        })
+        }
 
         bookmarkViewModel.getAllNickName()
-        bookmarkViewModel.bookmark.observe(viewLifecycleOwner, {
+        bookmarkViewModel.bookmark.observe(viewLifecycleOwner) {
             val list = it.reversed()
             bookmarkRecyclerViewAdapter.setData(list)
-        })
+        }
     }
 
     private fun changeMode() {

@@ -3,18 +3,21 @@ package com.hcraestrak.kartsearch.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hcraestrak.kartsearch.model.db.entity.Bookmark
-import com.hcraestrak.kartsearch.model.db.entity.Search
-import com.hcraestrak.kartsearch.model.repo.BookmarkRepository
-import com.hcraestrak.kartsearch.model.repo.SearchRepository
+import androidx.lifecycle.viewModelScope
+import com.hcraestrak.domain.model.local.Bookmark
+import com.hcraestrak.domain.useCase.local.bookmark.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkViewModel @Inject constructor(private val repo: BookmarkRepository) : ViewModel() {
-
-    private lateinit var job: Job
+class BookmarkViewModel @Inject constructor(
+    private val getAllNickNamesUseCase: GetAllNickNamesUseCase,
+    private val insertNickNamesUseCase: InsertNickNamesUseCase,
+    private val deleteAllNickNameUseCase: DeleteAllNickNameUseCase,
+    private val deleteNickNameUseCase: DeleteNickNameUseCase,
+    private val isExistsUseCase: IsExistsUseCase
+) : ViewModel() {
 
     private val _bookmark = MutableLiveData<List<Bookmark>>()
     private val _isExists = MutableLiveData<Boolean>()
@@ -25,49 +28,34 @@ class BookmarkViewModel @Inject constructor(private val repo: BookmarkRepository
         get() = _isExists
 
     fun getAllNickName() {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            val words = repo.getAllNickName()
-            withContext(Dispatchers.Main) {
-                _bookmark.postValue(words)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            val dataList = getAllNickNamesUseCase.execute()
+            _bookmark.postValue(dataList)
         }
     }
 
     fun insertNickName(bookmark: Bookmark) {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main) {
-                repo.insertNickName(bookmark)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            insertNickNamesUseCase.execute(bookmark)
         }
     }
 
     fun deleteNickName(bookmark: Bookmark) {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main) {
-                repo.deleteNickName(bookmark)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteNickNameUseCase.execute(bookmark)
         }
     }
 
     fun deleteAllNickName() {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main) {
-                repo.deleteAllNickName()
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteAllNickNameUseCase.execute()
         }
     }
 
     fun isExists(nickName: String) {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            val isExist = repo.isExists(nickName)
-            withContext(Dispatchers.Main) {
-                _isExists.postValue(isExist)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            isExistsUseCase.execute(nickName)
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
 }

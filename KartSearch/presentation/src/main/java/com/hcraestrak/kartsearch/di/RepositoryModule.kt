@@ -1,10 +1,17 @@
 package com.hcraestrak.kartsearch.di
 
-import com.hcraestrak.kartsearch.model.db.dao.BookmarkDao
-import com.hcraestrak.kartsearch.model.db.dao.SearchDao
-import com.hcraestrak.kartsearch.model.network.dao.MatchService
-import com.hcraestrak.kartsearch.model.network.dao.UserService
-import com.hcraestrak.kartsearch.model.repo.*
+import com.hcraestrak.data.dataSource.local.BookmarkDataSource
+import com.hcraestrak.data.dataSource.local.SearchDataSource
+import com.hcraestrak.data.dataSource.remote.MatchDataSource
+import com.hcraestrak.data.dataSource.remote.UserDataSource
+import com.hcraestrak.data.repository.BookMarkRepositoryImpl
+import com.hcraestrak.data.repository.MatchRepositoryImpl
+import com.hcraestrak.data.repository.SearchRepositoryImpl
+import com.hcraestrak.data.repository.UserRepositoryImpl
+import com.hcraestrak.domain.repository.BookmarkRepository
+import com.hcraestrak.domain.repository.MatchRepository
+import com.hcraestrak.domain.repository.SearchRepository
+import com.hcraestrak.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,31 +24,26 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(service: UserService): UserRepository {
-        return UserRepository(service)
+    fun provideUserRepository(source: UserDataSource): UserRepository {
+        return UserRepositoryImpl(source)
     }
 
     @Singleton
     @Provides
-    fun provideMatchRepository(service: MatchService): MatchRepository {
-        return MatchRepository(service)
+    fun provideMatchRepository(source: MatchDataSource): MatchRepository {
+        return MatchRepositoryImpl(source)
     }
 
     @Singleton
     @Provides
-    fun provideSpecificRepository(service: MatchService): SpecificRepository {
-        return SpecificRepository(service)
+    fun provideBookmarkRepository(source: BookmarkDataSource): BookmarkRepository {
+        return BookMarkRepositoryImpl(source)
     }
 
     @Singleton
     @Provides
-    fun provideSearchRepository(db: SearchDao?): SearchRepository {
-        return SearchRepository(db)
+    fun provideSearchRepository(source: SearchDataSource): SearchRepository {
+        return SearchRepositoryImpl(source)
     }
 
-    @Singleton
-    @Provides
-    fun provideBookmarkRepository(db: BookmarkDao?): BookmarkRepository {
-        return BookmarkRepository(db)
-    }
 }

@@ -12,6 +12,8 @@ plugins {
 //Properties properties = new Properties()
 //properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
+val key: String = gradleLocalProperties(rootDir).getProperty("api_key")
+
 android {
     compileSdk = Config.compileSdk
 
@@ -30,6 +32,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {
+            buildConfigField("String", "API_KEY", key)
         }
     }
     compileOptions {
@@ -73,11 +78,6 @@ dependencies {
     implementation (Dependency.Library.Navigation.navigation_fragment)
     implementation (Dependency.Library.Navigation.navigation_ui)
 
-    /* Retrofit2 */
-    implementation (Dependency.Library.Retrofit2.retrofit2)
-    implementation (Dependency.Library.Retrofit2.retrofit2_gson)
-    implementation (Dependency.Library.Retrofit2.logging)
-
     /* Glide */
     implementation (Dependency.Library.Glide.glide)
     annotationProcessor (Dependency.Library.Glide.glide_compiler)
@@ -98,11 +98,6 @@ dependencies {
     implementation (Dependency.Library.DaggerHilt.hilt_lifecycle)
     kapt (Dependency.Library.DaggerHilt.hilt_google_compiler)
     kapt (Dependency.Library.DaggerHilt.hilt_android_compiler)
-
-    /* Room */
-    kapt (Dependency.Library.Room.room_compiler)
-    implementation (Dependency.Library.Room.room_runtime)
-    implementation (Dependency.Library.Room.room_ktx)
 
     /* SwipeRefreshLayout */
     implementation (Dependency.Library.AndroidX.swipeRefreshLayout)

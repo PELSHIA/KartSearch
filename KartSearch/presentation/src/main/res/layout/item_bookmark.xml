@@ -8,7 +8,7 @@
     <data>
         <variable
             name="bookmark"
-            type="com.hcraestrak.kartsearch.model.db.entity.Bookmark" />
+            type="com.hcraestrak.domain.model.local.Bookmark" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -33,7 +33,7 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:hint="@string/search_hint"
                 android:imeOptions="actionSearch"
-                android:inputType="text"
+                android:inputType=""
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"

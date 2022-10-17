@@ -3,10 +3,7 @@ package com.hcraestrak.kartsearch.view.fragment
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -18,9 +15,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.hcraestrak.domain.model.remote.Match
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentUserTrackStatBinding
-import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.adapter.data.TrackStatData
 import com.hcraestrak.kartsearch.view.base.BaseFragment
 import com.hcraestrak.kartsearch.viewModel.MatchViewModel
@@ -43,11 +40,11 @@ class UserTrackStatFragment(val id: String, val type: String) : BaseFragment<Fra
 
     private fun getMatchData() {
         viewModel.accessIdMatchInquiry(id, type)
-        viewModel.matchResponse.observe(viewLifecycleOwner, {
+        viewModel.matchResponse.observe(viewLifecycleOwner) {
             if (it.matches.isNotEmpty()) {
                 setTrackData(it)
             }
-        })
+        }
     }
 
     private fun setTrackData(data: Match) {

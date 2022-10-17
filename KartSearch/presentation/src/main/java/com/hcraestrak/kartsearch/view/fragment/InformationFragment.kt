@@ -21,10 +21,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.hcraestrak.domain.model.local.Bookmark
+import com.hcraestrak.domain.model.remote.Match
 import com.hcraestrak.kartsearch.R
 import com.hcraestrak.kartsearch.databinding.FragmentInformationBinding
-import com.hcraestrak.kartsearch.model.db.entity.Bookmark
-import com.hcraestrak.kartsearch.model.network.data.response.Match
 import com.hcraestrak.kartsearch.view.adapter.InformationViewPagerAdapter
 import com.hcraestrak.kartsearch.view.adapter.UserRecordRecyclerViewAdapter
 import com.hcraestrak.kartsearch.view.adapter.data.UserInfoData
@@ -76,12 +76,12 @@ class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewMo
     }
 
     private fun modeObserve() {
-        modeViewModel.mode.observe(viewLifecycleOwner, {
+        modeViewModel.mode.observe(viewLifecycleOwner) {
             Log.d("gameType", it)
             gameType = it
             isTeamMatch(it)
             getGameTypeId(it)
-        })
+        }
     }
 
     private fun isTeamMatch(gameType: String) {
@@ -126,18 +126,22 @@ class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewMo
     private fun setData(type: String) {
         viewModel.accessIdMatchInquiry(args.accessId, type)
         setViewPager(type)
-        viewModel.matchResponse.observe(viewLifecycleOwner, { match ->
+        viewModel.matchResponse.observe(viewLifecycleOwner) { match ->
             binding.toolbarTitle.text = match.nickName + " 님의 전적"
             binding.userNickName.text = match.nickName
             initBookmark(match.nickName)
-            if (match.matches.isNotEmpty()){
+            if (match.matches.isNotEmpty()) {
                 binding.userStatsViewPager.visibility = View.VISIBLE
                 binding.userRecordRecyclerView.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.VISIBLE
                 binding.userRecordNone.visibility = View.GONE
                 setRecyclerViewData(match)
                 setUserInfo(match.nickName)
-                getImage("character", match.matches[0].matches[0].character, binding.userProfileImg) // 대표 캐릭터 이미지
+                getImage(
+                    "character",
+                    match.matches[0].matches[0].character,
+                    binding.userProfileImg
+                ) // 대표 캐릭터 이미지
                 getLicenseImage(match.matches[0].matches[0].player.rankinggrade2) // 라이센스 이미지
             } else {
                 binding.userStatsViewPager.visibility = View.GONE
@@ -145,18 +149,20 @@ class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewMo
                 binding.userRecordNone.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun initBookmark(nickName: String) {
         bookMark.isExists(nickName)
-        bookMark.isExists.observe(viewLifecycleOwner, { // 즐겨찾기 초기 설정
+        bookMark.isExists.observe(viewLifecycleOwner) { // 즐겨찾기 초기 설정
             if (it) {
-                Glide.with(binding.userBookmark.context).load(R.drawable.ic_star).into(binding.userBookmark)
+                Glide.with(binding.userBookmark.context).load(R.drawable.ic_star)
+                    .into(binding.userBookmark)
             } else {
-                Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border).into(binding.userBookmark)
+                Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border)
+                    .into(binding.userBookmark)
             }
-        })
+        }
     }
 
     private fun setRecyclerViewData(data: Match) {
@@ -264,15 +270,15 @@ class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewMo
     private fun setUserInfo(nickName: String) {
         userInfoViewModel.getProfileData(nickName)
         userInfoViewModel.getRecordData(nickName)
-        userInfoViewModel.infoData.observe(viewLifecycleOwner, {
+        userInfoViewModel.infoData.observe(viewLifecycleOwner) {
             Glide.with(binding.userLevelImg.context).load(it.levelImg).into(binding.userLevelImg)
             binding.userClub.text = if (it.club != "가입된클럽이없습니다") it.club else "없음"
-        })
-        userInfoViewModel.recordData.observe(viewLifecycleOwner, {
+        }
+        userInfoViewModel.recordData.observe(viewLifecycleOwner) {
             val playTime = it.playTime.replace("분", "")
             binding.userPlayTime.text = (playTime.toInt() / 60).toString() + "시간 플레이"
             binding.userStartDate.text = it.startTime.substring(0, 10) + " 부터"
-        })
+        }
     }
 
     private fun getImage(type: String, id: String, view: ImageView) {
@@ -324,18 +330,20 @@ class InformationFragment : BaseFragment<FragmentInformationBinding, MatchViewMo
 
     private fun bookmark() {
         binding.userBookmark.setOnClickListener {
-            viewModel.matchResponse.observe(viewLifecycleOwner, { match ->
+            viewModel.matchResponse.observe(viewLifecycleOwner) { match ->
                 bookMark.isExists(match.nickName)
-                bookMark.isExists.observe(viewLifecycleOwner, {
+                bookMark.isExists.observe(viewLifecycleOwner) {
                     if (it) {
                         bookMark.deleteNickName(Bookmark(match.nickName))
-                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border).into(binding.userBookmark)
+                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star_border)
+                            .into(binding.userBookmark)
                     } else {
                         bookMark.insertNickName(Bookmark(match.nickName))
-                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star).into(binding.userBookmark)
+                        Glide.with(binding.userBookmark.context).load(R.drawable.ic_star)
+                            .into(binding.userBookmark)
                     }
-                })
-            })
+                }
+            }
         }
     }
 
